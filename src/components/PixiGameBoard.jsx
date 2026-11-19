@@ -245,9 +245,11 @@ export default function PixiGameBoard({
       function canPour(fromB, toB) {
         if (!fromB || fromB.length === 0) return false;
         if (!toB || toB.length >= CAPACITY) return false;
-        if (toB.length === 0 && isComplete(fromB)) return false;
-        // Colors fall into all containers that have space, not just matching ones!
-        return true;
+        if (isComplete(fromB)) return false; // completed tube is locked with cork
+        // Any color can fall into an empty container
+        if (toB.length === 0) return true;
+        // Standard Color-Matching Rule: Top colors must match!
+        return fromB[fromB.length - 1] === toB[toB.length - 1];
       }
 
       function isComplete(bottle) {

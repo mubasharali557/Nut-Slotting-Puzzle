@@ -216,7 +216,7 @@ export const STAGES = [
         "cyan",
         "pink",
         "lime",
-        "teal"
+        "blue"
       ],
       [
         "purple",
@@ -226,14 +226,14 @@ export const STAGES = [
       ],
       [
         "lime",
-        "teal",
+        "blue",
         "purple",
         "orange"
       ],
       [
         "pink",
         "cyan",
-        "teal",
+        "blue",
         "lime"
       ],
       [
@@ -243,7 +243,7 @@ export const STAGES = [
         "cyan"
       ],
       [
-        "teal",
+        "blue",
         "lime",
         "orange",
         "purple"
