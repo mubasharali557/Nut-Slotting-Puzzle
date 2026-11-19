@@ -168,15 +168,14 @@ export default function App() {
     setHint(null);
   }, [bottles]);
 
-  // Booster: Hint Helper (Highlights first valid move: matching color or empty container)
+  // Booster: Hint Helper (Highlights first valid move, prioritizing matching colors or empty containers)
   const handleHint = () => {
     if (screen !== 'game' || isWinOpen || isOutOfChancesOpen) return;
+    // Priority 1: Matching color or empty container
     for (let from = 0; from < bottles.length; from++) {
       const fromB = bottles[from];
       if (fromB.length === 0 || isCompleteBottle(fromB)) continue;
       const topColor = fromB[fromB.length - 1];
-
-      // Avoid redundant move: don't move pure stack into empty tube
       const isPureFrom = fromB.every((c) => c === topColor);
 
       for (let to = 0; to < bottles.length; to++) {
@@ -185,12 +184,28 @@ export default function App() {
         if (toB.length >= 4) continue;
 
         if (toB.length === 0) {
-          if (isPureFrom) continue; // Moving an already sorted pure stack to an empty tube achieves nothing
+          if (isPureFrom) continue;
           setHint({ from, to });
           gameAudio.playHint();
           setTimeout(() => setHint(null), 3500);
           return;
         } else if (toB[toB.length - 1] === topColor) {
+          setHint({ from, to });
+          gameAudio.playHint();
+          setTimeout(() => setHint(null), 3500);
+          return;
+        }
+      }
+    }
+    // Priority 2: Any container with available space (free pouring mechanic)
+    for (let from = 0; from < bottles.length; from++) {
+      const fromB = bottles[from];
+      if (fromB.length === 0 || isCompleteBottle(fromB)) continue;
+
+      for (let to = 0; to < bottles.length; to++) {
+        if (from === to) continue;
+        const toB = bottles[to];
+        if (toB.length < 4) {
           setHint({ from, to });
           gameAudio.playHint();
           setTimeout(() => setHint(null), 3500);

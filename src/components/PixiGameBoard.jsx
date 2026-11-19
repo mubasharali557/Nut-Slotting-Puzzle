@@ -229,7 +229,7 @@ export default function PixiGameBoard({
         const toBottle = b[toIdx];
 
         if (!canPour(fromBottle, toBottle)) {
-          if (toBottle.length > 0 && !isComplete(toBottle)) {
+          if (toBottle.length >= CAPACITY && !isComplete(toBottle)) {
             state.selected = toIdx;
             gameAudio.playSelect();
           } else {
@@ -246,10 +246,9 @@ export default function PixiGameBoard({
         if (!fromB || fromB.length === 0) return false;
         if (!toB || toB.length >= CAPACITY) return false;
         if (isComplete(fromB)) return false; // completed tube is locked with cork
-        // Any color can fall into an empty container
-        if (toB.length === 0) return true;
-        // Standard Color-Matching Rule: Top colors must match!
-        return fromB[fromB.length - 1] === toB[toB.length - 1];
+        // Players can freely drop or pour colors into ANY bottle they choose with space,
+        // regardless of its current color. The game does not restrict pouring based on color matching!
+        return true;
       }
 
       function isComplete(bottle) {
