@@ -295,15 +295,17 @@ export default function App() {
       {/* Full-Screen Dynamic Background Image & Live Applied Theme */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {isHome ? (
-          // Home Screen: Cozy Winter Village Scene with Semi-Transparent Dark Overlay
+          // Home Screen: Cozy Winter Village Scene - Lighter, Brighter & Crisp
           <div className="relative w-full h-full">
             <img
               src="/winter-scene.jpg"
               alt="Water Sort Home Background"
-              className="w-full h-full object-cover object-center"
+              className="w-full h-full object-cover object-center filter brightness-105 contrast-105"
             />
-            {/* Semi-transparent black overlay layer to darken front page for optimal contrast */}
-            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+            {/* Subtle soft overlay so the snowy village and warm lights stay clear and bright */}
+            <div className="absolute inset-0 bg-black/15 pointer-events-none" />
+            {/* Ambient warm celestial glow centered behind the home title */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-gradient-to-b from-amber-300/15 via-sky-400/10 to-transparent rounded-full blur-3xl pointer-events-none" />
           </div>
         ) : (
           // Gameplay Screen: Live Applied Theme Background & Lighting
@@ -342,7 +344,7 @@ export default function App() {
         )}
 
         {/* Ambient Subtle Vignette */}
-        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none" />
+        <div className={`absolute inset-0 ${isHome ? 'bg-gradient-to-b from-black/10 via-transparent to-black/20' : 'bg-gradient-to-b from-black/20 via-transparent to-black/30'} pointer-events-none`} />
       </div>
 
       {/* Dynamic Ambient Particles per Active Theme */}
