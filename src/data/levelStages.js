@@ -199,7 +199,7 @@ export const STAGES = [
         "green"
       ],
       [
-        "blue",
+        "purple",
         "red",
         "yellow",
         "orange"
@@ -266,7 +266,7 @@ export const STAGES = [
         "blue",
         "orange",
         "green",
-        "lime"
+        "teal"
       ],
       [
         "green",
@@ -290,19 +290,19 @@ export const STAGES = [
         "blue",
         "teal",
         "purple",
-        "blue"
+        "teal"
       ],
       [
         "blue",
         "orange",
         "yellow",
-        "cyan"
+        "red"
       ],
       [
         "orange",
         "blue",
         "pink",
-        "pink"
+        "red"
       ],
       [
         "red",
@@ -4608,18 +4608,59 @@ export const STAGES = [
   }
 ];
 
+/**
+ * Ensures that every color in the bottles array appears exactly CAPACITY (4) times.
+ * If any level ever has corrupted/unbalanced data, this runtime guard balances it automatically.
+ */
+export function validateAndBalanceBottles(bottles) {
+  const result = bottles.map((b) => [...b]);
+  const counts = {};
+  result.forEach((b) => {
+    b.forEach((c) => {
+      counts[c] = (counts[c] || 0) + 1;
+    });
+  });
+
+  const excess = [];
+  const deficit = [];
+
+  for (const [color, count] of Object.entries(counts)) {
+    if (count > CAPACITY) {
+      for (let i = 0; i < count - CAPACITY; i++) excess.push(color);
+    } else if (count < CAPACITY && count > 0) {
+      for (let i = 0; i < CAPACITY - count; i++) deficit.push(color);
+    }
+  }
+
+  // If there are imbalances, replace excess with deficit
+  if (excess.length > 0 && deficit.length > 0) {
+    for (let bi = 0; bi < result.length; bi++) {
+      for (let si = 0; si < result[bi].length; si++) {
+        const c = result[bi][si];
+        const exIdx = excess.indexOf(c);
+        if (exIdx !== -1 && deficit.length > 0) {
+          result[bi][si] = deficit.pop();
+          excess.splice(exIdx, 1);
+        }
+      }
+    }
+  }
+
+  return result;
+}
+
 export function getStageData(stageNum) {
   const sNum = Math.max(1, Math.min(TOTAL_STAGES, stageNum));
   const existing = STAGES[sNum - 1];
   if (existing) {
     return {
       ...existing,
-      bottles: existing.bottles.map((b) => [...b]),
+      bottles: validateAndBalanceBottles(existing.bottles),
     };
   }
   return {
     stage: sNum,
     title: `Stage ${sNum} - Winter Challenge`,
-    bottles: STAGES[0].bottles.map((b) => [...b]),
+    bottles: validateAndBalanceBottles(STAGES[0].bottles),
   };
 }
