@@ -1,0 +1,649 @@
+import React, { useState, useEffect, useCallback } from 'react';
+import SnowEffect from './components/SnowEffect';
+import MagicParticles from './components/MagicParticles';
+import GameNavbar from './components/GameNavbar';
+import HomeScreen from './components/HomeScreen';
+import PixiGameBoard from './components/PixiGameBoard';
+import PauseModal from './components/PauseModal';
+import WinModal from './components/WinModal';
+import SettingsModal from './components/SettingsModal';
+import ShopModal from './components/ShopModal';
+import LevelsModal from './components/LevelsModal';
+import AchievementsModal from './components/AchievementsModal';
+import HowToPlayModal from './components/HowToPlayModal';
+import OutOfChancesModal from './components/OutOfChancesModal';
+import { getStageData } from './data/levelStages';
+import { GAME_THEMES, TUBE_SKINS } from './data/themes';
+import { gameAudio } from './utils/gameAudio';
+import { Undo2, RotateCcw, Heart, Pause, Sparkles, Lightbulb, FlaskConical } from 'lucide-react';
+
+export default function App() {
+  const [screen, setScreen] = useState('home'); // 'home' | 'game'
+  const [stage, setStage] = useState(() => {
+    const saved = localStorage.getItem('watersort_stage');
+    return saved ? parseInt(saved, 10) : 1;
+  });
+  const [highestUnlocked, setHighestUnlocked] = useState(() => {
+    const savedHighest = localStorage.getItem('watersort_highest_stage');
+    const savedStage = localStorage.getItem('watersort_stage');
+    return savedHighest ? parseInt(savedHighest, 10) : (savedStage ? parseInt(savedStage, 10) : 1);
+  });
+  const [coins, setCoins] = useState(() => {
+    const saved = localStorage.getItem('watersort_coins');
+    return saved ? parseInt(saved, 10) : 250;
+  });
+  const [stars, setStars] = useState(() => {
+    const saved = localStorage.getItem('watersort_stars');
+    return saved ? parseInt(saved, 10) : 125;
+  });
+  const [starBonusActive, setStarBonusActive] = useState(false);
+  const [soundEnabled, setSoundEnabled] = useState(true);
+  const [musicEnabled, setMusicEnabled] = useState(true);
+  const [vibrationEnabled, setVibrationEnabled] = useState(true);
+
+  // Generous chances formula: increases by 4 chances per stage
+  // Stage 1: 6 chances, Stage 2: 10 chances, Stage 3: 14 chances, Stage 4: 18 chances, etc.
+  const getMaxChances = (stageNum) => {
+    return Math.max(6, 6 + (stageNum - 1) * 4);
+  };
+  const maxChances = getMaxChances(stage);
+  const [chances, setChances] = useState(() => getMaxChances(stage));
+
+  // Themes & Bottle Skins State with LocalStorage Persistence
+  const [activeTheme, setActiveTheme] = useState(() => {
+    return localStorage.getItem('watersort_active_theme') || 'apothecary';
+  });
+  const [unlockedThemes, setUnlockedThemes] = useState(() => {
+    const saved = localStorage.getItem('watersort_unlocked_themes');
+    return saved ? JSON.parse(saved) : ['apothecary'];
+  });
+
+  const [activeSkin, setActiveSkin] = useState(() => {
+    return localStorage.getItem('watersort_active_skin') || 'classic';
+  });
+  const [unlockedSkins, setUnlockedSkins] = useState(() => {
+    const saved = localStorage.getItem('watersort_unlocked_skins');
+    return saved ? JSON.parse(saved) : ['classic'];
+  });
+
+  const handlePurchaseTheme = (themeId, price) => {
+    if (coins < price || unlockedThemes.includes(themeId)) return false;
+    setCoins((c) => c - price);
+    setUnlockedThemes((prev) => {
+      const next = [...prev, themeId];
+      localStorage.setItem('watersort_unlocked_themes', JSON.stringify(next));
+      return next;
+    });
+    setActiveTheme(themeId);
+    localStorage.setItem('watersort_active_theme', themeId);
+    gameAudio.playClick();
+    return true;
+  };
+
+  const handleEquipTheme = (themeId) => {
+    if (!unlockedThemes.includes(themeId)) return;
+    setActiveTheme(themeId);
+    localStorage.setItem('watersort_active_theme', themeId);
+    gameAudio.playClick();
+  };
+
+  const handlePurchaseSkin = (skinId, price) => {
+    if (coins < price || unlockedSkins.includes(skinId)) return false;
+    setCoins((c) => c - price);
+    setUnlockedSkins((prev) => {
+      const next = [...prev, skinId];
+      localStorage.setItem('watersort_unlocked_skins', JSON.stringify(next));
+      return next;
+    });
+    setActiveSkin(skinId);
+    localStorage.setItem('watersort_active_skin', skinId);
+    gameAudio.playClick();
+    return true;
+  };
+
+  const handleEquipSkin = (skinId) => {
+    if (!unlockedSkins.includes(skinId)) return;
+    setActiveSkin(skinId);
+    localStorage.setItem('watersort_active_skin', skinId);
+    gameAudio.playClick();
+  };
+
+  // Modals
+  const [isPaused, setIsPaused] = useState(false);
+  const [isWinOpen, setIsWinOpen] = useState(false);
+  const [isOutOfChancesOpen, setIsOutOfChancesOpen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isShopOpen, setIsShopOpen] = useState(false);
+  const [isLevelsOpen, setIsLevelsOpen] = useState(false);
+  const [isAchievementsOpen, setIsAchievementsOpen] = useState(false);
+  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
+
+  // Gameplay Bottles State
+  const [bottles, setBottles] = useState(() => getStageData(stage).bottles);
+  const [history, setHistory] = useState([]);
+
+  // Boosters State
+  const [hint, setHint] = useState(null);
+  const [extraBottleUsed, setExtraBottleUsed] = useState(false);
+
+  // Helper: check if a bottle is completed
+  const isCompleteBottle = (b) => {
+    return b && b.length === 4 && b.every((c) => c === b[0]);
+  };
+
+  // Sync stage to localStorage
+  useEffect(() => {
+    localStorage.setItem('watersort_stage', stage.toString());
+  }, [stage]);
+
+  // Sync coins to localStorage
+  useEffect(() => {
+    localStorage.setItem('watersort_coins', coins.toString());
+  }, [coins]);
+
+  // Sync stars to localStorage
+  useEffect(() => {
+    localStorage.setItem('watersort_stars', stars.toString());
+  }, [stars]);
+
+  // Load stage bottles and assign starting chances
+  const loadStage = useCallback((stageNum) => {
+    const data = getStageData(stageNum);
+    setStage(stageNum);
+    setBottles(data.bottles.map((b) => [...b]));
+    setHistory([]);
+    setChances(getMaxChances(stageNum));
+    setExtraBottleUsed(false);
+    setHint(null);
+    setIsWinOpen(false);
+    setIsOutOfChancesOpen(false);
+    setIsPaused(false);
+  }, []);
+
+  // Update bottles and decrement chances on each move
+  const handleBottlesChange = useCallback((newBottles) => {
+    setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
+    setBottles(newBottles);
+    setChances((prev) => Math.max(0, prev - 1));
+    setHint(null);
+  }, [bottles]);
+
+  // Booster: Hint Helper (Highlights first valid move, prioritizing matching colors)
+  const handleHint = () => {
+    if (screen !== 'game' || isWinOpen || isOutOfChancesOpen) return;
+    // Priority 1: Matching color or empty container
+    for (let from = 0; from < bottles.length; from++) {
+      const fromB = bottles[from];
+      if (fromB.length === 0 || isCompleteBottle(fromB)) continue;
+      const topColor = fromB[fromB.length - 1];
+
+      for (let to = 0; to < bottles.length; to++) {
+        if (from === to) continue;
+        const toB = bottles[to];
+        if (toB.length >= 4) continue;
+        if (toB.length === 0 || toB[toB.length - 1] === topColor) {
+          setHint({ from, to });
+          gameAudio.playHint();
+          setTimeout(() => setHint(null), 3500);
+          return;
+        }
+      }
+    }
+    // Priority 2: Any container with available space
+    for (let from = 0; from < bottles.length; from++) {
+      const fromB = bottles[from];
+      if (fromB.length === 0 || isCompleteBottle(fromB)) continue;
+
+      for (let to = 0; to < bottles.length; to++) {
+        if (from === to) continue;
+        const toB = bottles[to];
+        if (toB.length < 4) {
+          setHint({ from, to });
+          gameAudio.playHint();
+          setTimeout(() => setHint(null), 3500);
+          return;
+        }
+      }
+    }
+  };
+
+  // Booster: Add Extra Empty Tube (+1 Bottle)
+  const handleAddBottle = () => {
+    if (extraBottleUsed || screen !== 'game' || isWinOpen || isOutOfChancesOpen) return;
+    setExtraBottleUsed(true);
+    setBottles((prev) => [...prev, []]);
+    setChances((c) => Math.min(10, c + 1));
+    gameAudio.playAddBottle();
+  };
+
+  // Out of chances check: wait for pour animation to finish before showing modal
+  useEffect(() => {
+    if (chances === 0 && !isWinOpen && screen === 'game') {
+      const timer = setTimeout(() => {
+        if (!isWinOpen) {
+          setIsOutOfChancesOpen(true);
+        }
+      }, 1400);
+      return () => clearTimeout(timer);
+    } else if (chances > 0) {
+      setIsOutOfChancesOpen(false);
+    }
+  }, [chances, isWinOpen, screen]);
+
+  // Undo Move (Restores 1 chance and previous bottle state)
+  const handleUndo = () => {
+    if (history.length === 0 || isWinOpen) return;
+    const prev = history[history.length - 1];
+    setHistory((h) => h.slice(0, -1));
+    setBottles(prev.map((b) => [...b]));
+    setChances((c) => Math.min(getMaxChances(stage), c + 1));
+    setIsOutOfChancesOpen(false);
+    gameAudio.playClick();
+  };
+
+  // Restart Current Stage
+  const handleRestart = () => {
+    loadStage(stage);
+    gameAudio.playClick();
+  };
+
+  // Win Handler - Adds points to stars icon in navbar & coins
+  const handleWin = useCallback(() => {
+    setIsWinOpen(true);
+    setIsOutOfChancesOpen(false);
+    setStars((s) => s + 3); // Points added to the star icon!
+    setCoins((c) => c + 50);
+    setStarBonusActive(true);
+    setHighestUnlocked((prev) => {
+      const nextUnlocked = Math.max(prev, Math.min(100, stage + 1));
+      localStorage.setItem('watersort_highest_stage', nextUnlocked.toString());
+      return nextUnlocked;
+    });
+    setTimeout(() => setStarBonusActive(false), 3500);
+  }, [stage]);
+
+  // Next Stage Handler
+  const handleNextStage = () => {
+    const nextStage = stage >= 100 ? 1 : stage + 1;
+    setStage(nextStage);
+    localStorage.setItem('watersort_stage', nextStage.toString());
+    setHighestUnlocked((prev) => {
+      const updated = Math.max(prev, nextStage);
+      localStorage.setItem('watersort_highest_stage', updated.toString());
+      return updated;
+    });
+    loadStage(nextStage);
+  };
+
+  // Toggle Sound preference
+  const toggleSound = () => {
+    const next = !soundEnabled;
+    setSoundEnabled(next);
+    gameAudio.soundEnabled = next;
+  };
+
+  const isHome = screen === 'home';
+  const currentThemeObj = GAME_THEMES.find((t) => t.id === activeTheme) || GAME_THEMES[0];
+  const completedCount = bottles.filter(isCompleteBottle).length;
+  const uniqueColors = new Set(bottles.flat()).size;
+  const targetCompleted = Math.max(1, uniqueColors);
+  const progressPercent = Math.min(100, Math.round((completedCount / targetCompleted) * 100));
+
+  return (
+    <div className="relative w-full h-[100dvh] overflow-hidden bg-black flex flex-col justify-between font-sans select-none pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]">
+      
+      {/* Full-Screen Dynamic Background Image & Live Applied Theme */}
+      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+        {isHome ? (
+          // Home Screen: Cozy Winter Village Scene with Semi-Transparent Dark Overlay
+          <div className="relative w-full h-full">
+            <img
+              src="/winter-scene.jpg"
+              alt="Water Sort Home Background"
+              className="w-full h-full object-cover object-center"
+            />
+            {/* Semi-transparent black overlay layer to darken front page for optimal contrast */}
+            <div className="absolute inset-0 bg-black/40 pointer-events-none" />
+          </div>
+        ) : (
+          // Gameplay Screen: Live Applied Theme Background & Lighting
+          <div className="relative w-full h-full">
+            {currentThemeObj.bgImage ? (
+              <img
+                src={currentThemeObj.bgImage}
+                alt={currentThemeObj.name}
+                className="w-full h-full object-cover object-center transition-all duration-700"
+              />
+            ) : currentThemeObj.isDynamicAurora ? (
+              // Aurora Theme: Deep cosmic space gradient with northern lights waves
+              <div className="w-full h-full bg-gradient-to-b from-slate-950 via-teal-950 to-indigo-950 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-400/25 via-emerald-600/15 to-transparent animate-pulse" style={{ animationDuration: '4s' }} />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-purple-500/20 via-indigo-600/10 to-transparent" />
+              </div>
+            ) : currentThemeObj.isDynamicSunset ? (
+              // Sunset Theme: Rich warm golden hour horizon
+              <div className="w-full h-full bg-gradient-to-b from-purple-950 via-rose-950 to-amber-950 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-500/30 via-orange-600/15 to-transparent" />
+              </div>
+            ) : (
+              <img
+                src="/game-bg.png"
+                alt="Apothecary"
+                className="w-full h-full object-cover object-center"
+              />
+            )}
+
+            {/* Theme-Specific Ambient Lighting Overlay */}
+            <div className={`absolute inset-0 ${currentThemeObj.lightingOverlay} pointer-events-none transition-all duration-700`} />
+
+            {/* Theme-Specific Ambient Glow Vignette */}
+            <div className={`absolute inset-0 ${currentThemeObj.ambientGlow} pointer-events-none`} />
+          </div>
+        )}
+
+        {/* Ambient Subtle Vignette */}
+        <div className="absolute inset-0 bg-gradient-to-b from-black/20 via-transparent to-black/30 pointer-events-none" />
+      </div>
+
+      {/* Dynamic Ambient Particles per Active Theme */}
+      {isHome ? (
+        <SnowEffect />
+      ) : currentThemeObj.particleType === 'snow' ? (
+        <SnowEffect />
+      ) : (
+        <MagicParticles type={currentThemeObj.particleType} />
+      )}
+
+      {/* Main Container */}
+      <div className="relative z-20 w-full h-full flex flex-col justify-between overflow-hidden">
+        
+        {/* Top Game Navbar (Matching Reference Image Design) */}
+        <GameNavbar
+          currentScreen={screen}
+          onNavigate={(targetScreen) => {
+            if (targetScreen === 'game') loadStage(stage);
+            setScreen(targetScreen);
+          }}
+          currentStage={stage}
+          totalStars={stars}
+          starBonusActive={starBonusActive}
+          playerId="84920"
+          soundEnabled={soundEnabled}
+          onToggleSound={toggleSound}
+          onOpenSettings={() => setIsSettingsOpen(true)}
+          onOpenLevels={() => setIsLevelsOpen(true)}
+          onOpenAchievements={() => setIsAchievementsOpen(true)}
+          onOpenHowToPlay={() => setIsHowToPlayOpen(true)}
+        />
+
+        {/* Content Area: Home Screen OR Gameplay Screen */}
+        <div className="relative flex-1 w-full h-full max-w-lg mx-auto flex flex-col items-center justify-between overflow-hidden">
+          {isHome ? (
+            <HomeScreen
+              onPlay={() => {
+                loadStage(stage);
+                setScreen('game');
+              }}
+              onOpenSettings={() => setIsSettingsOpen(true)}
+              onOpenShop={() => setIsShopOpen(true)}
+              onOpenLevels={() => setIsLevelsOpen(true)}
+              onOpenAchievements={() => setIsAchievementsOpen(true)}
+              currentStage={stage}
+              coins={coins}
+              stars={stars}
+            />
+          ) : (
+            <div className="w-full h-full flex flex-col items-center justify-between">
+              {/* In-Game HUD: Stage Info, Chances Indicator & Pause */}
+              <div className="w-full max-w-lg px-2 sm:px-6 pt-1 sm:pt-1.5 pb-0.5 z-20 flex flex-col gap-1 flex-shrink-0">
+                <div className="w-full flex items-center justify-between gap-1.5 sm:gap-2">
+                  {/* Level / Stage Badge */}
+                  <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-cyan-400/40 shadow-md">
+                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-300 animate-pulse" />
+                    <span className="text-[11px] sm:text-sm font-black text-white tracking-wide whitespace-nowrap">
+                      Stage {stage}
+                    </span>
+                  </div>
+
+                  {/* Remaining Chances Display */}
+                  <div
+                    className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full backdrop-blur-md border shadow-lg transition-all ${
+                      chances <= 2
+                        ? 'bg-rose-950/90 border-rose-400 text-rose-300 shadow-rose-500/30 animate-pulse'
+                        : 'bg-slate-900/85 border-cyan-400/50 text-white shadow-cyan-500/20'
+                    }`}
+                  >
+                    <div className="flex items-center gap-1 sm:gap-1.5">
+                      <Heart
+                        className={`w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current ${
+                          chances <= 2 ? 'text-rose-400' : 'text-rose-500'
+                        }`}
+                      />
+                      <span className="text-[9px] sm:text-xs font-black uppercase tracking-wider text-slate-300">
+                        Chances:
+                      </span>
+                    </div>
+
+                    <div className="flex items-baseline gap-0.5 sm:gap-1">
+                      <span
+                        className={`text-xs sm:text-base font-black ${
+                          chances === 0
+                            ? 'text-rose-400'
+                            : chances <= 3
+                            ? 'text-amber-400'
+                            : 'text-emerald-400'
+                        }`}
+                      >
+                        {chances}
+                      </span>
+                      <span className="text-[9px] sm:text-[10px] font-bold text-slate-400">
+                        /{maxChances}
+                      </span>
+                    </div>
+
+                    {/* Mini Stamina Bar Gauge */}
+                    <div className="w-8 sm:w-14 h-1.5 sm:h-2 rounded-full bg-slate-800 border border-white/10 overflow-hidden shadow-inner ml-0.5">
+                      <div
+                        className={`h-full rounded-full transition-all duration-300 ${
+                          chances / maxChances > 0.5
+                            ? 'bg-gradient-to-r from-emerald-400 to-green-500 shadow-[0_0_6px_#10b981]'
+                            : chances / maxChances > 0.25
+                            ? 'bg-gradient-to-r from-amber-400 to-yellow-500 shadow-[0_0_6px_#f59e0b]'
+                            : 'bg-gradient-to-r from-rose-500 to-red-600 shadow-[0_0_6px_#ef4444]'
+                        }`}
+                        style={{ width: `${Math.round((chances / maxChances) * 100)}%` }}
+                      />
+                    </div>
+                  </div>
+
+                  {/* Quick In-Game Pause Button */}
+                  <button
+                    onClick={() => {
+                      gameAudio.playClick();
+                      setIsPaused(true);
+                    }}
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-900/80 hover:bg-slate-800 backdrop-blur-md border border-white/20 shadow-md flex items-center justify-center text-white active:scale-90 transition-transform cursor-pointer flex-shrink-0"
+                    title="Pause Game"
+                  >
+                    <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white" />
+                  </button>
+                </div>
+
+                {/* Sorted Bottles Progress Bar */}
+                <div className="w-full max-w-xs sm:max-w-sm mx-auto px-1 flex flex-col items-center">
+                  <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-300 mb-0.5">
+                    <span className="flex items-center gap-1">
+                      <span className="text-slate-400">Bottles Sorted:</span>
+                      <span className="text-cyan-300 font-bold">{completedCount} / {targetCompleted}</span>
+                    </span>
+                    <span className="text-amber-400 font-bold">{progressPercent}%</span>
+                  </div>
+                  <div className="w-full h-1.5 rounded-full bg-slate-900/80 border border-white/10 overflow-hidden shadow-inner">
+                    <div
+                      className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 shadow-[0_0_8px_rgba(6,182,212,0.8)] transition-all duration-500"
+                      style={{ width: `${progressPercent}%` }}
+                    />
+                  </div>
+                </div>
+              </div>
+
+              {/* PixiJS Interactive Water Sort Board */}
+              <div className="flex-1 w-full h-full min-h-0 flex items-center justify-center overflow-hidden">
+                <PixiGameBoard
+                  bottles={bottles}
+                  onBottlesChange={handleBottlesChange}
+                  onWin={handleWin}
+                  isPaused={isPaused || isWinOpen || isOutOfChancesOpen}
+                  hint={hint}
+                  activeSkin={activeSkin}
+                />
+              </div>
+
+              {/* Bottom In-Game Controls & Power-Up Boosters */}
+              <div className="w-full flex flex-col items-center pb-2.5 sm:pb-3 pt-0.5 px-2 sm:px-4 z-20 flex-shrink-0">
+                <div className="flex items-center justify-center gap-1.5 sm:gap-3 bg-slate-950/80 backdrop-blur-md px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/15 shadow-[0_4px_20px_rgba(0,0,0,0.5)] max-w-full overflow-x-auto scrollbar-none">
+                  {/* Hint Booster Button */}
+                  <button
+                    onClick={handleHint}
+                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-amber-500/20 to-yellow-600/30 hover:from-amber-500/30 hover:to-yellow-600/40 text-amber-300 border border-amber-400/60 shadow-md shadow-amber-500/10 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
+                    title="Highlight next valid move"
+                  >
+                    <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400/30 text-amber-300" />
+                    <span>Hint</span>
+                  </button>
+
+                  {/* Add Extra Tube Booster Button */}
+                  <button
+                    onClick={handleAddBottle}
+                    disabled={extraBottleUsed}
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border shadow-md transition-all text-[10px] sm:text-xs font-black uppercase whitespace-nowrap ${
+                      !extraBottleUsed
+                        ? 'bg-gradient-to-b from-emerald-500/20 to-green-600/30 hover:from-emerald-500/30 hover:to-green-600/40 text-emerald-300 border-emerald-400/60 shadow-emerald-500/10 hover:scale-105 active:scale-95 cursor-pointer'
+                        : 'bg-slate-900/40 text-slate-500 border-white/10 cursor-not-allowed opacity-40'
+                    }`}
+                    title={extraBottleUsed ? 'Extra tube already used for this stage' : 'Add an extra empty tube booster (+1 chance)'}
+                  >
+                    <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
+                    <span>+1 Tube</span>
+                  </button>
+
+                  {/* Undo Button */}
+                  <button
+                    onClick={handleUndo}
+                    disabled={history.length === 0}
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border shadow-md transition-all text-[10px] sm:text-xs font-black uppercase whitespace-nowrap ${
+                      history.length > 0
+                        ? 'bg-gradient-to-b from-cyan-500/20 to-blue-600/30 hover:from-cyan-500/30 hover:to-blue-600/40 text-cyan-200 border-cyan-400/60 shadow-cyan-500/10 hover:scale-105 active:scale-95 cursor-pointer'
+                        : 'bg-slate-900/40 text-slate-500 border-white/10 cursor-not-allowed opacity-40'
+                    }`}
+                  >
+                    <Undo2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span>Undo</span>
+                    {history.length > 0 && (
+                      <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-cyan-500 text-white text-[9px] sm:text-[10px] flex items-center justify-center font-bold">
+                        {history.length}
+                      </span>
+                    )}
+                  </button>
+
+                  {/* Restart Button */}
+                  <button
+                    onClick={handleRestart}
+                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-orange-500/20 to-amber-600/30 hover:from-orange-500/30 hover:to-amber-600/40 text-orange-300 border border-orange-400/60 shadow-md shadow-orange-500/10 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
+                  >
+                    <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
+                    <span>Restart</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
+
+        {/* Modals */}
+        <PauseModal
+          isOpen={isPaused}
+          onClose={() => setIsPaused(false)}
+          onRestart={() => {
+            setIsPaused(false);
+            handleRestart();
+          }}
+          onHome={() => {
+            setIsPaused(false);
+            setScreen('home');
+          }}
+          soundEnabled={soundEnabled}
+          onToggleSound={toggleSound}
+        />
+
+        <WinModal
+          isOpen={isWinOpen}
+          stage={stage}
+          onNextStage={handleNextStage}
+          onReplay={handleRestart}
+        />
+
+        <OutOfChancesModal
+          isOpen={isOutOfChancesOpen}
+          stage={stage}
+          canUndo={history.length > 0}
+          onRestart={handleRestart}
+          onUndo={handleUndo}
+          onHome={() => {
+            setIsOutOfChancesOpen(false);
+            setScreen('home');
+          }}
+        />
+
+        <LevelsModal
+          isOpen={isLevelsOpen}
+          onClose={() => setIsLevelsOpen(false)}
+          currentStage={stage}
+          highestUnlocked={highestUnlocked}
+          onSelectStage={(lvl) => {
+            loadStage(lvl);
+            setScreen('game');
+          }}
+        />
+
+        <AchievementsModal
+          isOpen={isAchievementsOpen}
+          onClose={() => setIsAchievementsOpen(false)}
+          totalStars={stars}
+          currentStage={stage}
+        />
+
+        <HowToPlayModal
+          isOpen={isHowToPlayOpen}
+          onClose={() => setIsHowToPlayOpen(false)}
+        />
+
+        <SettingsModal
+          isOpen={isSettingsOpen}
+          onClose={() => setIsSettingsOpen(false)}
+          soundEnabled={soundEnabled}
+          onToggleSound={toggleSound}
+          musicEnabled={musicEnabled}
+          onToggleMusic={() => setMusicEnabled(!musicEnabled)}
+          vibrationEnabled={vibrationEnabled}
+          onToggleVibration={() => setVibrationEnabled(!vibrationEnabled)}
+          onResetProgress={() => loadStage(1)}
+        />
+
+        <ShopModal
+          isOpen={isShopOpen}
+          onClose={() => setIsShopOpen(false)}
+          coins={coins}
+          activeTheme={activeTheme}
+          unlockedThemes={unlockedThemes}
+          onEquipTheme={handleEquipTheme}
+          onPurchaseTheme={handlePurchaseTheme}
+          activeSkin={activeSkin}
+          unlockedSkins={unlockedSkins}
+          onEquipSkin={handleEquipSkin}
+          onPurchaseSkin={handlePurchaseSkin}
+        />
+      </div>
+    </div>
+  );
+}
