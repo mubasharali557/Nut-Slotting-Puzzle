@@ -11,84 +11,96 @@ export const STAGES = [
       [
         "blue",
         "blue",
-        "blue",
-        "orange"
-      ],
-      [
         "orange",
-        "orange",
-        "orange"
-      ],
-      [
         "blue"
-      ]
+      ],
+      [
+        "orange",
+        "orange",
+        "orange",
+        "blue"
+      ],
+      []
     ]
   },
   {
     "stage": 2,
-    "title": "Stage 2 - Dual Swirl",
+    "title": "Stage 2 - Dual Flow",
     "bottles": [
       [
-        "pink",
-        "pink",
+        "blue",
+        "orange",
         "green",
-        "green"
+        "blue"
+      ],
+      [
+        "orange",
+        "orange",
+        "orange",
+        "blue"
       ],
       [
         "green",
         "green",
-        "pink",
-        "pink"
+        "green",
+        "blue"
       ],
       []
     ]
   },
   {
     "stage": 3,
-    "title": "Stage 3 - Triple Flow",
+    "title": "Stage 3 - Triple Swirl",
     "bottles": [
       [
         "blue",
+        "green",
         "blue",
+        "green"
+      ],
+      [
         "orange",
+        "orange",
+        "blue",
         "orange"
       ],
       [
-        "orange",
-        "orange",
-        "yellow",
-        "yellow"
-      ],
-      [
-        "yellow",
-        "yellow",
+        "green",
+        "green",
         "blue",
-        "blue"
+        "orange"
       ],
+      [],
       []
     ]
   },
   {
     "stage": 4,
-    "title": "Stage 4 - Rainbow Vials",
+    "title": "Stage 4 - Emerald Garden",
     "bottles": [
       [
-        "teal",
-        "purple",
-        "yellow",
-        "teal"
+        "blue",
+        "green",
+        "orange",
+        "pink"
       ],
       [
-        "purple",
-        "yellow",
-        "teal",
-        "purple"
+        "orange",
+        "green",
+        "orange",
+        "blue"
       ],
       [
-        "yellow",
-        "teal",
-        "purple",
-        "yellow"
+        "green",
+        "blue",
+        "orange",
+        "blue"
+      ],
+      [
+        "pink",
+        "pink",
+        "pink",
+        "green"
       ],
       [],
       []
@@ -96,31 +108,37 @@ export const STAGES = [
   },
   {
     "stage": 5,
-    "title": "Stage 5 - Quad Chemistry",
+    "title": "Stage 5 - Azure Frost",
     "bottles": [
       [
-        "red",
         "green",
+        "pink",
+        "green",
+        "pink"
+      ],
+      [
+        "yellow",
+        "orange",
         "blue",
         "yellow"
       ],
       [
-        "yellow",
-        "red",
+        "blue",
         "green",
-        "blue"
+        "green",
+        "orange"
       ],
       [
+        "pink",
         "blue",
-        "yellow",
-        "red",
-        "green"
+        "blue",
+        "pink"
       ],
       [
-        "green",
-        "blue",
         "yellow",
-        "red"
+        "yellow",
+        "orange",
+        "orange"
       ],
       [],
       []
@@ -128,37 +146,43 @@ export const STAGES = [
   },
   {
     "stage": 6,
-    "title": "Stage 6 - Color Cascade",
+    "title": "Stage 6 - Trophy Trial",
     "bottles": [
       [
-        "pink",
-        "teal",
+        "blue",
+        "blue",
+        "yellow",
+        "blue"
+      ],
+      [
+        "yellow",
         "orange",
+        "pink",
+        "pink"
+      ],
+      [
+        "green",
+        "green",
+        "blue",
+        "orange"
+      ],
+      [
+        "pink",
+        "purple",
+        "orange",
+        "green"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "green",
         "purple"
       ],
       [
         "purple",
+        "purple",
         "pink",
-        "teal",
         "orange"
-      ],
-      [
-        "orange",
-        "purple",
-        "pink",
-        "teal"
-      ],
-      [
-        "teal",
-        "orange",
-        "purple",
-        "pink"
-      ],
-      [
-        "blue",
-        "blue",
-        "blue",
-        "blue"
       ],
       [],
       []
@@ -169,40 +193,46 @@ export const STAGES = [
     "title": "Stage 7 - Test Tube Matrix",
     "bottles": [
       [
-        "green",
-        "yellow",
+        "blue",
+        "purple",
         "red",
-        "blue"
+        "green"
       ],
       [
         "orange",
+        "orange",
         "purple",
-        "green",
         "yellow"
       ],
       [
-        "red",
-        "blue",
+        "green",
         "orange",
+        "pink",
+        "blue"
+      ],
+      [
+        "pink",
+        "pink",
+        "red",
+        "yellow"
+      ],
+      [
+        "blue",
+        "red",
+        "purple",
         "purple"
       ],
       [
         "yellow",
         "green",
-        "red",
+        "pink",
         "blue"
       ],
       [
-        "purple",
-        "orange",
-        "blue",
-        "green"
-      ],
-      [
-        "purple",
-        "red",
+        "green",
         "yellow",
-        "orange"
+        "orange",
+        "red"
       ],
       [],
       []
@@ -213,46 +243,52 @@ export const STAGES = [
     "title": "Stage 8 - Master Alchemy",
     "bottles": [
       [
-        "cyan",
-        "pink",
-        "lime",
-        "blue"
-      ],
-      [
-        "purple",
-        "orange",
-        "cyan",
-        "pink"
-      ],
-      [
-        "lime",
+        "red",
+        "yellow",
         "blue",
-        "purple",
         "orange"
       ],
       [
-        "pink",
-        "cyan",
-        "blue",
-        "lime"
+        "orange",
+        "green",
+        "orange",
+        "yellow"
       ],
       [
-        "orange",
-        "purple",
-        "pink",
-        "cyan"
-      ],
-      [
+        "green",
         "blue",
-        "lime",
-        "orange",
+        "red",
         "purple"
       ],
       [
+        "pink",
+        "pink",
+        "orange",
+        "cyan"
+      ],
+      [
         "yellow",
         "yellow",
-        "yellow",
-        "yellow"
+        "green",
+        "pink"
+      ],
+      [
+        "purple",
+        "purple",
+        "purple",
+        "blue"
+      ],
+      [
+        "red",
+        "pink",
+        "cyan",
+        "blue"
+      ],
+      [
+        "cyan",
+        "red",
+        "cyan",
+        "green"
       ],
       [],
       []
@@ -260,54 +296,60 @@ export const STAGES = [
   },
   {
     "stage": 9,
-    "title": "Stage 9 - Golden Gate Challenge",
+    "title": "Stage 9 - Golden Gate",
     "bottles": [
       [
-        "blue",
         "orange",
-        "green",
-        "teal"
+        "orange",
+        "blue",
+        "blue"
+      ],
+      [
+        "orange",
+        "pink",
+        "lime",
+        "green"
       ],
       [
         "green",
-        "orange",
+        "blue",
+        "cyan",
+        "green"
+      ],
+      [
         "pink",
+        "red",
+        "pink",
+        "blue"
+      ],
+      [
+        "cyan",
+        "purple",
+        "yellow",
         "pink"
       ],
       [
-        "green",
-        "teal",
-        "yellow",
-        "red"
-      ],
-      [
         "purple",
-        "pink",
         "purple",
-        "purple"
-      ],
-      [
-        "blue",
-        "teal",
-        "purple",
-        "teal"
-      ],
-      [
-        "blue",
-        "orange",
-        "yellow",
-        "red"
-      ],
-      [
-        "orange",
-        "blue",
-        "pink",
+        "lime",
         "red"
       ],
       [
         "red",
-        "green",
+        "red",
         "yellow",
+        "green"
+      ],
+      [
+        "cyan",
+        "yellow",
+        "purple",
+        "orange"
+      ],
+      [
+        "lime",
+        "lime",
+        "cyan",
         "yellow"
       ],
       [],
@@ -316,31 +358,67 @@ export const STAGES = [
   },
   {
     "stage": 10,
-    "title": "Stage 10 - Winter Breeze",
+    "title": "Stage 10 - Winter Peak",
     "bottles": [
       [
-        "green",
+        "blue",
         "orange",
-        "pink",
-        "cyan"
+        "blue",
+        "purple"
       ],
       [
         "orange",
         "orange",
-        "cyan",
+        "lime",
+        "cyan"
+      ],
+      [
+        "green",
+        "green",
+        "lime",
         "pink"
       ],
       [
         "pink",
+        "blue",
+        "teal",
+        "yellow"
+      ],
+      [
+        "yellow",
         "green",
+        "red",
+        "blue"
+      ],
+      [
+        "purple",
+        "purple",
+        "pink",
+        "teal"
+      ],
+      [
+        "red",
+        "red",
+        "purple",
+        "teal"
+      ],
+      [
+        "red",
         "orange",
-        "green"
+        "yellow",
+        "pink"
+      ],
+      [
+        "lime",
+        "lime",
+        "yellow",
+        "cyan"
       ],
       [
         "cyan",
+        "green",
         "cyan",
-        "pink",
-        "green"
+        "teal"
       ],
       [],
       []
@@ -348,31 +426,67 @@ export const STAGES = [
   },
   {
     "stage": 11,
-    "title": "Stage 11 - Frosty Elixir",
+    "title": "Stage 11 - Crystal Cavern",
     "bottles": [
       [
-        "pink",
-        "cyan",
-        "yellow",
-        "yellow"
+        "blue",
+        "blue",
+        "red",
+        "purple"
       ],
       [
         "green",
-        "green",
+        "pink",
         "yellow",
-        "cyan"
+        "lime"
       ],
       [
-        "cyan",
         "green",
-        "pink",
+        "yellow",
+        "teal",
         "green"
       ],
       [
         "pink",
+        "lime",
+        "orange",
+        "blue"
+      ],
+      [
+        "yellow",
+        "cyan",
+        "red",
+        "purple"
+      ],
+      [
+        "teal",
+        "teal",
+        "orange",
+        "purple"
+      ],
+      [
+        "red",
+        "red",
+        "orange",
+        "pink"
+      ],
+      [
+        "cyan",
         "cyan",
         "yellow",
-        "pink"
+        "green"
+      ],
+      [
+        "purple",
+        "blue",
+        "teal",
+        "cyan"
+      ],
+      [
+        "pink",
+        "lime",
+        "orange",
+        "lime"
       ],
       [],
       []
@@ -380,31 +494,55 @@ export const STAGES = [
   },
   {
     "stage": 12,
-    "title": "Stage 12 - Aurora Glow",
+    "title": "Stage 12 - Aurora Stream",
     "bottles": [
       [
-        "lime",
         "green",
+        "green",
+        "cyan",
+        "red"
+      ],
+      [
+        "orange",
+        "orange",
+        "purple",
+        "cyan"
+      ],
+      [
+        "green",
+        "blue",
+        "orange",
+        "pink"
+      ],
+      [
+        "pink",
+        "cyan",
+        "pink",
+        "red"
+      ],
+      [
+        "blue",
         "yellow",
+        "blue",
         "yellow"
+      ],
+      [
+        "purple",
+        "purple",
+        "red",
+        "pink"
+      ],
+      [
+        "red",
+        "blue",
+        "yellow",
+        "orange"
       ],
       [
         "green",
-        "lime",
-        "orange",
-        "green"
-      ],
-      [
-        "orange",
-        "lime",
-        "orange",
-        "yellow"
-      ],
-      [
-        "orange",
-        "lime",
-        "green",
-        "yellow"
+        "purple",
+        "yellow",
+        "cyan"
       ],
       [],
       []
@@ -412,31 +550,61 @@ export const STAGES = [
   },
   {
     "stage": 13,
-    "title": "Stage 13 - Glacier Run",
+    "title": "Stage 13 - Neon Cascade",
     "bottles": [
       [
-        "red",
-        "orange",
         "blue",
-        "purple"
-      ],
-      [
-        "orange",
         "red",
-        "red",
-        "purple"
-      ],
-      [
-        "orange",
-        "blue",
         "purple",
         "purple"
       ],
       [
-        "red",
+        "purple",
+        "blue",
+        "orange",
+        "green"
+      ],
+      [
+        "green",
+        "green",
+        "yellow",
+        "orange"
+      ],
+      [
+        "pink",
+        "pink",
+        "lime",
+        "green"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "yellow",
+        "red"
+      ],
+      [
+        "purple",
         "orange",
         "blue",
-        "blue"
+        "pink"
+      ],
+      [
+        "red",
+        "pink",
+        "cyan",
+        "lime"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "cyan",
+        "orange"
+      ],
+      [
+        "lime",
+        "lime",
+        "blue",
+        "red"
       ],
       [],
       []
@@ -444,31 +612,67 @@ export const STAGES = [
   },
   {
     "stage": 14,
-    "title": "Stage 14 - Crystal Flow",
+    "title": "Stage 14 - Frosty Flask",
     "bottles": [
       [
-        "pink",
-        "lime",
-        "pink",
-        "teal"
-      ],
-      [
-        "lime",
-        "yellow",
-        "pink",
-        "lime"
-      ],
-      [
-        "pink",
-        "yellow",
-        "yellow",
-        "teal"
-      ],
-      [
-        "lime",
-        "yellow",
+        "purple",
+        "blue",
         "teal",
+        "blue"
+      ],
+      [
+        "orange",
+        "orange",
+        "lime",
+        "green"
+      ],
+      [
+        "green",
+        "green",
+        "purple",
+        "pink"
+      ],
+      [
+        "pink",
+        "purple",
+        "blue",
+        "cyan"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "green",
         "teal"
+      ],
+      [
+        "purple",
+        "orange",
+        "orange",
+        "teal"
+      ],
+      [
+        "red",
+        "red",
+        "teal",
+        "pink"
+      ],
+      [
+        "cyan",
+        "lime",
+        "blue",
+        "yellow"
+      ],
+      [
+        "lime",
+        "lime",
+        "cyan",
+        "pink"
+      ],
+      [
+        "cyan",
+        "red",
+        "red",
+        "yellow"
       ],
       [],
       []
@@ -476,29 +680,53 @@ export const STAGES = [
   },
   {
     "stage": 15,
-    "title": "Stage 15 - Enchanted Lab",
+    "title": "Stage 15 - Liquid Harmony",
     "bottles": [
       [
-        "cyan",
+        "blue",
+        "blue",
+        "red",
+        "pink"
+      ],
+      [
         "yellow",
         "red",
+        "blue",
         "cyan"
       ],
       [
+        "green",
         "purple",
-        "red",
-        "red",
-        "yellow"
+        "green",
+        "orange"
       ],
       [
-        "purple",
+        "pink",
+        "pink",
         "cyan",
-        "yellow",
         "red"
       ],
       [
         "yellow",
         "purple",
+        "yellow",
+        "yellow"
+      ],
+      [
+        "purple",
+        "green",
+        "cyan",
+        "blue"
+      ],
+      [
+        "orange",
+        "red",
+        "orange",
+        "green"
+      ],
+      [
+        "orange",
+        "pink",
         "cyan",
         "purple"
       ],
@@ -508,37 +736,61 @@ export const STAGES = [
   },
   {
     "stage": 16,
-    "title": "Stage 16 - Mystic Potion",
+    "title": "Stage 16 - Prism Path",
     "bottles": [
       [
-        "lime",
+        "blue",
         "yellow",
-        "green",
-        "green"
+        "pink",
+        "red"
       ],
       [
-        "yellow",
-        "lime",
-        "green",
-        "pink"
+        "orange",
+        "orange",
+        "blue",
+        "purple"
       ],
       [
+        "blue",
+        "yellow",
+        "lime",
+        "lime"
+      ],
+      [
+        "pink",
+        "orange",
         "cyan",
-        "green",
-        "yellow",
-        "pink"
+        "purple"
       ],
       [
         "pink",
         "cyan",
-        "cyan",
-        "pink"
+        "blue",
+        "yellow"
       ],
       [
-        "yellow",
+        "purple",
+        "red",
+        "pink",
+        "green"
+      ],
+      [
+        "red",
+        "orange",
+        "purple",
+        "green"
+      ],
+      [
+        "cyan",
+        "red",
+        "cyan",
+        "green"
+      ],
+      [
         "lime",
         "lime",
-        "cyan"
+        "green",
+        "yellow"
       ],
       [],
       []
@@ -546,37 +798,67 @@ export const STAGES = [
   },
   {
     "stage": 17,
-    "title": "Stage 17 - Sapphire Spiral",
+    "title": "Stage 17 - Breezy Basin",
     "bottles": [
       [
-        "teal",
         "blue",
-        "teal",
+        "orange",
+        "lime",
         "blue"
       ],
       [
-        "red",
-        "green",
         "orange",
+        "orange",
+        "orange",
+        "yellow"
+      ],
+      [
+        "green",
+        "cyan",
+        "red",
+        "yellow"
+      ],
+      [
+        "pink",
+        "pink",
+        "purple",
+        "green"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "green",
+        "purple"
+      ],
+      [
+        "purple",
+        "purple",
+        "green",
+        "blue"
+      ],
+      [
+        "lime",
+        "red",
+        "pink",
         "red"
       ],
       [
-        "orange",
-        "green",
-        "orange",
+        "cyan",
+        "cyan",
+        "cyan",
+        "pink"
+      ],
+      [
+        "lime",
+        "lime",
+        "teal",
         "red"
       ],
       [
         "teal",
-        "blue",
-        "orange",
-        "red"
-      ],
-      [
-        "green",
-        "green",
-        "blue",
-        "teal"
+        "teal",
+        "teal",
+        "blue"
       ],
       [],
       []
@@ -584,37 +866,55 @@ export const STAGES = [
   },
   {
     "stage": 18,
-    "title": "Stage 18 - Emerald Echo",
+    "title": "Stage 18 - Velvet Vial",
     "bottles": [
       [
-        "green",
-        "pink",
-        "yellow",
+        "blue",
+        "blue",
+        "red",
         "green"
       ],
       [
-        "pink",
-        "yellow",
-        "teal",
-        "pink"
+        "orange",
+        "purple",
+        "cyan",
+        "blue"
       ],
       [
-        "yellow",
-        "lime",
         "green",
-        "lime"
+        "green",
+        "pink",
+        "cyan"
+      ],
+      [
+        "pink",
+        "red",
+        "orange",
+        "cyan"
       ],
       [
         "yellow",
-        "lime",
-        "pink",
-        "teal"
+        "blue",
+        "green",
+        "red"
       ],
       [
-        "lime",
-        "teal",
-        "teal",
-        "green"
+        "purple",
+        "purple",
+        "orange",
+        "red"
+      ],
+      [
+        "orange",
+        "yellow",
+        "yellow",
+        "yellow"
+      ],
+      [
+        "pink",
+        "pink",
+        "cyan",
+        "purple"
       ],
       [],
       []
@@ -622,37 +922,61 @@ export const STAGES = [
   },
   {
     "stage": 19,
-    "title": "Stage 19 - Ruby Cascade",
+    "title": "Stage 19 - Glacier Drop",
     "bottles": [
       [
-        "cyan",
         "blue",
-        "blue",
-        "teal"
+        "yellow",
+        "green",
+        "red"
+      ],
+      [
+        "pink",
+        "lime",
+        "yellow",
+        "lime"
       ],
       [
         "lime",
-        "lime",
-        "teal",
-        "cyan"
-      ],
-      [
         "blue",
         "orange",
+        "blue"
+      ],
+      [
+        "pink",
         "lime",
+        "red",
         "orange"
       ],
       [
-        "orange",
-        "teal",
+        "yellow",
         "cyan",
-        "teal"
+        "blue",
+        "yellow"
       ],
       [
-        "orange",
+        "purple",
         "cyan",
-        "lime",
-        "blue"
+        "orange",
+        "green"
+      ],
+      [
+        "red",
+        "red",
+        "orange",
+        "green"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "pink",
+        "pink"
+      ],
+      [
+        "green",
+        "purple",
+        "purple",
+        "purple"
       ],
       [],
       []
@@ -660,37 +984,67 @@ export const STAGES = [
   },
   {
     "stage": 20,
-    "title": "Stage 20 - Golden Flask",
+    "title": "Stage 20 - Arcane Flask",
     "bottles": [
       [
-        "orange",
         "blue",
-        "orange",
-        "cyan"
+        "blue",
+        "teal",
+        "orange"
       ],
       [
-        "pink",
+        "teal",
+        "red",
+        "cyan",
+        "blue"
+      ],
+      [
+        "cyan",
+        "cyan",
         "blue",
-        "purple",
         "pink"
       ],
       [
-        "purple",
-        "purple",
         "pink",
-        "cyan"
+        "purple",
+        "green",
+        "green"
       ],
       [
-        "blue",
-        "orange",
+        "yellow",
+        "yellow",
+        "purple",
+        "teal"
+      ],
+      [
+        "pink",
+        "purple",
+        "yellow",
+        "lime"
+      ],
+      [
+        "red",
+        "red",
+        "green",
+        "yellow"
+      ],
+      [
         "cyan",
-        "cyan"
+        "purple",
+        "orange",
+        "orange"
       ],
       [
-        "orange",
+        "lime",
+        "lime",
         "pink",
-        "blue",
-        "purple"
+        "lime"
+      ],
+      [
+        "red",
+        "green",
+        "orange",
+        "teal"
       ],
       [],
       []
@@ -698,75 +1052,130 @@ export const STAGES = [
   },
   {
     "stage": 21,
-    "title": "Stage 21 - Silver Shimmer",
+    "title": "Stage 21 - Sapphire Surge",
     "bottles": [
       [
-        "purple",
-        "cyan",
-        "lime",
-        "blue"
-      ],
-      [
-        "lime",
-        "purple",
-        "orange",
-        "blue"
-      ],
-      [
-        "cyan",
-        "lime",
+        "red",
+        "yellow",
         "blue",
-        "purple"
+        "blue"
       ],
       [
-        "orange",
-        "orange",
+        "lime",
+        "lime",
+        "red",
+        "green"
+      ],
+      [
+        "lime",
         "cyan",
+        "cyan",
+        "lime"
+      ],
+      [
+        "pink",
+        "blue",
+        "orange",
         "cyan"
       ],
       [
-        "blue",
-        "orange",
-        "lime",
+        "yellow",
+        "teal",
+        "yellow",
+        "orange"
+      ],
+      [
+        "purple",
+        "purple",
+        "pink",
+        "pink"
+      ],
+      [
+        "red",
+        "red",
+        "purple",
+        "green"
+      ],
+      [
+        "cyan",
+        "teal",
+        "green",
         "purple"
       ],
+      [
+        "yellow",
+        "orange",
+        "teal",
+        "pink"
+      ],
+      [
+        "green",
+        "orange",
+        "blue",
+        "teal"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 22,
-    "title": "Stage 22 - Cosmic Blend",
+    "title": "Stage 22 - Ruby Rapids",
     "bottles": [
       [
-        "yellow",
-        "purple",
+        "blue",
+        "blue",
+        "green",
+        "lime"
+      ],
+      [
         "cyan",
+        "pink",
+        "yellow",
+        "cyan"
+      ],
+      [
+        "pink",
+        "purple",
+        "lime",
+        "red"
+      ],
+      [
+        "pink",
+        "orange",
+        "purple",
         "blue"
       ],
       [
+        "yellow",
+        "red",
+        "yellow",
+        "orange"
+      ],
+      [
+        "lime",
+        "red",
+        "green",
+        "green"
+      ],
+      [
+        "cyan",
+        "red",
+        "orange",
+        "pink"
+      ],
+      [
+        "orange",
         "purple",
         "blue",
-        "yellow",
-        "blue"
-      ],
-      [
-        "yellow",
-        "yellow",
-        "cyan",
-        "teal"
-      ],
-      [
-        "purple",
-        "blue",
-        "cyan",
-        "teal"
+        "lime"
       ],
       [
         "cyan",
         "purple",
-        "teal",
-        "teal"
+        "yellow",
+        "green"
       ],
       [],
       []
@@ -774,75 +1183,130 @@ export const STAGES = [
   },
   {
     "stage": 23,
-    "title": "Stage 23 - Vortex Fusion",
+    "title": "Stage 23 - Amber Oasis",
     "bottles": [
       [
-        "teal",
-        "lime",
+        "blue",
+        "blue",
+        "orange",
+        "purple"
+      ],
+      [
+        "orange",
         "red",
-        "red"
+        "lime",
+        "pink"
+      ],
+      [
+        "yellow",
+        "blue",
+        "purple",
+        "pink"
+      ],
+      [
+        "blue",
+        "cyan",
+        "teal",
+        "purple"
       ],
       [
         "yellow",
         "yellow",
-        "red",
+        "teal",
         "lime"
       ],
       [
-        "green",
+        "cyan",
         "teal",
+        "lime",
+        "green"
+      ],
+      [
         "red",
-        "teal"
+        "red",
+        "red",
+        "orange"
       ],
       [
         "green",
         "green",
-        "yellow",
+        "pink",
+        "pink"
+      ],
+      [
+        "cyan",
+        "teal",
+        "purple",
         "lime"
       ],
       [
+        "orange",
         "green",
-        "lime",
-        "teal",
-        "yellow"
+        "yellow",
+        "cyan"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 24,
-    "title": "Stage 24 - Twilight Draught",
+    "title": "Stage 24 - Topaz Twist",
     "bottles": [
       [
-        "teal",
-        "red",
+        "blue",
+        "yellow",
         "pink",
         "red"
       ],
       [
         "orange",
-        "pink",
-        "red",
-        "red"
+        "orange",
+        "lime",
+        "lime"
       ],
       [
-        "purple",
-        "teal",
-        "orange",
+        "green",
+        "green",
+        "green",
         "orange"
       ],
       [
-        "purple",
         "pink",
-        "teal",
+        "pink",
+        "lime",
         "pink"
       ],
       [
+        "yellow",
+        "cyan",
+        "blue",
+        "cyan"
+      ],
+      [
         "purple",
+        "lime",
         "purple",
-        "teal",
-        "orange"
+        "blue"
+      ],
+      [
+        "red",
+        "green",
+        "blue",
+        "purple"
+      ],
+      [
+        "cyan",
+        "purple",
+        "cyan",
+        "red"
+      ],
+      [
+        "orange",
+        "red",
+        "yellow",
+        "yellow"
       ],
       [],
       []
@@ -850,75 +1314,130 @@ export const STAGES = [
   },
   {
     "stage": 25,
-    "title": "Stage 25 - Starlight Stream",
+    "title": "Stage 25 - Citrine Cascade",
     "bottles": [
       [
+        "lime",
+        "pink",
+        "purple",
+        "teal"
+      ],
+      [
+        "orange",
+        "green",
+        "red",
+        "red"
+      ],
+      [
+        "green",
+        "green",
+        "blue",
+        "purple"
+      ],
+      [
+        "cyan",
+        "yellow",
+        "pink",
+        "purple"
+      ],
+      [
+        "yellow",
+        "cyan",
+        "cyan",
+        "teal"
+      ],
+      [
+        "blue",
+        "lime",
+        "pink",
+        "purple"
+      ],
+      [
+        "red",
+        "blue",
+        "yellow",
+        "blue"
+      ],
+      [
+        "pink",
         "orange",
         "lime",
-        "lime",
-        "pink"
+        "orange"
       ],
       [
+        "cyan",
         "lime",
-        "lime",
-        "green",
-        "pink"
-      ],
-      [
-        "pink",
-        "green",
-        "pink",
+        "yellow",
         "green"
       ],
       [
-        "blue",
-        "orange",
-        "green",
-        "blue"
+        "teal",
+        "teal",
+        "red",
+        "orange"
       ],
-      [
-        "blue",
-        "orange",
-        "orange",
-        "blue"
-      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 26,
-    "title": "Stage 26 - Sunburst Mix",
+    "title": "Stage 26 - Cobalt Current",
     "bottles": [
       [
-        "green",
-        "green",
-        "pink",
-        "teal"
-      ],
-      [
-        "purple",
         "cyan",
         "cyan",
-        "pink"
-      ],
-      [
-        "green",
-        "teal",
-        "purple",
-        "purple"
-      ],
-      [
-        "teal",
-        "pink",
-        "cyan",
-        "purple"
-      ],
-      [
-        "pink",
-        "teal",
-        "cyan",
+        "yellow",
         "green"
+      ],
+      [
+        "orange",
+        "orange",
+        "blue",
+        "lime"
+      ],
+      [
+        "green",
+        "blue",
+        "orange",
+        "red"
+      ],
+      [
+        "pink",
+        "pink",
+        "red",
+        "orange"
+      ],
+      [
+        "red",
+        "pink",
+        "lime",
+        "red"
+      ],
+      [
+        "purple",
+        "purple",
+        "blue",
+        "purple"
+      ],
+      [
+        "blue",
+        "lime",
+        "yellow",
+        "green"
+      ],
+      [
+        "cyan",
+        "pink",
+        "green",
+        "cyan"
+      ],
+      [
+        "lime",
+        "yellow",
+        "purple",
+        "yellow"
       ],
       [],
       []
@@ -926,75 +1445,130 @@ export const STAGES = [
   },
   {
     "stage": 27,
-    "title": "Stage 27 - Velvet Waters",
+    "title": "Stage 27 - Jade Junction",
     "bottles": [
       [
-        "green",
-        "teal",
-        "yellow",
-        "pink"
+        "blue",
+        "blue",
+        "pink",
+        "cyan"
       ],
       [
-        "green",
-        "teal",
-        "purple",
-        "pink"
-      ],
-      [
-        "yellow",
-        "green",
-        "teal",
+        "orange",
+        "orange",
+        "cyan",
         "purple"
       ],
       [
-        "purple",
-        "pink",
         "yellow",
+        "orange",
+        "pink",
+        "lime"
+      ],
+      [
+        "pink",
+        "teal",
+        "green",
+        "purple"
+      ],
+      [
+        "green",
+        "purple",
+        "red",
+        "yellow"
+      ],
+      [
+        "green",
+        "lime",
+        "purple",
+        "cyan"
+      ],
+      [
+        "red",
+        "blue",
+        "blue",
         "green"
       ],
       [
-        "teal",
-        "purple",
-        "pink",
+        "cyan",
+        "orange",
+        "yellow",
         "yellow"
       ],
+      [
+        "lime",
+        "red",
+        "teal",
+        "teal"
+      ],
+      [
+        "teal",
+        "red",
+        "lime",
+        "pink"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 28,
-    "title": "Stage 28 - Oceanic Depth",
+    "title": "Stage 28 - Coral Cove",
     "bottles": [
       [
-        "cyan",
-        "lime",
-        "yellow",
-        "blue"
-      ],
-      [
+        "pink",
         "blue",
         "cyan",
-        "cyan",
-        "yellow"
-      ],
-      [
-        "lime",
-        "pink",
-        "pink",
-        "yellow"
-      ],
-      [
-        "cyan",
-        "pink",
-        "lime",
-        "lime"
+        "purple"
       ],
       [
         "yellow",
-        "blue",
+        "lime",
+        "yellow",
+        "green"
+      ],
+      [
+        "lime",
+        "cyan",
+        "orange",
+        "red"
+      ],
+      [
+        "pink",
+        "pink",
+        "cyan",
+        "green"
+      ],
+      [
+        "yellow",
+        "yellow",
         "blue",
         "pink"
+      ],
+      [
+        "purple",
+        "red",
+        "lime",
+        "orange"
+      ],
+      [
+        "red",
+        "red",
+        "green",
+        "orange"
+      ],
+      [
+        "cyan",
+        "blue",
+        "purple",
+        "green"
+      ],
+      [
+        "purple",
+        "orange",
+        "blue",
+        "lime"
       ],
       [],
       []
@@ -1002,75 +1576,130 @@ export const STAGES = [
   },
   {
     "stage": 29,
-    "title": "Stage 29 - Amber Horizon",
+    "title": "Stage 29 - Amethyst Arch",
     "bottles": [
       [
-        "yellow",
         "orange",
-        "cyan",
+        "teal",
+        "teal",
+        "orange"
+      ],
+      [
+        "lime",
+        "pink",
+        "blue",
         "red"
       ],
       [
-        "yellow",
+        "green",
         "red",
+        "purple",
+        "lime"
+      ],
+      [
         "cyan",
+        "lime",
+        "blue",
+        "orange"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "teal",
         "cyan"
       ],
       [
-        "orange",
-        "green",
-        "red",
+        "purple",
+        "purple",
+        "cyan",
         "green"
       ],
       [
+        "teal",
         "orange",
-        "green",
-        "yellow",
-        "red"
+        "red",
+        "pink"
       ],
       [
         "yellow",
-        "green",
-        "orange",
-        "cyan"
+        "purple",
+        "yellow",
+        "green"
       ],
+      [
+        "green",
+        "cyan",
+        "blue",
+        "pink"
+      ],
+      [
+        "pink",
+        "lime",
+        "blue",
+        "red"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 30,
-    "title": "Stage 30 - Diamond Spark",
+    "title": "Stage 30 - Opal Orbit",
     "bottles": [
       [
-        "orange",
-        "cyan",
+        "purple",
         "green",
+        "green",
+        "orange"
+      ],
+      [
+        "orange",
+        "red",
+        "purple",
+        "cyan"
+      ],
+      [
+        "green",
+        "blue",
+        "lime",
+        "orange"
+      ],
+      [
+        "pink",
+        "pink",
+        "pink",
         "yellow"
       ],
       [
-        "green",
         "yellow",
+        "yellow",
+        "green",
+        "blue"
+      ],
+      [
+        "purple",
+        "red",
+        "yellow",
+        "cyan"
+      ],
+      [
+        "red",
+        "red",
         "cyan",
-        "orange"
+        "lime"
       ],
       [
         "cyan",
-        "yellow",
         "pink",
-        "pink"
+        "blue",
+        "lime"
       ],
       [
-        "cyan",
-        "green",
-        "yellow",
-        "orange"
-      ],
-      [
-        "pink",
-        "pink",
-        "green",
-        "orange"
+        "orange",
+        "purple",
+        "blue",
+        "lime"
       ],
       [],
       []
@@ -1078,87 +1707,130 @@ export const STAGES = [
   },
   {
     "stage": 31,
-    "title": "Stage 31 - Phantom Prism",
+    "title": "Stage 31 - Silver Stream",
     "bottles": [
       [
+        "blue",
+        "blue",
+        "blue",
+        "pink"
+      ],
+      [
+        "teal",
+        "teal",
+        "green",
+        "red"
+      ],
+      [
+        "green",
+        "cyan",
+        "teal",
+        "pink"
+      ],
+      [
+        "pink",
+        "red",
+        "green",
+        "orange"
+      ],
+      [
         "orange",
-        "yellow",
-        "yellow",
+        "purple",
+        "lime",
         "lime"
       ],
       [
-        "blue",
-        "teal",
         "purple",
-        "blue"
-      ],
-      [
-        "orange",
-        "orange",
-        "lime",
-        "blue"
-      ],
-      [
-        "teal",
         "purple",
-        "teal",
-        "purple"
+        "cyan",
+        "lime"
       ],
       [
-        "lime",
-        "blue",
-        "purple",
-        "teal"
-      ],
-      [
-        "orange",
+        "red",
+        "red",
         "yellow",
-        "lime",
+        "blue"
+      ],
+      [
+        "orange",
+        "green",
+        "purple",
         "yellow"
       ],
+      [
+        "pink",
+        "yellow",
+        "orange",
+        "cyan"
+      ],
+      [
+        "lime",
+        "teal",
+        "yellow",
+        "cyan"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 32,
-    "title": "Stage 32 - Spectral Shift",
+    "title": "Stage 32 - Diamond Drift",
     "bottles": [
       [
+        "cyan",
+        "pink",
         "orange",
-        "blue",
-        "orange",
-        "green"
+        "pink"
       ],
       [
-        "red",
-        "red",
-        "lime",
-        "orange"
-      ],
-      [
-        "blue",
-        "blue",
-        "lime",
+        "purple",
+        "green",
+        "yellow",
         "blue"
       ],
       [
         "green",
-        "orange",
-        "lime",
-        "red"
+        "red",
+        "red",
+        "yellow"
+      ],
+      [
+        "pink",
+        "green",
+        "pink",
+        "yellow"
       ],
       [
         "cyan",
         "green",
+        "yellow",
+        "orange"
+      ],
+      [
+        "orange",
+        "blue",
+        "blue",
+        "purple"
+      ],
+      [
+        "red",
+        "red",
+        "lime",
+        "blue"
+      ],
+      [
+        "purple",
+        "orange",
         "cyan",
         "cyan"
       ],
       [
-        "red",
         "lime",
-        "cyan",
-        "green"
+        "lime",
+        "lime",
+        "purple"
       ],
       [],
       []
@@ -1166,87 +1838,130 @@ export const STAGES = [
   },
   {
     "stage": 33,
-    "title": "Stage 33 - Nebula Wave",
+    "title": "Stage 33 - Emerald Eddy",
     "bottles": [
       [
-        "red",
         "blue",
-        "red",
-        "lime"
+        "lime",
+        "pink",
+        "purple"
+      ],
+      [
+        "orange",
+        "lime",
+        "cyan",
+        "purple"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "orange",
+        "green"
       ],
       [
         "pink",
+        "pink",
         "blue",
+        "green"
+      ],
+      [
+        "blue",
+        "blue",
+        "orange",
+        "red"
+      ],
+      [
+        "purple",
+        "teal",
         "red",
-        "lime"
+        "red"
       ],
       [
-        "blue",
+        "pink",
+        "red",
         "green",
-        "orange",
-        "lime"
-      ],
-      [
-        "orange",
-        "green",
-        "lime",
         "orange"
       ],
       [
-        "pink",
-        "pink",
-        "orange",
-        "blue"
+        "cyan",
+        "cyan",
+        "yellow",
+        "purple"
       ],
       [
         "green",
-        "green",
-        "pink",
-        "red"
+        "cyan",
+        "yellow",
+        "lime"
       ],
+      [
+        "teal",
+        "teal",
+        "teal",
+        "lime"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 34,
-    "title": "Stage 34 - Zenith Pulse",
+    "title": "Stage 34 - Garnet Glide",
     "bottles": [
       [
-        "pink",
-        "red",
-        "lime",
-        "teal"
+        "blue",
+        "blue",
+        "purple",
+        "blue"
       ],
       [
         "orange",
-        "purple",
+        "orange",
+        "pink",
+        "yellow"
+      ],
+      [
+        "green",
         "lime",
+        "yellow",
         "pink"
       ],
       [
         "orange",
+        "purple",
+        "green",
+        "cyan"
+      ],
+      [
+        "yellow",
+        "pink",
+        "green",
+        "yellow"
+      ],
+      [
         "red",
+        "cyan",
+        "cyan",
+        "green"
+      ],
+      [
+        "red",
+        "lime",
         "lime",
         "purple"
       ],
       [
-        "teal",
-        "purple",
-        "purple",
-        "orange"
-      ],
-      [
-        "red",
-        "orange",
-        "red",
-        "teal"
-      ],
-      [
-        "teal",
-        "pink",
+        "blue",
         "lime",
+        "purple",
         "pink"
+      ],
+      [
+        "red",
+        "cyan",
+        "orange",
+        "red"
       ],
       [],
       []
@@ -1254,86 +1969,129 @@ export const STAGES = [
   },
   {
     "stage": 35,
-    "title": "Stage 35 - Winter Breeze",
+    "title": "Stage 35 - Lapis Lagoon",
     "bottles": [
       [
-        "yellow",
-        "blue",
+        "cyan",
+        "green",
+        "pink",
+        "green"
+      ],
+      [
+        "cyan",
+        "purple",
         "red",
         "red"
       ],
       [
-        "red",
+        "green",
+        "orange",
         "blue",
-        "purple",
-        "orange"
-      ],
-      [
-        "red",
-        "cyan",
-        "cyan",
         "purple"
       ],
       [
-        "yellow",
+        "pink",
+        "lime",
         "purple",
+        "red"
+      ],
+      [
+        "yellow",
+        "yellow",
         "cyan",
-        "orange"
+        "lime"
       ],
       [
-        "orange",
         "purple",
-        "blue",
-        "yellow"
+        "lime",
+        "teal",
+        "teal"
       ],
       [
-        "yellow",
         "orange",
-        "blue",
+        "yellow",
+        "pink",
+        "blue"
+      ],
+      [
+        "orange",
+        "green",
+        "orange",
         "cyan"
       ],
+      [
+        "lime",
+        "blue",
+        "yellow",
+        "red"
+      ],
+      [
+        "teal",
+        "pink",
+        "teal",
+        "blue"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 36,
-    "title": "Stage 36 - Frosty Elixir",
+    "title": "Stage 36 - Pearl Plunge",
     "bottles": [
       [
-        "green",
-        "yellow",
         "blue",
-        "blue"
-      ],
-      [
-        "green",
-        "orange",
-        "yellow",
-        "orange"
-      ],
-      [
-        "pink",
-        "lime",
-        "lime",
-        "orange"
-      ],
-      [
-        "lime",
-        "yellow",
-        "orange",
+        "blue",
+        "purple",
         "green"
       ],
       [
-        "green",
-        "pink",
-        "yellow",
-        "lime"
+        "orange",
+        "orange",
+        "orange",
+        "pink"
       ],
       [
+        "green",
+        "green",
+        "red",
+        "red"
+      ],
+      [
+        "green",
+        "red",
+        "yellow",
+        "purple"
+      ],
+      [
+        "yellow",
+        "lime",
         "blue",
+        "pink"
+      ],
+      [
         "pink",
-        "pink",
+        "purple",
+        "yellow",
+        "orange"
+      ],
+      [
+        "cyan",
+        "purple",
+        "yellow",
+        "cyan"
+      ],
+      [
+        "cyan",
+        "red",
+        "cyan",
+        "pink"
+      ],
+      [
+        "lime",
+        "lime",
+        "lime",
         "blue"
       ],
       [],
@@ -1342,87 +2100,130 @@ export const STAGES = [
   },
   {
     "stage": 37,
-    "title": "Stage 37 - Aurora Glow",
+    "title": "Stage 37 - Quartz Quiver",
     "bottles": [
       [
+        "blue",
+        "blue",
+        "purple",
+        "lime"
+      ],
+      [
+        "orange",
+        "orange",
         "red",
-        "cyan",
+        "orange"
+      ],
+      [
         "green",
+        "yellow",
+        "teal",
+        "teal"
+      ],
+      [
+        "pink",
+        "pink",
+        "cyan",
         "green"
       ],
       [
-        "orange",
-        "yellow",
+        "purple",
+        "blue",
         "cyan",
-        "red"
+        "teal"
       ],
       [
+        "cyan",
         "yellow",
-        "teal",
-        "teal",
-        "green"
+        "blue",
+        "pink"
       ],
       [
-        "orange",
-        "teal",
-        "teal",
-        "yellow"
+        "red",
+        "red",
+        "lime",
+        "red"
       ],
       [
         "cyan",
         "green",
-        "cyan",
-        "red"
+        "purple",
+        "orange"
       ],
       [
-        "orange",
-        "orange",
         "yellow",
-        "red"
+        "green",
+        "lime",
+        "pink"
       ],
+      [
+        "teal",
+        "purple",
+        "yellow",
+        "lime"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 38,
-    "title": "Stage 38 - Glacier Run",
+    "title": "Stage 38 - Beryl Brook",
     "bottles": [
       [
-        "lime",
-        "teal",
-        "lime",
-        "teal"
-      ],
-      [
-        "orange",
-        "red",
-        "teal",
-        "blue"
-      ],
-      [
-        "green",
-        "red",
-        "teal",
-        "orange"
-      ],
-      [
-        "red",
-        "lime",
         "blue",
-        "red"
+        "orange",
+        "lime",
+        "purple"
       ],
       [
-        "green",
-        "green",
+        "pink",
+        "yellow",
         "blue",
         "green"
       ],
       [
+        "green",
+        "cyan",
+        "cyan",
+        "pink"
+      ],
+      [
+        "green",
+        "yellow",
+        "orange",
+        "lime"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "red",
+        "red"
+      ],
+      [
+        "purple",
+        "cyan",
+        "purple",
+        "red"
+      ],
+      [
+        "pink",
         "orange",
         "blue",
+        "blue"
+      ],
+      [
+        "cyan",
+        "orange",
         "lime",
-        "orange"
+        "red"
+      ],
+      [
+        "purple",
+        "lime",
+        "green",
+        "pink"
       ],
       [],
       []
@@ -1430,25 +2231,25 @@ export const STAGES = [
   },
   {
     "stage": 39,
-    "title": "Stage 39 - Crystal Flow",
+    "title": "Stage 39 - Moonstone Mist",
     "bottles": [
       [
-        "green",
+        "lime",
         "yellow",
+        "green",
+        "teal"
+      ],
+      [
         "orange",
-        "green"
-      ],
-      [
         "blue",
-        "pink",
-        "yellow",
-        "orange"
+        "lime",
+        "green"
       ],
       [
+        "purple",
         "green",
-        "pink",
-        "pink",
-        "green"
+        "lime",
+        "blue"
       ],
       [
         "pink",
@@ -1457,60 +2258,103 @@ export const STAGES = [
         "blue"
       ],
       [
-        "blue",
-        "red",
-        "blue",
+        "yellow",
+        "orange",
+        "pink",
+        "cyan"
+      ],
+      [
+        "pink",
+        "teal",
+        "pink",
         "orange"
       ],
       [
+        "purple",
         "red",
         "red",
-        "yellow",
-        "orange"
+        "purple"
       ],
+      [
+        "cyan",
+        "green",
+        "blue",
+        "purple"
+      ],
+      [
+        "yellow",
+        "cyan",
+        "orange",
+        "lime"
+      ],
+      [
+        "teal",
+        "cyan",
+        "teal",
+        "red"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 40,
-    "title": "Stage 40 - Enchanted Lab",
+    "title": "Stage 40 - Sunstone Splash",
     "bottles": [
       [
-        "purple",
-        "pink",
-        "green",
-        "orange"
-      ],
-      [
-        "yellow",
-        "lime",
-        "yellow",
-        "orange"
-      ],
-      [
-        "lime",
-        "lime",
+        "blue",
+        "red",
         "orange",
+        "orange"
+      ],
+      [
+        "lime",
+        "cyan",
+        "lime",
+        "pink"
+      ],
+      [
+        "cyan",
+        "red",
+        "purple",
+        "yellow"
+      ],
+      [
+        "pink",
+        "lime",
+        "blue",
         "purple"
       ],
       [
-        "orange",
-        "green",
         "yellow",
+        "yellow",
+        "green",
         "green"
       ],
       [
         "purple",
-        "purple",
-        "pink",
+        "red",
+        "orange",
+        "purple"
+      ],
+      [
+        "green",
+        "blue",
+        "yellow",
         "pink"
       ],
       [
-        "yellow",
+        "cyan",
+        "cyan",
         "green",
-        "pink",
-        "lime"
+        "pink"
+      ],
+      [
+        "lime",
+        "red",
+        "orange",
+        "blue"
       ],
       [],
       []
@@ -1518,87 +2362,130 @@ export const STAGES = [
   },
   {
     "stage": 41,
-    "title": "Stage 41 - Mystic Potion",
+    "title": "Stage 41 - Mystic Mountain",
     "bottles": [
       [
-        "lime",
+        "blue",
+        "cyan",
         "green",
+        "purple"
+      ],
+      [
         "yellow",
-        "pink"
-      ],
-      [
-        "green",
-        "lime",
-        "purple",
-        "lime"
-      ],
-      [
-        "teal",
-        "green",
-        "purple",
+        "orange",
+        "cyan",
         "yellow"
       ],
       [
-        "purple",
-        "pink",
+        "green",
+        "red",
         "pink",
         "teal"
       ],
       [
+        "orange",
+        "lime",
+        "pink",
+        "blue"
+      ],
+      [
         "yellow",
-        "teal",
+        "cyan",
         "teal",
         "purple"
       ],
       [
+        "purple",
         "lime",
-        "yellow",
+        "purple",
+        "red"
+      ],
+      [
+        "red",
+        "red",
+        "green",
+        "yellow"
+      ],
+      [
+        "teal",
         "pink",
+        "blue",
         "green"
       ],
+      [
+        "lime",
+        "teal",
+        "pink",
+        "blue"
+      ],
+      [
+        "orange",
+        "lime",
+        "orange",
+        "cyan"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 42,
-    "title": "Stage 42 - Sapphire Spiral",
+    "title": "Stage 42 - Frosty Fortress",
     "bottles": [
       [
-        "purple",
+        "yellow",
+        "lime",
+        "green",
+        "green"
+      ],
+      [
         "orange",
-        "teal",
-        "red"
-      ],
-      [
-        "green",
-        "purple",
-        "green",
-        "purple"
-      ],
-      [
         "red",
-        "green",
-        "orange",
-        "teal"
+        "blue",
+        "green"
       ],
       [
+        "lime",
         "red",
-        "teal",
-        "teal",
+        "blue",
+        "pink"
+      ],
+      [
+        "pink",
+        "lime",
+        "pink",
         "orange"
       ],
       [
         "yellow",
+        "yellow",
         "purple",
-        "red",
-        "yellow"
+        "cyan"
       ],
       [
-        "yellow",
+        "purple",
+        "purple",
+        "red",
+        "lime"
+      ],
+      [
         "orange",
+        "blue",
+        "red",
+        "blue"
+      ],
+      [
+        "cyan",
+        "green",
         "yellow",
-        "green"
+        "cyan"
+      ],
+      [
+        "purple",
+        "cyan",
+        "pink",
+        "orange"
       ],
       [],
       []
@@ -1606,87 +2493,130 @@ export const STAGES = [
   },
   {
     "stage": 43,
-    "title": "Stage 43 - Emerald Echo",
+    "title": "Stage 43 - Winter Whisper",
     "bottles": [
       [
-        "red",
-        "orange",
-        "cyan",
-        "cyan"
+        "blue",
+        "yellow",
+        "yellow",
+        "teal"
       ],
       [
+        "blue",
+        "yellow",
         "purple",
+        "pink"
+      ],
+      [
+        "green",
+        "green",
+        "purple",
+        "lime"
+      ],
+      [
+        "pink",
+        "purple",
+        "teal",
+        "lime"
+      ],
+      [
+        "cyan",
         "orange",
+        "lime",
+        "orange"
+      ],
+      [
+        "yellow",
         "purple",
+        "red",
         "orange"
       ],
       [
         "red",
-        "lime",
-        "orange",
-        "red"
-      ],
-      [
-        "purple",
         "red",
-        "blue",
+        "teal",
         "blue"
       ],
       [
-        "lime",
-        "blue",
-        "lime",
-        "cyan"
+        "cyan",
+        "cyan",
+        "orange",
+        "lime"
       ],
       [
-        "lime",
-        "purple",
+        "teal",
+        "red",
         "blue",
+        "pink"
+      ],
+      [
+        "green",
+        "green",
+        "pink",
         "cyan"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 44,
-    "title": "Stage 44 - Ruby Cascade",
+    "title": "Stage 44 - Glacial Gorge",
     "bottles": [
       [
-        "teal",
-        "purple",
-        "lime",
-        "teal"
-      ],
-      [
-        "blue",
+        "yellow",
+        "cyan",
         "orange",
-        "purple",
-        "blue"
+        "red"
+      ],
+      [
+        "orange",
+        "orange",
+        "cyan",
+        "red"
       ],
       [
         "blue",
-        "lime",
-        "green",
-        "orange"
-      ],
-      [
-        "teal",
-        "blue",
-        "green",
-        "orange"
-      ],
-      [
-        "lime",
         "green",
         "lime",
-        "orange"
+        "yellow"
       ],
       [
-        "teal",
-        "green",
-        "purple",
+        "pink",
+        "orange",
+        "pink",
         "purple"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "green",
+        "pink"
+      ],
+      [
+        "lime",
+        "blue",
+        "lime",
+        "cyan"
+      ],
+      [
+        "red",
+        "green",
+        "green",
+        "purple"
+      ],
+      [
+        "cyan",
+        "purple",
+        "purple",
+        "red"
+      ],
+      [
+        "blue",
+        "blue",
+        "lime",
+        "pink"
       ],
       [],
       []
@@ -1694,87 +2624,130 @@ export const STAGES = [
   },
   {
     "stage": 45,
-    "title": "Stage 45 - Golden Flask",
+    "title": "Stage 45 - Celestial Current",
     "bottles": [
       [
-        "blue",
-        "blue",
+        "purple",
+        "purple",
         "orange",
+        "yellow"
+      ],
+      [
+        "orange",
+        "red",
+        "yellow",
+        "teal"
+      ],
+      [
+        "blue",
+        "red",
+        "teal",
+        "yellow"
+      ],
+      [
+        "pink",
+        "purple",
+        "cyan",
+        "purple"
+      ],
+      [
+        "cyan",
+        "green",
+        "teal",
         "orange"
       ],
       [
-        "lime",
-        "green",
-        "orange",
-        "blue"
-      ],
-      [
-        "pink",
-        "pink",
-        "yellow",
-        "lime"
-      ],
-      [
         "blue",
-        "orange",
-        "green",
-        "pink"
-      ],
-      [
-        "yellow",
-        "yellow",
-        "pink",
-        "lime"
-      ],
-      [
         "lime",
-        "yellow",
         "green",
         "green"
       ],
+      [
+        "red",
+        "pink",
+        "green",
+        "lime"
+      ],
+      [
+        "cyan",
+        "orange",
+        "blue",
+        "pink"
+      ],
+      [
+        "lime",
+        "lime",
+        "blue",
+        "red"
+      ],
+      [
+        "teal",
+        "yellow",
+        "cyan",
+        "pink"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 46,
-    "title": "Stage 46 - Silver Shimmer",
+    "title": "Stage 46 - Starlight Splash",
     "bottles": [
       [
-        "yellow",
         "blue",
-        "blue",
-        "teal"
-      ],
-      [
-        "green",
-        "green",
-        "yellow",
-        "teal"
-      ],
-      [
-        "teal",
-        "red",
-        "teal",
-        "blue"
-      ],
-      [
-        "orange",
-        "green",
-        "red",
-        "red"
-      ],
-      [
-        "yellow",
-        "orange",
-        "red",
-        "blue"
-      ],
-      [
-        "orange",
-        "orange",
-        "yellow",
+        "purple",
+        "purple",
         "green"
+      ],
+      [
+        "orange",
+        "red",
+        "green",
+        "orange"
+      ],
+      [
+        "cyan",
+        "blue",
+        "blue",
+        "cyan"
+      ],
+      [
+        "red",
+        "pink",
+        "red",
+        "orange"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "orange",
+        "yellow"
+      ],
+      [
+        "purple",
+        "cyan",
+        "red",
+        "green"
+      ],
+      [
+        "pink",
+        "lime",
+        "pink",
+        "purple"
+      ],
+      [
+        "cyan",
+        "blue",
+        "green",
+        "lime"
+      ],
+      [
+        "lime",
+        "lime",
+        "yellow",
+        "pink"
       ],
       [],
       []
@@ -1782,87 +2755,130 @@ export const STAGES = [
   },
   {
     "stage": 47,
-    "title": "Stage 47 - Cosmic Blend",
+    "title": "Stage 47 - Cosmic Cascade",
     "bottles": [
       [
-        "lime",
         "yellow",
+        "pink",
         "purple",
-        "yellow"
+        "lime"
       ],
       [
-        "blue",
-        "lime",
-        "blue",
-        "red"
+        "orange",
+        "purple",
+        "teal",
+        "green"
       ],
       [
-        "blue",
-        "lime",
-        "red",
+        "cyan",
+        "teal",
+        "orange",
+        "blue"
+      ],
+      [
+        "pink",
+        "green",
+        "pink",
         "pink"
       ],
       [
-        "red",
-        "pink",
+        "yellow",
+        "orange",
+        "teal",
+        "lime"
+      ],
+      [
         "blue",
+        "cyan",
+        "teal",
+        "blue"
+      ],
+      [
+        "lime",
+        "red",
+        "lime",
+        "red"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "green",
+        "orange"
+      ],
+      [
+        "yellow",
+        "blue",
+        "purple",
         "yellow"
       ],
       [
         "purple",
-        "lime",
-        "yellow",
-        "purple"
-      ],
-      [
-        "purple",
-        "pink",
-        "pink",
+        "green",
+        "red",
         "red"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 48,
-    "title": "Stage 48 - Vortex Fusion",
+    "title": "Stage 48 - Nova Nectar",
     "bottles": [
       [
-        "lime",
-        "orange",
-        "lime",
-        "blue"
-      ],
-      [
-        "orange",
-        "orange",
-        "teal",
-        "blue"
-      ],
-      [
-        "red",
+        "purple",
         "cyan",
-        "teal",
-        "lime"
-      ],
-      [
-        "teal",
-        "orange",
-        "teal",
-        "cyan"
-      ],
-      [
-        "blue",
-        "blue",
-        "red",
-        "cyan"
-      ],
-      [
         "cyan",
-        "lime",
-        "red",
         "red"
+      ],
+      [
+        "lime",
+        "yellow",
+        "orange",
+        "blue"
+      ],
+      [
+        "orange",
+        "blue",
+        "red",
+        "orange"
+      ],
+      [
+        "pink",
+        "pink",
+        "blue",
+        "green"
+      ],
+      [
+        "purple",
+        "green",
+        "pink",
+        "cyan"
+      ],
+      [
+        "purple",
+        "pink",
+        "orange",
+        "green"
+      ],
+      [
+        "red",
+        "blue",
+        "red",
+        "green"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "yellow",
+        "purple"
+      ],
+      [
+        "lime",
+        "lime",
+        "lime",
+        "cyan"
       ],
       [],
       []
@@ -1870,87 +2886,130 @@ export const STAGES = [
   },
   {
     "stage": 49,
-    "title": "Stage 49 - Twilight Draught",
+    "title": "Stage 49 - Solar Surge",
     "bottles": [
       [
-        "green",
-        "teal",
-        "pink",
-        "green"
-      ],
-      [
+        "lime",
         "cyan",
-        "lime",
+        "yellow",
+        "cyan"
+      ],
+      [
         "orange",
-        "orange"
+        "orange",
+        "green",
+        "red"
       ],
       [
+        "blue",
+        "blue",
+        "purple",
+        "yellow"
+      ],
+      [
+        "yellow",
         "green",
+        "blue",
+        "pink"
+      ],
+      [
+        "purple",
+        "orange",
         "teal",
-        "lime",
-        "teal"
+        "pink"
       ],
       [
+        "red",
         "green",
-        "pink",
-        "lime",
+        "purple",
+        "pink"
+      ],
+      [
+        "blue",
+        "orange",
+        "cyan",
         "pink"
       ],
       [
         "cyan",
-        "orange",
-        "cyan",
-        "orange"
+        "red",
+        "yellow",
+        "teal"
+      ],
+      [
+        "lime",
+        "green",
+        "lime",
+        "red"
       ],
       [
         "teal",
-        "pink",
+        "teal",
         "lime",
-        "cyan"
+        "purple"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 50,
-    "title": "Stage 50 - Starlight Stream",
+    "title": "Stage 50 - Nebula Nexus",
     "bottles": [
+      [
+        "orange",
+        "yellow",
+        "yellow",
+        "purple"
+      ],
+      [
+        "red",
+        "lime",
+        "blue",
+        "pink"
+      ],
+      [
+        "green",
+        "red",
+        "orange",
+        "green"
+      ],
+      [
+        "pink",
+        "orange",
+        "purple",
+        "purple"
+      ],
       [
         "yellow",
         "yellow",
         "red",
-        "cyan"
+        "purple"
       ],
       [
-        "teal",
-        "orange",
-        "teal",
-        "blue"
-      ],
-      [
+        "green",
+        "lime",
         "cyan",
-        "teal",
+        "red"
+      ],
+      [
+        "green",
+        "pink",
         "blue",
         "orange"
       ],
       [
         "cyan",
-        "orange",
-        "red",
-        "red"
-      ],
-      [
-        "teal",
         "cyan",
-        "red",
-        "yellow"
+        "cyan",
+        "blue"
       ],
       [
-        "orange",
+        "lime",
+        "lime",
         "blue",
-        "blue",
-        "yellow"
+        "pink"
       ],
       [],
       []
@@ -1958,49 +3017,67 @@ export const STAGES = [
   },
   {
     "stage": 51,
-    "title": "Stage 51 - Sunburst Mix",
+    "title": "Stage 51 - Zenith Zone",
     "bottles": [
       [
-        "red",
+        "blue",
+        "blue",
         "lime",
-        "yellow",
-        "red"
+        "lime"
       ],
       [
-        "green",
-        "lime",
-        "cyan",
-        "red"
-      ],
-      [
-        "lime",
-        "cyan",
-        "teal",
-        "orange"
-      ],
-      [
-        "green",
-        "cyan",
-        "cyan",
-        "orange"
-      ],
-      [
-        "lime",
         "orange",
-        "red",
-        "green"
+        "purple",
+        "green",
+        "yellow"
+      ],
+      [
+        "orange",
+        "cyan",
+        "pink",
+        "orange"
+      ],
+      [
+        "pink",
+        "pink",
+        "cyan",
+        "blue"
       ],
       [
         "yellow",
         "green",
-        "yellow",
+        "red",
         "teal"
       ],
       [
+        "purple",
+        "green",
+        "purple",
+        "lime"
+      ],
+      [
+        "red",
         "teal",
+        "teal",
+        "pink"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "green",
+        "blue"
+      ],
+      [
+        "lime",
         "orange",
+        "yellow",
+        "red"
+      ],
+      [
         "teal",
-        "yellow"
+        "purple",
+        "yellow",
+        "red"
       ],
       [],
       []
@@ -2008,148 +3085,205 @@ export const STAGES = [
   },
   {
     "stage": 52,
-    "title": "Stage 52 - Velvet Waters",
+    "title": "Stage 52 - Apex Alchemy",
     "bottles": [
       [
-        "orange",
-        "orange",
-        "blue",
-        "lime"
-      ],
-      [
         "lime",
-        "red",
-        "red",
-        "pink"
+        "purple",
+        "green",
+        "red"
       ],
       [
-        "red",
-        "yellow",
-        "yellow",
+        "orange",
+        "orange",
+        "purple",
         "orange"
       ],
       [
         "red",
-        "yellow",
-        "blue",
-        "green"
-      ],
-      [
+        "teal",
         "lime",
-        "yellow",
-        "pink",
-        "green"
-      ],
-      [
-        "pink",
-        "pink",
-        "blue",
-        "orange"
-      ],
-      [
-        "green",
-        "lime",
-        "green",
         "blue"
       ],
+      [
+        "pink",
+        "pink",
+        "pink",
+        "blue"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "cyan",
+        "red"
+      ],
+      [
+        "purple",
+        "purple",
+        "orange",
+        "cyan"
+      ],
+      [
+        "yellow",
+        "blue",
+        "lime",
+        "cyan"
+      ],
+      [
+        "cyan",
+        "green",
+        "lime",
+        "green"
+      ],
+      [
+        "yellow",
+        "pink",
+        "red",
+        "teal"
+      ],
+      [
+        "teal",
+        "teal",
+        "blue",
+        "green"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 53,
-    "title": "Stage 53 - Oceanic Depth",
+    "title": "Stage 53 - Summit Swirl",
     "bottles": [
       [
+        "blue",
+        "yellow",
+        "blue",
+        "orange"
+      ],
+      [
+        "purple",
+        "green",
+        "lime",
+        "cyan"
+      ],
+      [
+        "green",
+        "lime",
+        "purple",
+        "purple"
+      ],
+      [
+        "cyan",
+        "orange",
+        "cyan",
+        "red"
+      ],
+      [
+        "red",
+        "red",
+        "teal",
+        "yellow"
+      ],
+      [
         "pink",
-        "red",
-        "red",
+        "lime",
+        "cyan",
         "pink"
       ],
       [
-        "red",
         "green",
-        "green",
-        "yellow"
-      ],
-      [
         "pink",
-        "teal",
-        "orange",
+        "lime",
         "orange"
       ],
       [
-        "green",
-        "pink",
         "teal",
-        "teal"
-      ],
-      [
+        "teal",
         "blue",
-        "orange",
-        "yellow",
-        "teal"
-      ],
-      [
-        "blue",
-        "blue",
-        "yellow",
         "orange"
       ],
       [
-        "red",
-        "blue",
+        "teal",
+        "yellow",
+        "purple",
+        "red"
+      ],
+      [
         "green",
+        "pink",
+        "blue",
         "yellow"
       ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 54,
-    "title": "Stage 54 - Amber Horizon",
+    "title": "Stage 54 - Pinnacle Pour",
     "bottles": [
       [
         "blue",
-        "teal",
-        "pink",
-        "green"
-      ],
-      [
-        "teal",
-        "red",
-        "lime",
-        "pink"
-      ],
-      [
-        "orange",
-        "blue",
-        "lime",
-        "blue"
-      ],
-      [
-        "orange",
-        "pink",
+        "green",
         "blue",
         "orange"
       ],
       [
-        "pink",
-        "green",
-        "green",
-        "teal"
+        "cyan",
+        "red",
+        "lime",
+        "orange"
       ],
       [
-        "lime",
-        "red",
         "green",
-        "red"
+        "green",
+        "red",
+        "pink"
+      ],
+      [
+        "pink",
+        "pink",
+        "lime",
+        "lime"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "teal",
+        "cyan"
+      ],
+      [
+        "purple",
+        "green",
+        "red",
+        "purple"
+      ],
+      [
+        "red",
+        "blue",
+        "lime",
+        "yellow"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "blue",
+        "purple"
       ],
       [
         "teal",
-        "red",
-        "lime",
+        "purple",
+        "orange",
+        "yellow"
+      ],
+      [
+        "teal",
+        "teal",
+        "pink",
         "orange"
       ],
       [],
@@ -2158,149 +3292,206 @@ export const STAGES = [
   },
   {
     "stage": 55,
-    "title": "Stage 55 - Diamond Spark",
+    "title": "Stage 55 - Vanguard Vial",
     "bottles": [
       [
-        "purple",
-        "cyan",
-        "purple",
-        "purple"
+        "blue",
+        "blue",
+        "pink",
+        "green"
       ],
       [
         "red",
-        "blue",
+        "green",
         "yellow",
-        "blue"
+        "orange"
+      ],
+      [
+        "cyan",
+        "purple",
+        "red",
+        "red"
+      ],
+      [
+        "green",
+        "pink",
+        "orange",
+        "pink"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "cyan",
+        "purple"
+      ],
+      [
+        "purple",
+        "purple",
+        "cyan",
+        "green"
+      ],
+      [
+        "pink",
+        "yellow",
+        "cyan",
+        "teal"
       ],
       [
         "blue",
-        "orange",
+        "lime",
+        "lime",
+        "lime"
+      ],
+      [
+        "teal",
+        "teal",
         "red",
         "orange"
       ],
       [
-        "purple",
-        "red",
-        "yellow",
-        "cyan"
-      ],
-      [
-        "cyan",
-        "orange",
-        "orange",
-        "yellow"
-      ],
-      [
-        "teal",
         "teal",
         "blue",
-        "teal"
+        "lime",
+        "orange"
       ],
-      [
-        "cyan",
-        "teal",
-        "red",
-        "yellow"
-      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 56,
-    "title": "Stage 56 - Phantom Prism",
+    "title": "Stage 56 - Horizon Hydration",
     "bottles": [
       [
-        "lime",
-        "red",
-        "orange",
-        "red"
-      ],
-      [
+        "green",
         "blue",
-        "yellow",
-        "teal",
-        "blue"
-      ],
-      [
-        "red",
-        "yellow",
-        "cyan",
-        "lime"
-      ],
-      [
-        "teal",
-        "cyan",
         "lime",
+        "pink"
+      ],
+      [
+        "teal",
+        "teal",
+        "purple",
         "orange"
       ],
       [
-        "orange",
-        "teal",
+        "red",
         "cyan",
+        "yellow",
+        "cyan"
+      ],
+      [
+        "pink",
+        "pink",
+        "teal",
+        "purple"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "red",
         "lime"
       ],
       [
         "orange",
-        "blue",
-        "teal",
+        "green",
+        "purple",
         "blue"
       ],
       [
-        "yellow",
-        "cyan",
-        "yellow",
-        "red"
+        "red",
+        "lime",
+        "blue",
+        "yellow"
       ],
+      [
+        "cyan",
+        "cyan",
+        "orange",
+        "lime"
+      ],
+      [
+        "green",
+        "red",
+        "purple",
+        "orange"
+      ],
+      [
+        "teal",
+        "pink",
+        "blue",
+        "green"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 57,
-    "title": "Stage 57 - Spectral Shift",
+    "title": "Stage 57 - Echoing Elixir",
     "bottles": [
       [
-        "teal",
-        "yellow",
-        "pink",
-        "teal"
-      ],
-      [
-        "pink",
-        "orange",
-        "yellow",
-        "pink"
-      ],
-      [
-        "lime",
-        "orange",
-        "orange",
-        "pink"
-      ],
-      [
-        "lime",
-        "teal",
-        "lime",
-        "yellow"
-      ],
-      [
-        "green",
-        "green",
-        "green",
-        "yellow"
-      ],
-      [
-        "teal",
-        "red",
+        "blue",
+        "blue",
         "green",
         "orange"
       ],
       [
+        "orange",
+        "orange",
+        "orange",
+        "lime"
+      ],
+      [
+        "green",
+        "green",
+        "red",
+        "pink"
+      ],
+      [
+        "pink",
+        "yellow",
+        "purple",
+        "green"
+      ],
+      [
+        "yellow",
+        "cyan",
+        "pink",
+        "teal"
+      ],
+      [
+        "purple",
+        "cyan",
+        "yellow",
+        "yellow"
+      ],
+      [
         "red",
         "red",
+        "teal",
+        "lime"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "purple",
+        "purple"
+      ],
+      [
+        "blue",
+        "pink",
         "lime",
-        "red"
+        "blue"
+      ],
+      [
+        "teal",
+        "teal",
+        "red",
+        "lime"
       ],
       [],
       []
@@ -2308,149 +3499,206 @@ export const STAGES = [
   },
   {
     "stage": 58,
-    "title": "Stage 58 - Nebula Wave",
+    "title": "Stage 58 - Phantom Potion",
     "bottles": [
       [
-        "yellow",
-        "cyan",
-        "yellow",
+        "orange",
+        "pink",
+        "purple",
+        "teal"
+      ],
+      [
+        "orange",
+        "orange",
+        "teal",
         "blue"
       ],
       [
-        "teal",
-        "teal",
         "blue",
-        "blue"
+        "lime",
+        "purple",
+        "lime"
+      ],
+      [
+        "pink",
+        "pink",
+        "green",
+        "teal"
       ],
       [
         "yellow",
-        "orange",
-        "purple",
-        "pink"
-      ],
-      [
-        "cyan",
-        "orange",
-        "purple",
+        "yellow",
+        "teal",
         "cyan"
       ],
       [
-        "pink",
-        "pink",
-        "orange",
-        "pink"
+        "purple",
+        "blue",
+        "lime",
+        "green"
       ],
       [
-        "orange",
-        "teal",
-        "purple",
-        "blue"
+        "red",
+        "cyan",
+        "cyan",
+        "green"
       ],
       [
         "cyan",
-        "teal",
-        "yellow",
+        "red",
+        "pink",
         "purple"
       ],
+      [
+        "orange",
+        "red",
+        "yellow",
+        "yellow"
+      ],
+      [
+        "green",
+        "blue",
+        "lime",
+        "red"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 59,
-    "title": "Stage 59 - Zenith Pulse",
+    "title": "Stage 59 - Radiant Rapids",
     "bottles": [
       [
         "teal",
-        "pink",
-        "cyan",
-        "orange"
+        "teal",
+        "teal",
+        "red"
       ],
       [
-        "teal",
+        "green",
+        "cyan",
         "pink",
+        "pink"
+      ],
+      [
+        "green",
+        "orange",
+        "blue",
+        "lime"
+      ],
+      [
+        "pink",
+        "cyan",
         "lime",
-        "purple"
-      ],
-      [
-        "cyan",
-        "yellow",
-        "orange",
-        "cyan"
-      ],
-      [
-        "teal",
-        "orange",
-        "purple",
         "yellow"
       ],
       [
-        "pink",
+        "red",
         "yellow",
-        "lime",
-        "purple"
-      ],
-      [
-        "lime",
-        "cyan",
-        "teal",
-        "purple"
-      ],
-      [
-        "lime",
-        "orange",
-        "yellow",
+        "blue",
         "pink"
       ],
+      [
+        "purple",
+        "purple",
+        "yellow",
+        "purple"
+      ],
+      [
+        "teal",
+        "green",
+        "cyan",
+        "cyan"
+      ],
+      [
+        "blue",
+        "yellow",
+        "blue",
+        "orange"
+      ],
+      [
+        "lime",
+        "lime",
+        "red",
+        "purple"
+      ],
+      [
+        "orange",
+        "green",
+        "red",
+        "orange"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 60,
-    "title": "Stage 60 - Winter Breeze",
+    "title": "Stage 60 - Titan Tube",
     "bottles": [
       [
         "yellow",
-        "blue",
         "cyan",
+        "pink",
+        "purple"
+      ],
+      [
+        "blue",
+        "blue",
+        "teal",
         "green"
       ],
       [
-        "orange",
         "green",
-        "yellow",
-        "teal"
+        "pink",
+        "teal",
+        "purple"
       ],
       [
-        "blue",
+        "pink",
+        "cyan",
         "yellow",
-        "lime",
         "lime"
       ],
       [
+        "yellow",
         "green",
-        "cyan",
-        "teal",
+        "blue",
+        "cyan"
+      ],
+      [
+        "purple",
+        "orange",
+        "orange",
         "green"
       ],
       [
-        "orange",
-        "blue",
+        "pink",
+        "lime",
         "cyan",
+        "red"
+      ],
+      [
+        "lime",
+        "lime",
+        "purple",
         "yellow"
       ],
       [
-        "blue",
-        "teal",
-        "lime",
-        "teal"
+        "red",
+        "red",
+        "orange",
+        "blue"
       ],
       [
-        "cyan",
-        "lime",
+        "teal",
+        "teal",
         "orange",
-        "orange"
+        "red"
       ],
       [],
       []
@@ -2458,149 +3706,206 @@ export const STAGES = [
   },
   {
     "stage": 61,
-    "title": "Stage 61 - Frosty Elixir",
+    "title": "Stage 61 - Infinite Indigo",
     "bottles": [
       [
         "pink",
-        "lime",
-        "lime",
-        "lime"
-      ],
-      [
-        "pink",
         "purple",
-        "red",
+        "cyan",
         "teal"
       ],
       [
-        "pink",
-        "purple",
-        "cyan",
+        "orange",
+        "orange",
+        "blue",
         "red"
       ],
       [
-        "teal",
-        "yellow",
-        "yellow",
-        "lime"
+        "green",
+        "blue",
+        "pink",
+        "cyan"
       ],
       [
+        "green",
+        "teal",
+        "green",
+        "purple"
+      ],
+      [
+        "yellow",
+        "lime",
         "pink",
-        "purple",
+        "red"
+      ],
+      [
         "red",
+        "blue",
+        "teal",
         "yellow"
       ],
       [
+        "red",
+        "lime",
         "yellow",
+        "green"
+      ],
+      [
         "cyan",
         "cyan",
+        "purple",
+        "orange"
+      ],
+      [
+        "blue",
+        "purple",
+        "yellow",
         "teal"
       ],
       [
-        "red",
-        "cyan",
-        "teal",
-        "purple"
+        "lime",
+        "pink",
+        "lime",
+        "orange"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 62,
-    "title": "Stage 62 - Aurora Glow",
+    "title": "Stage 62 - Prismatic Peak",
     "bottles": [
       [
-        "green",
-        "purple",
-        "cyan",
-        "orange"
-      ],
-      [
-        "green",
-        "pink",
+        "yellow",
+        "orange",
         "cyan",
         "pink"
       ],
       [
-        "purple",
-        "cyan",
+        "blue",
+        "red",
         "lime",
         "cyan"
       ],
       [
-        "purple",
-        "teal",
-        "pink",
-        "lime"
-      ],
-      [
-        "teal",
-        "orange",
-        "purple",
-        "teal"
-      ],
-      [
-        "orange",
         "green",
-        "orange",
-        "green"
-      ],
-      [
         "teal",
-        "lime",
-        "lime",
+        "green",
         "pink"
       ],
+      [
+        "pink",
+        "blue",
+        "orange",
+        "red"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "lime",
+        "purple"
+      ],
+      [
+        "blue",
+        "green",
+        "teal",
+        "purple"
+      ],
+      [
+        "purple",
+        "lime",
+        "yellow",
+        "red"
+      ],
+      [
+        "cyan",
+        "blue",
+        "pink",
+        "cyan"
+      ],
+      [
+        "lime",
+        "teal",
+        "teal",
+        "orange"
+      ],
+      [
+        "purple",
+        "orange",
+        "green",
+        "red"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 63,
-    "title": "Stage 63 - Glacier Run",
+    "title": "Stage 63 - Enchanted Eddy",
     "bottles": [
       [
+        "blue",
+        "cyan",
         "pink",
-        "purple",
-        "pink",
-        "lime"
+        "teal"
       ],
       [
-        "red",
         "orange",
+        "orange",
+        "blue",
+        "pink"
+      ],
+      [
+        "green",
+        "green",
         "red",
         "purple"
       ],
       [
-        "lime",
+        "pink",
         "green",
-        "blue",
+        "lime",
+        "purple"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "yellow",
+        "teal"
+      ],
+      [
+        "purple",
+        "cyan",
+        "orange",
         "blue"
       ],
       [
-        "blue",
-        "purple",
+        "red",
+        "pink",
         "green",
         "orange"
       ],
       [
-        "green",
-        "lime",
         "blue",
-        "green"
+        "yellow",
+        "red",
+        "yellow"
       ],
       [
-        "red",
-        "red",
-        "orange",
-        "pink"
-      ],
-      [
-        "purple",
         "lime",
-        "orange",
-        "pink"
+        "red",
+        "lime",
+        "purple"
+      ],
+      [
+        "teal",
+        "teal",
+        "yellow",
+        "lime"
       ],
       [],
       []
@@ -2608,149 +3913,206 @@ export const STAGES = [
   },
   {
     "stage": 64,
-    "title": "Stage 64 - Crystal Flow",
+    "title": "Stage 64 - Dragon Draft",
     "bottles": [
       [
-        "lime",
-        "cyan",
-        "pink",
-        "blue"
-      ],
-      [
-        "lime",
-        "lime",
-        "cyan",
-        "orange"
-      ],
-      [
-        "pink",
+        "blue",
         "orange",
-        "pink",
-        "blue"
-      ],
-      [
-        "teal",
         "yellow",
-        "lime",
-        "yellow"
+        "teal"
       ],
       [
         "orange",
+        "lime",
+        "red",
+        "purple"
+      ],
+      [
+        "green",
+        "green",
         "yellow",
-        "yellow",
+        "blue"
+      ],
+      [
+        "pink",
+        "lime",
+        "red",
+        "pink"
+      ],
+      [
+        "cyan",
+        "green",
+        "orange",
+        "green"
+      ],
+      [
+        "pink",
+        "red",
+        "cyan",
         "cyan"
       ],
       [
-        "blue",
-        "teal",
-        "pink",
+        "red",
+        "purple",
+        "purple",
         "teal"
       ],
       [
         "cyan",
-        "teal",
-        "orange",
-        "blue"
+        "blue",
+        "blue",
+        "teal"
       ],
+      [
+        "lime",
+        "lime",
+        "yellow",
+        "teal"
+      ],
+      [
+        "pink",
+        "purple",
+        "yellow",
+        "orange"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 65,
-    "title": "Stage 65 - Enchanted Lab",
+    "title": "Stage 65 - Phoenix Potion",
     "bottles": [
       [
-        "purple",
-        "orange",
-        "orange",
-        "orange"
-      ],
-      [
-        "lime",
-        "teal",
-        "lime",
-        "pink"
-      ],
-      [
-        "teal",
         "pink",
+        "blue",
+        "green",
+        "green"
+      ],
+      [
+        "orange",
+        "teal",
+        "orange",
+        "teal"
+      ],
+      [
+        "green",
+        "teal",
+        "red",
+        "green"
+      ],
+      [
+        "pink",
+        "purple",
         "lime",
+        "blue"
+      ],
+      [
+        "yellow",
+        "red",
+        "lime",
+        "red"
+      ],
+      [
+        "purple",
+        "purple",
+        "yellow",
         "yellow"
       ],
       [
         "purple",
-        "pink",
-        "teal",
-        "lime"
-      ],
-      [
-        "yellow",
-        "yellow",
-        "orange",
-        "cyan"
-      ],
-      [
-        "yellow",
-        "teal",
+        "cyan",
         "cyan",
         "pink"
       ],
       [
-        "purple",
-        "purple",
-        "cyan",
+        "pink",
+        "red",
+        "blue",
         "cyan"
       ],
+      [
+        "lime",
+        "orange",
+        "blue",
+        "cyan"
+      ],
+      [
+        "teal",
+        "yellow",
+        "lime",
+        "orange"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 66,
-    "title": "Stage 66 - Mystic Potion",
+    "title": "Stage 66 - Valkyrie Vial",
     "bottles": [
       [
-        "red",
-        "blue",
-        "teal",
-        "orange"
-      ],
-      [
-        "blue",
-        "blue",
-        "teal",
-        "lime"
-      ],
-      [
-        "red",
-        "pink",
+        "purple",
         "lime",
-        "red"
+        "cyan",
+        "cyan"
       ],
       [
-        "pink",
-        "lime",
+        "orange",
+        "orange",
+        "yellow",
+        "green"
+      ],
+      [
+        "green",
+        "green",
         "orange",
         "orange"
       ],
       [
         "lime",
+        "red",
         "pink",
-        "cyan",
-        "cyan"
+        "teal"
       ],
       [
-        "cyan",
-        "red",
-        "teal",
+        "yellow",
+        "pink",
+        "blue",
         "pink"
       ],
       [
-        "orange",
         "blue",
+        "blue",
+        "purple",
+        "yellow"
+      ],
+      [
+        "red",
+        "red",
+        "red",
+        "pink"
+      ],
+      [
+        "purple",
+        "cyan",
         "teal",
-        "cyan"
+        "blue"
+      ],
+      [
+        "lime",
+        "lime",
+        "cyan",
+        "green"
+      ],
+      [
+        "teal",
+        "purple",
+        "yellow",
+        "teal"
       ],
       [],
       []
@@ -2758,148 +4120,205 @@ export const STAGES = [
   },
   {
     "stage": 67,
-    "title": "Stage 67 - Sapphire Spiral",
+    "title": "Stage 67 - Chrono Cascade",
     "bottles": [
       [
+        "blue",
+        "purple",
+        "blue",
+        "orange"
+      ],
+      [
         "teal",
+        "purple",
+        "purple",
+        "cyan"
+      ],
+      [
         "cyan",
-        "red",
-        "teal"
-      ],
-      [
-        "pink",
-        "purple",
-        "yellow",
-        "pink"
-      ],
-      [
-        "pink",
-        "yellow",
-        "purple",
-        "pink"
-      ],
-      [
-        "purple",
-        "red",
+        "blue",
         "yellow",
         "yellow"
       ],
       [
+        "pink",
+        "pink",
+        "red",
+        "blue"
+      ],
+      [
         "green",
-        "teal",
+        "green",
+        "pink",
+        "orange"
+      ],
+      [
+        "purple",
         "cyan",
+        "yellow",
         "green"
       ],
       [
+        "lime",
+        "lime",
         "cyan",
-        "purple",
-        "green",
-        "red"
+        "green"
       ],
       [
         "red",
-        "teal",
-        "cyan",
-        "green"
+        "orange",
+        "orange",
+        "teal"
       ],
+      [
+        "lime",
+        "lime",
+        "red",
+        "yellow"
+      ],
+      [
+        "teal",
+        "teal",
+        "pink",
+        "red"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 68,
-    "title": "Stage 68 - Emerald Echo",
+    "title": "Stage 68 - Aether Alchemy",
     "bottles": [
       [
-        "purple",
-        "green",
-        "lime",
-        "pink"
-      ],
-      [
-        "lime",
-        "orange",
-        "purple",
-        "blue"
-      ],
-      [
-        "yellow",
         "blue",
-        "yellow",
-        "purple"
-      ],
-      [
-        "blue",
-        "lime",
-        "green",
-        "blue"
-      ],
-      [
-        "yellow",
-        "yellow",
         "orange",
-        "green"
-      ],
-      [
-        "lime",
-        "pink",
-        "pink",
+        "red",
         "orange"
       ],
       [
-        "orange",
         "purple",
+        "teal",
+        "pink",
+        "cyan"
+      ],
+      [
+        "green",
+        "cyan",
+        "purple",
+        "cyan"
+      ],
+      [
+        "pink",
+        "red",
+        "yellow",
+        "orange"
+      ],
+      [
+        "yellow",
+        "blue",
         "green",
         "pink"
       ],
+      [
+        "purple",
+        "lime",
+        "orange",
+        "teal"
+      ],
+      [
+        "green",
+        "green",
+        "teal",
+        "pink"
+      ],
+      [
+        "purple",
+        "lime",
+        "yellow",
+        "cyan"
+      ],
+      [
+        "red",
+        "blue",
+        "lime",
+        "blue"
+      ],
+      [
+        "yellow",
+        "teal",
+        "red",
+        "lime"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 69,
-    "title": "Stage 69 - Ruby Cascade",
+    "title": "Stage 69 - Rune Rapids",
     "bottles": [
       [
-        "yellow",
+        "blue",
+        "blue",
+        "pink",
+        "red"
+      ],
+      [
         "orange",
         "yellow",
+        "green",
+        "lime"
+      ],
+      [
+        "red",
+        "red",
+        "green",
+        "yellow"
+      ],
+      [
+        "pink",
+        "red",
+        "lime",
         "yellow"
       ],
       [
         "yellow",
-        "teal",
-        "cyan",
-        "red"
+        "blue",
+        "blue",
+        "cyan"
       ],
       [
-        "red",
+        "purple",
         "orange",
-        "red",
-        "lime"
+        "cyan",
+        "orange"
+      ],
+      [
+        "purple",
+        "pink",
+        "purple",
+        "orange"
       ],
       [
         "cyan",
-        "lime",
-        "green",
-        "red"
-      ],
-      [
-        "green",
-        "orange",
-        "lime",
+        "cyan",
+        "pink",
         "teal"
       ],
       [
-        "orange",
         "lime",
-        "cyan",
+        "lime",
+        "green",
         "teal"
       ],
       [
-        "green",
         "teal",
-        "cyan",
+        "teal",
+        "purple",
         "green"
       ],
       [],
@@ -2908,149 +4327,206 @@ export const STAGES = [
   },
   {
     "stage": 70,
-    "title": "Stage 70 - Golden Flask",
+    "title": "Stage 70 - Siren Splash",
     "bottles": [
       [
+        "blue",
+        "blue",
+        "pink",
+        "red"
+      ],
+      [
+        "orange",
         "teal",
-        "red",
-        "teal",
+        "cyan",
         "orange"
       ],
       [
+        "green",
+        "teal",
+        "cyan",
+        "orange"
+      ],
+      [
+        "pink",
+        "blue",
+        "lime",
+        "purple"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "red",
+        "purple"
+      ],
+      [
         "purple",
-        "pink",
-        "pink",
+        "purple",
+        "teal",
+        "cyan"
+      ],
+      [
+        "red",
+        "green",
+        "yellow",
+        "red"
+      ],
+      [
+        "blue",
+        "lime",
+        "cyan",
         "teal"
       ],
       [
-        "red",
-        "orange",
-        "purple",
-        "purple"
-      ],
-      [
-        "blue",
-        "blue",
-        "teal",
-        "blue"
-      ],
-      [
-        "red",
         "lime",
         "lime",
+        "green",
         "pink"
       ],
       [
+        "yellow",
         "pink",
-        "lime",
-        "lime",
-        "purple"
-      ],
-      [
-        "orange",
-        "red",
-        "blue",
+        "green",
         "orange"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 71,
-    "title": "Stage 71 - Silver Shimmer",
+    "title": "Stage 71 - Oasis Orbit",
     "bottles": [
       [
         "lime",
-        "yellow",
-        "green",
-        "pink"
+        "purple",
+        "red",
+        "cyan"
       ],
       [
-        "yellow",
-        "purple",
-        "pink",
+        "orange",
+        "green",
+        "orange",
         "green"
       ],
       [
-        "teal",
-        "teal",
-        "pink",
-        "pink"
+        "green",
+        "purple",
+        "lime",
+        "red"
       ],
       [
-        "green",
-        "lime",
+        "pink",
+        "pink",
+        "purple",
+        "lime"
+      ],
+      [
         "yellow",
+        "teal",
+        "pink",
         "teal"
       ],
       [
-        "lime",
-        "teal",
-        "purple",
-        "purple"
-      ],
-      [
-        "orange",
-        "orange",
         "yellow",
-        "orange"
-      ],
-      [
-        "orange",
-        "lime",
-        "purple",
+        "cyan",
+        "teal",
         "green"
       ],
+      [
+        "purple",
+        "orange",
+        "pink",
+        "red"
+      ],
+      [
+        "yellow",
+        "blue",
+        "blue",
+        "teal"
+      ],
+      [
+        "red",
+        "blue",
+        "blue",
+        "yellow"
+      ],
+      [
+        "orange",
+        "cyan",
+        "lime",
+        "cyan"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 72,
-    "title": "Stage 72 - Cosmic Blend",
+    "title": "Stage 72 - Polar Prism",
     "bottles": [
       [
-        "green",
         "red",
         "green",
+        "teal",
+        "pink"
+      ],
+      [
+        "orange",
+        "orange",
+        "yellow",
+        "lime"
+      ],
+      [
+        "green",
+        "green",
+        "cyan",
+        "lime"
+      ],
+      [
+        "pink",
+        "yellow",
+        "blue",
         "blue"
       ],
       [
         "orange",
-        "yellow",
+        "cyan",
+        "teal",
+        "purple"
+      ],
+      [
+        "purple",
+        "lime",
+        "teal",
+        "pink"
+      ],
+      [
+        "red",
+        "pink",
         "green",
-        "pink"
+        "lime"
       ],
       [
-        "blue",
-        "pink",
-        "blue",
-        "green"
-      ],
-      [
-        "teal",
-        "teal",
+        "cyan",
+        "cyan",
         "red",
+        "purple"
+      ],
+      [
+        "yellow",
+        "purple",
+        "teal",
+        "red"
+      ],
+      [
+        "orange",
+        "blue",
+        "blue",
         "yellow"
-      ],
-      [
-        "red",
-        "orange",
-        "yellow",
-        "teal"
-      ],
-      [
-        "red",
-        "blue",
-        "yellow",
-        "pink"
-      ],
-      [
-        "pink",
-        "orange",
-        "orange",
-        "teal"
       ],
       [],
       []
@@ -3058,149 +4534,206 @@ export const STAGES = [
   },
   {
     "stage": 73,
-    "title": "Stage 73 - Vortex Fusion",
+    "title": "Stage 73 - Boreal Basin",
     "bottles": [
       [
-        "pink",
-        "cyan",
-        "pink",
-        "teal"
-      ],
-      [
-        "green",
         "lime",
-        "green",
-        "teal"
+        "blue",
+        "purple",
+        "purple"
       ],
       [
+        "orange",
         "cyan",
+        "cyan",
+        "green"
+      ],
+      [
+        "green",
+        "green",
+        "pink",
+        "blue"
+      ],
+      [
+        "teal",
+        "pink",
         "purple",
-        "yellow",
         "cyan"
       ],
       [
-        "pink",
-        "teal",
-        "green",
+        "yellow",
+        "red",
+        "orange",
         "lime"
       ],
       [
-        "green",
         "purple",
-        "lime",
+        "blue",
+        "orange",
         "yellow"
       ],
       [
-        "lime",
+        "red",
         "teal",
-        "cyan",
-        "purple"
+        "teal",
+        "pink"
       ],
       [
-        "yellow",
+        "orange",
+        "green",
         "pink",
-        "yellow",
-        "purple"
+        "cyan"
       ],
+      [
+        "lime",
+        "yellow",
+        "blue",
+        "lime"
+      ],
+      [
+        "red",
+        "red",
+        "teal",
+        "yellow"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 74,
-    "title": "Stage 74 - Twilight Draught",
+    "title": "Stage 74 - Tundra Torrent",
     "bottles": [
       [
-        "purple",
-        "orange",
-        "pink",
-        "purple"
-      ],
-      [
-        "orange",
-        "blue",
-        "green",
-        "purple"
-      ],
-      [
-        "green",
         "blue",
         "red",
+        "pink",
+        "green"
+      ],
+      [
+        "orange",
+        "orange",
+        "lime",
+        "purple"
+      ],
+      [
+        "green",
+        "lime",
+        "yellow",
+        "teal"
+      ],
+      [
+        "lime",
+        "purple",
+        "lime",
+        "blue"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "orange",
+        "orange"
+      ],
+      [
+        "pink",
+        "yellow",
+        "green",
         "red"
       ],
       [
+        "purple",
+        "cyan",
+        "blue",
+        "red"
+      ],
+      [
+        "cyan",
+        "cyan",
         "pink",
-        "pink",
-        "red",
         "blue"
       ],
       [
         "purple",
-        "green",
-        "blue",
-        "orange"
-      ],
-      [
+        "teal",
         "pink",
-        "teal",
-        "teal",
-        "orange"
+        "red"
       ],
       [
         "teal",
-        "teal",
-        "red",
-        "green"
+        "cyan",
+        "green",
+        "teal"
       ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 75,
-    "title": "Stage 75 - Starlight Stream",
+    "title": "Stage 75 - Subzero Stream",
     "bottles": [
       [
+        "blue",
+        "blue",
+        "red",
+        "pink"
+      ],
+      [
+        "orange",
+        "orange",
+        "purple",
+        "red"
+      ],
+      [
+        "green",
         "cyan",
         "lime",
-        "cyan",
         "blue"
       ],
       [
-        "blue",
-        "yellow",
-        "purple",
-        "yellow"
-      ],
-      [
+        "pink",
+        "pink",
         "lime",
-        "orange",
-        "purple",
-        "lime"
-      ],
-      [
-        "pink",
-        "cyan",
-        "orange",
-        "purple"
-      ],
-      [
-        "yellow",
-        "blue",
-        "pink",
         "orange"
       ],
       [
-        "cyan",
-        "blue",
-        "lime",
+        "yellow",
+        "yellow",
+        "green",
+        "red"
+      ],
+      [
+        "purple",
+        "yellow",
+        "red",
         "yellow"
       ],
       [
-        "pink",
-        "pink",
-        "orange",
+        "blue",
+        "teal",
+        "lime",
         "purple"
+      ],
+      [
+        "pink",
+        "cyan",
+        "cyan",
+        "cyan"
+      ],
+      [
+        "teal",
+        "orange",
+        "green",
+        "lime"
+      ],
+      [
+        "teal",
+        "teal",
+        "purple",
+        "green"
       ],
       [],
       []
@@ -3208,167 +4741,206 @@ export const STAGES = [
   },
   {
     "stage": 76,
-    "title": "Stage 76 - Sunburst Mix",
+    "title": "Stage 76 - Permafrost Pour",
     "bottles": [
       [
-        "cyan",
-        "teal",
-        "cyan",
-        "orange"
-      ],
-      [
-        "purple",
+        "lime",
         "green",
-        "teal",
-        "teal"
-      ],
-      [
-        "orange",
-        "cyan",
-        "blue",
-        "yellow"
-      ],
-      [
-        "green",
-        "blue",
-        "purple",
+        "red",
         "red"
       ],
       [
         "orange",
-        "red",
+        "teal",
+        "green",
+        "yellow"
+      ],
+      [
+        "lime",
+        "yellow",
         "cyan",
-        "green"
+        "orange"
       ],
       [
         "blue",
+        "pink",
+        "blue",
+        "cyan"
+      ],
+      [
         "yellow",
+        "lime",
+        "pink",
+        "pink"
+      ],
+      [
+        "purple",
+        "purple",
+        "green",
+        "cyan"
+      ],
+      [
+        "blue",
+        "cyan",
+        "purple",
+        "red"
+      ],
+      [
+        "green",
+        "blue",
+        "pink",
+        "red"
+      ],
+      [
+        "lime",
         "yellow",
-        "blue"
+        "orange",
+        "orange"
       ],
       [
         "teal",
         "purple",
-        "purple",
-        "yellow"
+        "teal",
+        "teal"
       ],
-      [
-        "orange",
-        "red",
-        "red",
-        "green"
-      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 77,
-    "title": "Stage 77 - Velvet Waters",
+    "title": "Stage 77 - Blizzard Brew",
     "bottles": [
       [
         "orange",
+        "purple",
         "yellow",
-        "purple",
-        "purple"
-      ],
-      [
-        "lime",
-        "pink",
-        "orange",
-        "pink"
-      ],
-      [
-        "purple",
-        "pink",
-        "cyan",
-        "yellow"
+        "lime"
       ],
       [
         "orange",
-        "cyan",
-        "blue",
-        "purple"
+        "purple",
+        "teal",
+        "cyan"
       ],
       [
-        "lime",
-        "yellow",
-        "teal",
+        "blue",
+        "pink",
+        "red",
         "blue"
       ],
       [
-        "yellow",
-        "teal",
-        "blue",
-        "blue"
+        "pink",
+        "red",
+        "green",
+        "orange"
       ],
       [
-        "teal",
+        "yellow",
         "cyan",
+        "purple",
+        "teal"
+      ],
+      [
+        "red",
+        "purple",
+        "green",
+        "lime"
+      ],
+      [
+        "red",
+        "green",
         "pink",
         "cyan"
       ],
       [
+        "green",
+        "blue",
+        "blue",
+        "teal"
+      ],
+      [
+        "lime",
+        "yellow",
+        "lime",
+        "pink"
+      ],
+      [
+        "cyan",
         "teal",
         "orange",
-        "lime",
-        "lime"
+        "yellow"
       ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 78,
-    "title": "Stage 78 - Oceanic Depth",
+    "title": "Stage 78 - Avalanche Aqua",
     "bottles": [
       [
-        "pink",
-        "pink",
-        "teal",
-        "orange"
+        "blue",
+        "purple",
+        "blue",
+        "lime"
       ],
       [
         "green",
-        "blue",
-        "green",
+        "pink",
+        "orange",
+        "orange"
+      ],
+      [
+        "pink",
+        "yellow",
+        "cyan",
         "green"
       ],
       [
-        "pink",
-        "orange",
-        "purple",
-        "lime"
+        "cyan",
+        "lime",
+        "red",
+        "green"
       ],
       [
-        "blue",
+        "yellow",
+        "yellow",
+        "lime",
+        "teal"
+      ],
+      [
         "purple",
-        "blue",
-        "lime"
+        "purple",
+        "purple",
+        "yellow"
       ],
       [
         "red",
-        "pink",
+        "blue",
         "teal",
+        "pink"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "orange",
+        "red"
+      ],
+      [
+        "red",
+        "orange",
+        "blue",
         "lime"
       ],
       [
         "green",
-        "red",
+        "pink",
         "teal",
-        "red"
-      ],
-      [
-        "blue",
-        "lime",
-        "purple",
         "teal"
-      ],
-      [
-        "red",
-        "orange",
-        "purple",
-        "orange"
       ],
       [],
       []
@@ -3376,166 +4948,205 @@ export const STAGES = [
   },
   {
     "stage": 79,
-    "title": "Stage 79 - Amber Horizon",
+    "title": "Stage 79 - Northern Lights",
     "bottles": [
       [
         "blue",
-        "orange",
-        "yellow",
-        "green"
-      ],
-      [
-        "orange",
-        "orange",
         "red",
-        "lime"
-      ],
-      [
-        "green",
-        "pink",
-        "pink",
-        "purple"
-      ],
-      [
-        "pink",
-        "green",
-        "yellow",
+        "red",
         "yellow"
       ],
       [
-        "red",
-        "red",
-        "lime",
-        "blue"
-      ],
-      [
-        "red",
-        "purple",
         "yellow",
-        "purple"
-      ],
-      [
+        "lime",
         "purple",
-        "blue",
-        "orange",
         "green"
       ],
       [
-        "blue",
-        "lime",
-        "lime",
+        "cyan",
+        "red",
+        "cyan",
         "pink"
       ],
+      [
+        "pink",
+        "lime",
+        "lime",
+        "orange"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "green",
+        "teal"
+      ],
+      [
+        "purple",
+        "purple",
+        "orange",
+        "blue"
+      ],
+      [
+        "teal",
+        "orange",
+        "green",
+        "pink"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "lime",
+        "orange"
+      ],
+      [
+        "red",
+        "green",
+        "purple",
+        "blue"
+      ],
+      [
+        "teal",
+        "teal",
+        "pink",
+        "blue"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 80,
-    "title": "Stage 80 - Diamond Spark",
+    "title": "Stage 80 - Frostfire Flask",
     "bottles": [
       [
         "blue",
+        "yellow",
         "red",
-        "cyan",
         "orange"
       ],
       [
+        "orange",
+        "orange",
+        "teal",
+        "teal"
+      ],
+      [
         "green",
-        "pink",
-        "pink",
-        "purple"
+        "red",
+        "green",
+        "lime"
       ],
       [
         "purple",
-        "cyan",
+        "yellow",
+        "yellow",
+        "purple"
+      ],
+      [
+        "blue",
+        "orange",
+        "green",
+        "blue"
+      ],
+      [
+        "pink",
         "teal",
+        "purple",
         "cyan"
       ],
       [
-        "green",
-        "orange",
-        "orange",
-        "red"
+        "red",
+        "pink",
+        "teal",
+        "yellow"
       ],
       [
         "cyan",
-        "purple",
-        "green",
-        "green"
-      ],
-      [
-        "blue",
-        "blue",
-        "blue",
-        "purple"
-      ],
-      [
+        "cyan",
         "pink",
-        "teal",
-        "red",
-        "pink"
+        "cyan"
       ],
       [
-        "red",
-        "teal",
-        "teal",
-        "orange"
+        "lime",
+        "green",
+        "pink",
+        "lime"
       ],
+      [
+        "lime",
+        "purple",
+        "blue",
+        "red"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 81,
-    "title": "Stage 81 - Phantom Prism",
+    "title": "Stage 81 - Illusion Infusion",
     "bottles": [
       [
         "blue",
-        "teal",
         "blue",
+        "red",
+        "teal"
+      ],
+      [
+        "orange",
+        "yellow",
+        "cyan",
+        "purple"
+      ],
+      [
+        "teal",
+        "green",
+        "cyan",
         "yellow"
       ],
       [
         "pink",
-        "lime",
+        "pink",
         "cyan",
+        "green"
+      ],
+      [
+        "orange",
+        "lime",
+        "pink",
         "lime"
       ],
       [
-        "green",
-        "blue",
-        "green",
+        "purple",
+        "purple",
+        "purple",
         "red"
       ],
       [
-        "teal",
-        "cyan",
         "red",
-        "yellow"
-      ],
-      [
-        "pink",
-        "pink",
-        "lime",
+        "green",
+        "orange",
         "green"
       ],
       [
         "cyan",
-        "lime",
-        "pink",
-        "red"
-      ],
-      [
-        "teal",
         "red",
-        "blue",
-        "yellow"
+        "lime",
+        "lime"
       ],
       [
-        "cyan",
+        "yellow",
+        "blue",
+        "pink",
+        "orange"
+      ],
+      [
         "teal",
-        "green",
+        "teal",
+        "blue",
         "yellow"
       ],
       [],
@@ -3544,167 +5155,206 @@ export const STAGES = [
   },
   {
     "stage": 82,
-    "title": "Stage 82 - Spectral Shift",
+    "title": "Stage 82 - Mirage Matrix",
     "bottles": [
       [
-        "teal",
-        "lime",
+        "red",
+        "pink",
         "cyan",
-        "cyan"
-      ],
-      [
-        "red",
-        "purple",
-        "green",
-        "cyan"
-      ],
-      [
-        "cyan",
-        "red",
-        "orange",
-        "lime"
-      ],
-      [
-        "green",
-        "purple",
-        "blue",
-        "orange"
-      ],
-      [
-        "red",
-        "red",
-        "purple",
-        "green"
-      ],
-      [
-        "teal",
-        "lime",
-        "blue",
-        "orange"
-      ],
-      [
-        "orange",
-        "blue",
-        "teal",
-        "lime"
-      ],
-      [
-        "teal",
-        "green",
-        "blue",
         "purple"
       ],
+      [
+        "orange",
+        "cyan",
+        "purple",
+        "cyan"
+      ],
+      [
+        "green",
+        "lime",
+        "blue",
+        "yellow"
+      ],
+      [
+        "pink",
+        "orange",
+        "blue",
+        "yellow"
+      ],
+      [
+        "yellow",
+        "purple",
+        "pink",
+        "cyan"
+      ],
+      [
+        "green",
+        "green",
+        "teal",
+        "lime"
+      ],
+      [
+        "red",
+        "orange",
+        "green",
+        "blue"
+      ],
+      [
+        "teal",
+        "orange",
+        "blue",
+        "yellow"
+      ],
+      [
+        "purple",
+        "teal",
+        "red",
+        "pink"
+      ],
+      [
+        "teal",
+        "lime",
+        "red",
+        "lime"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 83,
-    "title": "Stage 83 - Nebula Wave",
+    "title": "Stage 83 - Chimera Current",
     "bottles": [
       [
+        "cyan",
+        "blue",
+        "red",
+        "yellow"
+      ],
+      [
         "orange",
         "yellow",
         "teal",
-        "green"
-      ],
-      [
-        "cyan",
-        "orange",
-        "cyan",
-        "cyan"
+        "teal"
       ],
       [
         "blue",
-        "yellow",
-        "pink",
-        "red"
-      ],
-      [
-        "teal",
-        "pink",
-        "yellow",
-        "cyan"
-      ],
-      [
-        "yellow",
         "orange",
-        "pink",
-        "red"
-      ],
-      [
-        "teal",
-        "pink",
         "green",
+        "pink"
+      ],
+      [
+        "pink",
+        "pink",
+        "lime",
         "green"
+      ],
+      [
+        "blue",
+        "purple",
+        "cyan",
+        "lime"
+      ],
+      [
+        "purple",
+        "red",
+        "pink",
+        "orange"
+      ],
+      [
+        "green",
+        "purple",
+        "cyan",
+        "red"
       ],
       [
         "teal",
-        "blue",
+        "orange",
         "red",
-        "blue"
+        "yellow"
       ],
       [
-        "orange",
+        "lime",
+        "lime",
         "blue",
-        "red",
-        "green"
+        "purple"
       ],
+      [
+        "teal",
+        "green",
+        "yellow",
+        "cyan"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 84,
-    "title": "Stage 84 - Zenith Pulse",
+    "title": "Stage 84 - Seraph Surge",
     "bottles": [
       [
-        "yellow",
-        "purple",
-        "purple",
-        "pink"
-      ],
-      [
-        "yellow",
-        "orange",
-        "lime",
-        "green"
-      ],
-      [
+        "blue",
+        "blue",
         "pink",
-        "yellow",
-        "purple",
         "teal"
       ],
       [
-        "teal",
-        "lime",
+        "cyan",
+        "cyan",
         "green",
+        "teal"
+      ],
+      [
+        "green",
+        "yellow",
+        "orange",
         "orange"
       ],
       [
+        "pink",
+        "pink",
         "orange",
-        "green",
+        "teal"
+      ],
+      [
         "yellow",
+        "teal",
+        "purple",
         "purple"
       ],
       [
+        "purple",
+        "purple",
+        "yellow",
+        "green"
+      ],
+      [
+        "red",
+        "red",
+        "pink",
+        "cyan"
+      ],
+      [
+        "red",
+        "blue",
+        "orange",
+        "red"
+      ],
+      [
+        "lime",
+        "cyan",
+        "lime",
+        "yellow"
+      ],
+      [
         "green",
         "lime",
-        "cyan",
-        "orange"
-      ],
-      [
-        "cyan",
-        "lime",
-        "pink",
-        "cyan"
-      ],
-      [
-        "pink",
-        "teal",
-        "teal",
-        "cyan"
+        "blue",
+        "lime"
       ],
       [],
       []
@@ -3712,167 +5362,206 @@ export const STAGES = [
   },
   {
     "stage": 85,
-    "title": "Stage 85 - Winter Breeze",
+    "title": "Stage 85 - Pegasus Potion",
     "bottles": [
       [
         "red",
+        "green",
+        "blue",
+        "lime"
+      ],
+      [
+        "blue",
+        "orange",
+        "pink",
+        "cyan"
+      ],
+      [
+        "pink",
         "red",
-        "purple",
+        "teal",
         "orange"
       ],
       [
         "pink",
-        "teal",
-        "yellow",
+        "green",
+        "green",
         "cyan"
       ],
       [
-        "pink",
-        "purple",
-        "yellow",
-        "purple"
-      ],
-      [
         "cyan",
-        "orange",
-        "orange",
-        "green"
+        "pink",
+        "cyan",
+        "blue"
       ],
       [
+        "purple",
+        "purple",
+        "blue",
+        "yellow"
+      ],
+      [
+        "red",
+        "yellow",
+        "red",
+        "yellow"
+      ],
+      [
+        "purple",
+        "lime",
         "green",
-        "yellow",
-        "yellow",
         "teal"
       ],
       [
+        "lime",
+        "teal",
         "orange",
-        "green",
-        "pink",
-        "pink"
+        "orange"
       ],
       [
         "teal",
-        "green",
-        "red",
-        "cyan"
+        "purple",
+        "yellow",
+        "lime"
       ],
-      [
-        "cyan",
-        "red",
-        "teal",
-        "purple"
-      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 86,
-    "title": "Stage 86 - Frosty Elixir",
+    "title": "Stage 86 - Griffin Glide",
     "bottles": [
       [
-        "blue",
         "green",
+        "red",
         "teal",
+        "blue"
+      ],
+      [
+        "orange",
+        "orange",
+        "lime",
+        "lime"
+      ],
+      [
+        "red",
+        "yellow",
+        "purple",
         "cyan"
       ],
       [
+        "pink",
+        "cyan",
+        "lime",
+        "blue"
+      ],
+      [
+        "yellow",
+        "yellow",
+        "blue",
+        "blue"
+      ],
+      [
+        "purple",
         "purple",
         "green",
-        "yellow",
-        "purple"
+        "yellow"
+      ],
+      [
+        "red",
+        "cyan",
+        "pink",
+        "cyan"
+      ],
+      [
+        "pink",
+        "lime",
+        "orange",
+        "pink"
       ],
       [
         "orange",
-        "yellow",
-        "cyan",
+        "green",
+        "green",
         "red"
       ],
       [
-        "cyan",
-        "red",
         "teal",
+        "teal",
+        "purple",
         "teal"
       ],
-      [
-        "orange",
-        "blue",
-        "orange",
-        "red"
-      ],
-      [
-        "cyan",
-        "blue",
-        "yellow",
-        "red"
-      ],
-      [
-        "teal",
-        "green",
-        "blue",
-        "orange"
-      ],
-      [
-        "yellow",
-        "purple",
-        "purple",
-        "green"
-      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 87,
-    "title": "Stage 87 - Aurora Glow",
+    "title": "Stage 87 - Centaur Stream",
     "bottles": [
       [
+        "blue",
+        "blue",
         "orange",
-        "green",
-        "pink",
-        "green"
+        "pink"
       ],
       [
+        "orange",
+        "purple",
+        "purple",
+        "red"
+      ],
+      [
+        "green",
         "red",
         "orange",
-        "teal",
-        "green"
+        "yellow"
       ],
       [
         "pink",
-        "lime",
+        "pink",
         "cyan",
+        "green"
+      ],
+      [
+        "purple",
+        "orange",
+        "teal",
+        "lime"
+      ],
+      [
+        "purple",
+        "lime",
+        "red",
+        "teal"
+      ],
+      [
+        "cyan",
+        "red",
+        "yellow",
         "blue"
       ],
       [
-        "orange",
-        "lime",
-        "blue",
-        "cyan"
-      ],
-      [
-        "teal",
-        "red",
-        "red",
+        "cyan",
+        "yellow",
+        "cyan",
         "pink"
       ],
       [
         "lime",
-        "pink",
-        "teal",
-        "teal"
-      ],
-      [
-        "blue",
-        "orange",
-        "green",
-        "red"
-      ],
-      [
         "lime",
+        "green",
+        "yellow"
+      ],
+      [
+        "teal",
         "blue",
-        "cyan",
-        "cyan"
+        "green",
+        "teal"
       ],
       [],
       []
@@ -3880,167 +5569,206 @@ export const STAGES = [
   },
   {
     "stage": 88,
-    "title": "Stage 88 - Glacier Run",
+    "title": "Stage 88 - Kraken Kettle",
     "bottles": [
       [
-        "purple",
-        "lime",
-        "green",
+        "blue",
+        "blue",
+        "cyan",
         "cyan"
       ],
       [
         "purple",
+        "red",
+        "teal",
+        "orange"
+      ],
+      [
+        "cyan",
         "purple",
+        "yellow",
+        "orange"
+      ],
+      [
+        "yellow",
         "lime",
+        "green",
+        "purple"
+      ],
+      [
+        "yellow",
+        "pink",
+        "teal",
+        "pink"
+      ],
+      [
+        "purple",
+        "cyan",
+        "green",
+        "orange"
+      ],
+      [
+        "red",
+        "teal",
+        "blue",
         "pink"
       ],
       [
         "orange",
-        "green",
-        "lime",
-        "orange"
+        "pink",
+        "red",
+        "green"
       ],
       [
-        "cyan",
-        "pink",
-        "purple",
+        "lime",
+        "lime",
+        "blue",
+        "yellow"
+      ],
+      [
+        "teal",
+        "lime",
+        "green",
         "red"
       ],
-      [
-        "lime",
-        "cyan",
-        "red",
-        "blue"
-      ],
-      [
-        "green",
-        "orange",
-        "cyan",
-        "blue"
-      ],
-      [
-        "pink",
-        "red",
-        "green",
-        "blue"
-      ],
-      [
-        "blue",
-        "red",
-        "pink",
-        "orange"
-      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 89,
-    "title": "Stage 89 - Crystal Flow",
+    "title": "Stage 89 - Hydra Hydration",
     "bottles": [
       [
-        "pink",
-        "pink",
         "blue",
-        "purple"
-      ],
-      [
-        "green",
-        "green",
+        "yellow",
         "red",
-        "lime"
-      ],
-      [
-        "lime",
-        "orange",
-        "pink",
-        "red"
-      ],
-      [
-        "pink",
-        "yellow",
-        "yellow",
         "blue"
       ],
       [
-        "lime",
-        "red",
-        "yellow",
-        "green"
-      ],
-      [
-        "orange",
-        "lime",
-        "blue",
-        "purple"
-      ],
-      [
-        "orange",
-        "yellow",
-        "orange",
-        "purple"
-      ],
-      [
-        "red",
         "purple",
-        "blue",
+        "green",
+        "cyan",
+        "pink"
+      ],
+      [
+        "green",
+        "orange",
+        "teal",
         "green"
       ],
+      [
+        "pink",
+        "orange",
+        "blue",
+        "purple"
+      ],
+      [
+        "teal",
+        "blue",
+        "pink",
+        "purple"
+      ],
+      [
+        "lime",
+        "purple",
+        "orange",
+        "yellow"
+      ],
+      [
+        "red",
+        "orange",
+        "green",
+        "red"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "red",
+        "teal"
+      ],
+      [
+        "lime",
+        "yellow",
+        "lime",
+        "lime"
+      ],
+      [
+        "teal",
+        "pink",
+        "cyan",
+        "yellow"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 90,
-    "title": "Stage 90 - Enchanted Lab",
+    "title": "Stage 90 - Titan Torrent",
     "bottles": [
       [
+        "blue",
+        "orange",
         "lime",
-        "cyan",
-        "lime",
-        "cyan"
+        "blue"
       ],
       [
-        "purple",
         "orange",
         "orange",
+        "cyan",
+        "pink"
+      ],
+      [
+        "green",
+        "green",
+        "red",
         "lime"
       ],
       [
-        "orange",
-        "teal",
-        "blue",
-        "purple"
+        "pink",
+        "red",
+        "pink",
+        "cyan"
       ],
       [
         "yellow",
-        "orange",
+        "yellow",
+        "yellow",
+        "pink"
+      ],
+      [
+        "purple",
+        "purple",
+        "purple",
+        "blue"
+      ],
+      [
+        "purple",
+        "cyan",
         "green",
         "teal"
       ],
       [
-        "yellow",
-        "green",
-        "teal",
-        "purple"
+        "blue",
+        "red",
+        "red",
+        "green"
       ],
       [
         "lime",
-        "blue",
-        "purple",
-        "green"
-      ],
-      [
-        "cyan",
-        "yellow",
-        "blue",
-        "cyan"
+        "lime",
+        "orange",
+        "teal"
       ],
       [
         "teal",
-        "yellow",
-        "blue",
-        "green"
+        "teal",
+        "cyan",
+        "yellow"
       ],
       [],
       []
@@ -4048,167 +5776,206 @@ export const STAGES = [
   },
   {
     "stage": 91,
-    "title": "Stage 91 - Mystic Potion",
+    "title": "Stage 91 - Olympian Oasis",
     "bottles": [
       [
-        "cyan",
-        "green",
-        "cyan",
-        "pink"
-      ],
-      [
-        "green",
-        "blue",
-        "pink",
-        "red"
-      ],
-      [
         "lime",
-        "blue",
-        "orange",
-        "purple"
-      ],
-      [
-        "blue",
-        "pink",
-        "purple",
-        "purple"
+        "lime",
+        "teal",
+        "blue"
       ],
       [
         "orange",
         "lime",
-        "red",
-        "orange"
-      ],
-      [
-        "green",
-        "blue",
-        "purple",
-        "green"
-      ],
-      [
-        "red",
-        "lime",
-        "lime",
+        "cyan",
         "cyan"
       ],
       [
-        "orange",
-        "cyan",
+        "green",
         "red",
-        "pink"
+        "lime",
+        "yellow"
       ],
+      [
+        "pink",
+        "pink",
+        "green",
+        "orange"
+      ],
+      [
+        "yellow",
+        "red",
+        "green",
+        "purple"
+      ],
+      [
+        "orange",
+        "blue",
+        "cyan",
+        "orange"
+      ],
+      [
+        "yellow",
+        "pink",
+        "purple",
+        "teal"
+      ],
+      [
+        "purple",
+        "blue",
+        "blue",
+        "yellow"
+      ],
+      [
+        "red",
+        "green",
+        "red",
+        "purple"
+      ],
+      [
+        "teal",
+        "teal",
+        "pink",
+        "cyan"
+      ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 92,
-    "title": "Stage 92 - Sapphire Spiral",
+    "title": "Stage 92 - Valhalla Vial",
     "bottles": [
       [
+        "blue",
         "teal",
-        "orange",
-        "orange",
-        "yellow"
-      ],
-      [
-        "teal",
-        "lime",
-        "yellow",
-        "cyan"
-      ],
-      [
         "green",
-        "purple",
-        "pink",
-        "pink"
+        "green"
       ],
       [
-        "teal",
-        "lime",
+        "cyan",
         "orange",
-        "teal"
+        "blue",
+        "red"
       ],
       [
-        "yellow",
-        "cyan",
-        "cyan",
-        "pink"
-      ],
-      [
-        "green",
+        "orange",
         "purple",
         "yellow",
-        "purple"
+        "orange"
       ],
       [
-        "orange",
         "pink",
-        "green",
+        "pink",
+        "purple",
         "lime"
       ],
       [
-        "lime",
-        "cyan",
-        "purple",
-        "green"
+        "yellow",
+        "yellow",
+        "yellow",
+        "teal"
       ],
+      [
+        "purple",
+        "pink",
+        "cyan",
+        "lime"
+      ],
+      [
+        "red",
+        "green",
+        "blue",
+        "teal"
+      ],
+      [
+        "cyan",
+        "teal",
+        "purple",
+        "pink"
+      ],
+      [
+        "lime",
+        "lime",
+        "blue",
+        "red"
+      ],
+      [
+        "orange",
+        "green",
+        "cyan",
+        "red"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 93,
-    "title": "Stage 93 - Emerald Echo",
+    "title": "Stage 93 - Asgard Aqua",
     "bottles": [
       [
-        "lime",
-        "teal",
-        "cyan",
-        "pink"
+        "blue",
+        "yellow",
+        "red",
+        "cyan"
       ],
       [
         "orange",
         "green",
-        "blue",
+        "yellow",
+        "pink"
+      ],
+      [
+        "green",
+        "green",
+        "cyan",
+        "red"
+      ],
+      [
+        "pink",
+        "pink",
+        "cyan",
+        "red"
+      ],
+      [
+        "green",
+        "orange",
+        "red",
         "lime"
       ],
       [
-        "cyan",
-        "pink",
+        "purple",
+        "purple",
+        "purple",
+        "lime"
+      ],
+      [
+        "orange",
+        "yellow",
         "blue",
         "orange"
       ],
       [
-        "lime",
-        "teal",
-        "teal",
-        "teal"
-      ],
-      [
-        "green",
-        "orange",
-        "orange",
-        "green"
-      ],
-      [
         "cyan",
-        "green",
-        "pink",
-        "red"
-      ],
-      [
+        "teal",
         "blue",
-        "blue",
-        "red",
         "pink"
       ],
       [
         "lime",
-        "red",
-        "cyan",
-        "red"
+        "lime",
+        "blue",
+        "purple"
+      ],
+      [
+        "teal",
+        "teal",
+        "teal",
+        "yellow"
       ],
       [],
       []
@@ -4216,167 +5983,206 @@ export const STAGES = [
   },
   {
     "stage": 94,
-    "title": "Stage 94 - Ruby Cascade",
+    "title": "Stage 94 - Elysium Elixir",
     "bottles": [
       [
-        "lime",
-        "red",
-        "lime",
-        "yellow"
-      ],
-      [
-        "yellow",
-        "purple",
-        "cyan",
-        "cyan"
-      ],
-      [
-        "pink",
-        "lime",
-        "pink",
-        "teal"
-      ],
-      [
-        "red",
-        "yellow",
+        "blue",
+        "teal",
         "green",
-        "purple"
+        "lime"
       ],
       [
-        "yellow",
-        "cyan",
         "lime",
+        "orange",
+        "green",
         "pink"
       ],
       [
-        "purple",
-        "green",
-        "cyan",
-        "purple"
+        "yellow",
+        "yellow",
+        "teal",
+        "yellow"
       ],
       [
         "pink",
-        "teal",
+        "pink",
+        "cyan",
+        "blue"
+      ],
+      [
+        "cyan",
+        "pink",
+        "yellow",
+        "red"
+      ],
+      [
+        "purple",
+        "cyan",
+        "lime",
+        "orange"
+      ],
+      [
+        "red",
+        "red",
         "red",
         "teal"
       ],
       [
-        "teal",
-        "red",
+        "cyan",
         "green",
+        "orange",
+        "blue"
+      ],
+      [
+        "purple",
+        "orange",
+        "blue",
+        "lime"
+      ],
+      [
+        "teal",
+        "purple",
+        "purple",
         "green"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 95,
-    "title": "Stage 95 - Golden Flask",
+    "title": "Stage 95 - Avalon Alchemy",
     "bottles": [
       [
+        "yellow",
+        "pink",
+        "teal",
+        "pink"
+      ],
+      [
+        "orange",
+        "orange",
         "blue",
-        "purple",
-        "red",
         "green"
       ],
       [
-        "teal",
         "green",
         "blue",
-        "red"
+        "lime",
+        "teal"
+      ],
+      [
+        "purple",
+        "green",
+        "yellow",
+        "cyan"
       ],
       [
         "green",
-        "cyan",
-        "blue",
-        "yellow"
-      ],
-      [
-        "teal",
-        "cyan",
+        "lime",
         "red",
-        "orange"
+        "blue"
       ],
       [
         "purple",
-        "purple",
+        "teal",
         "yellow",
         "blue"
       ],
       [
-        "cyan",
         "red",
-        "yellow",
-        "teal"
+        "red",
+        "pink",
+        "orange"
       ],
       [
         "cyan",
+        "cyan",
+        "cyan",
+        "pink"
+      ],
+      [
+        "lime",
+        "lime",
+        "yellow",
+        "red"
+      ],
+      [
         "teal",
-        "green",
+        "orange",
+        "purple",
         "purple"
       ],
-      [
-        "orange",
-        "orange",
-        "orange",
-        "yellow"
-      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 96,
-    "title": "Stage 96 - Silver Shimmer",
+    "title": "Stage 96 - Atlantis Aqua",
     "bottles": [
       [
+        "blue",
+        "blue",
+        "blue",
+        "pink"
+      ],
+      [
         "orange",
+        "purple",
+        "green",
+        "pink"
+      ],
+      [
+        "yellow",
+        "red",
+        "lime",
+        "yellow"
+      ],
+      [
+        "pink",
+        "blue",
         "orange",
-        "teal",
         "green"
       ],
       [
         "yellow",
-        "blue",
-        "lime",
-        "purple"
-      ],
-      [
-        "lime",
-        "teal",
-        "orange",
-        "blue"
-      ],
-      [
         "pink",
         "green",
-        "green",
-        "pink"
-      ],
-      [
-        "yellow",
-        "purple",
-        "lime",
-        "pink"
-      ],
-      [
-        "teal",
-        "orange",
-        "pink",
-        "blue"
-      ],
-      [
-        "purple",
-        "yellow",
-        "yellow",
         "lime"
       ],
       [
-        "teal",
         "green",
         "purple",
-        "blue"
+        "lime",
+        "orange"
+      ],
+      [
+        "red",
+        "lime",
+        "teal",
+        "cyan"
+      ],
+      [
+        "cyan",
+        "cyan",
+        "teal",
+        "purple"
+      ],
+      [
+        "orange",
+        "red",
+        "red",
+        "cyan"
+      ],
+      [
+        "teal",
+        "teal",
+        "yellow",
+        "purple"
       ],
       [],
       []
@@ -4384,167 +6190,206 @@ export const STAGES = [
   },
   {
     "stage": 97,
-    "title": "Stage 97 - Cosmic Blend",
+    "title": "Stage 97 - Genesis Gush",
     "bottles": [
       [
         "blue",
-        "orange",
-        "blue",
+        "teal",
+        "green",
+        "pink"
+      ],
+      [
+        "green",
+        "red",
+        "lime",
         "cyan"
       ],
       [
-        "purple",
-        "purple",
-        "green",
-        "lime"
-      ],
-      [
         "green",
         "pink",
-        "green",
-        "purple"
+        "orange",
+        "orange"
       ],
       [
+        "pink",
+        "pink",
         "blue",
-        "orange",
-        "orange",
-        "lime"
-      ],
-      [
-        "green",
-        "cyan",
-        "lime",
         "purple"
       ],
       [
-        "red",
-        "orange",
-        "pink",
+        "yellow",
+        "yellow",
+        "green",
+        "purple"
+      ],
+      [
+        "yellow",
+        "teal",
+        "teal",
         "lime"
       ],
       [
         "red",
-        "pink",
+        "lime",
+        "yellow",
+        "cyan"
+      ],
+      [
+        "cyan",
+        "purple",
+        "blue",
+        "purple"
+      ],
+      [
+        "orange",
         "red",
+        "cyan",
         "blue"
       ],
       [
-        "cyan",
+        "lime",
+        "teal",
         "red",
-        "pink",
-        "cyan"
+        "orange"
       ],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 98,
-    "title": "Stage 98 - Vortex Fusion",
+    "title": "Stage 98 - Infinity Infusion",
     "bottles": [
       [
-        "lime",
+        "red",
         "purple",
         "red",
-        "cyan"
-      ],
-      [
-        "cyan",
-        "purple",
-        "teal",
-        "teal"
-      ],
-      [
-        "orange",
-        "blue",
-        "orange",
-        "teal"
-      ],
-      [
-        "red",
-        "blue",
-        "lime",
-        "lime"
-      ],
-      [
-        "teal",
-        "yellow",
-        "blue",
         "yellow"
       ],
       [
-        "yellow",
-        "purple",
-        "purple",
-        "lime"
+        "orange",
+        "orange",
+        "teal",
+        "yellow"
       ],
       [
-        "yellow",
+        "green",
+        "pink",
+        "pink",
+        "pink"
+      ],
+      [
+        "pink",
+        "teal",
+        "purple",
+        "yellow"
+      ],
+      [
         "blue",
+        "purple",
+        "green",
+        "green"
+      ],
+      [
+        "teal",
+        "blue",
+        "green",
+        "cyan"
+      ],
+      [
+        "red",
+        "cyan",
         "orange",
-        "red"
+        "yellow"
       ],
       [
         "cyan",
-        "orange",
         "cyan",
+        "blue",
+        "orange"
+      ],
+      [
+        "lime",
+        "lime",
+        "purple",
         "red"
       ],
+      [
+        "teal",
+        "lime",
+        "lime",
+        "blue"
+      ],
+      [],
+      [],
       [],
       []
     ]
   },
   {
     "stage": 99,
-    "title": "Stage 99 - Twilight Draught",
+    "title": "Stage 99 - Supreme Swirl",
     "bottles": [
       [
-        "cyan",
         "blue",
-        "green",
-        "yellow"
+        "blue",
+        "yellow",
+        "purple"
       ],
       [
-        "red",
-        "blue",
+        "pink",
+        "orange",
         "orange",
         "pink"
       ],
       [
-        "teal",
-        "blue",
-        "blue",
-        "yellow"
-      ],
-      [
-        "cyan",
-        "teal",
-        "red",
-        "red"
-      ],
-      [
+        "green",
         "pink",
-        "pink",
-        "pink",
-        "orange"
-      ],
-      [
-        "teal",
-        "yellow",
-        "orange",
-        "orange"
-      ],
-      [
-        "cyan",
-        "yellow",
-        "cyan",
+        "lime",
         "green"
       ],
       [
+        "pink",
+        "lime",
+        "yellow",
+        "cyan"
+      ],
+      [
         "green",
         "teal",
-        "green",
+        "yellow",
         "red"
+      ],
+      [
+        "purple",
+        "teal",
+        "purple",
+        "cyan"
+      ],
+      [
+        "red",
+        "red",
+        "teal",
+        "blue"
+      ],
+      [
+        "cyan",
+        "red",
+        "blue",
+        "lime"
+      ],
+      [
+        "lime",
+        "orange",
+        "cyan",
+        "orange"
+      ],
+      [
+        "teal",
+        "yellow",
+        "purple",
+        "green"
       ],
       [],
       []
@@ -4552,56 +6397,69 @@ export const STAGES = [
   },
   {
     "stage": 100,
-    "title": "Stage 100 - Starlight Stream",
+    "title": "Stage 100 - Grandmaster Finale",
     "bottles": [
       [
-        "orange",
+        "lime",
         "cyan",
         "green",
+        "blue"
+      ],
+      [
+        "orange",
+        "pink",
+        "teal",
         "green"
       ],
       [
-        "red",
-        "cyan",
-        "cyan",
-        "pink"
-      ],
-      [
-        "green",
         "lime",
-        "teal",
+        "purple",
+        "red",
         "orange"
       ],
       [
-        "lime",
-        "lime",
         "orange",
-        "lime"
+        "lime",
+        "yellow",
+        "cyan"
       ],
       [
-        "red",
-        "teal",
-        "red",
-        "pink"
-      ],
-      [
-        "pink",
         "purple",
         "red",
-        "green"
+        "pink",
+        "yellow"
       ],
       [
+        "blue",
+        "red",
+        "blue",
+        "yellow"
+      ],
+      [
+        "green",
         "pink",
-        "teal",
+        "orange",
+        "yellow"
+      ],
+      [
         "cyan",
-        "teal"
-      ],
-      [
-        "purple",
-        "purple",
-        "orange",
+        "cyan",
+        "red",
         "purple"
       ],
+      [
+        "pink",
+        "green",
+        "lime",
+        "blue"
+      ],
+      [
+        "teal",
+        "teal",
+        "teal",
+        "purple"
+      ],
+      [],
       [],
       []
     ]
