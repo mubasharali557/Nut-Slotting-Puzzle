@@ -63,19 +63,19 @@ export default function GameNavbar({
           {/* Potion Bottles Trio Graphic */}
           <div className="relative flex items-end -space-x-1 sm:-space-x-1.5 pb-0.5 scale-90 sm:scale-100 origin-left">
             {/* Blue potion */}
-            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-gradient-to-b from-blue-400 to-blue-600 border border-white/60 shadow-sm transform -rotate-12 flex flex-col justify-between p-0.5">
+            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-gradient-to-b from-sky-400 to-blue-500 border border-white/80 shadow-sm transform -rotate-12 flex flex-col justify-between p-0.5">
               <div className="w-1.5 sm:w-2 h-0.5 sm:h-1 bg-amber-700 mx-auto rounded-t-sm" />
-              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/40 rounded-full mx-auto mb-0.5" />
+              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full mx-auto mb-0.5" />
             </div>
             {/* Magenta center potion */}
-            <div className="w-4.5 h-7.5 sm:w-5 sm:h-8.5 rounded-b-lg rounded-t-sm bg-gradient-to-b from-pink-400 to-fuchsia-600 border border-white/80 shadow-md z-10 flex flex-col justify-between p-0.5">
+            <div className="w-4.5 h-7.5 sm:w-5 sm:h-8.5 rounded-b-lg rounded-t-sm bg-gradient-to-b from-pink-400 to-fuchsia-500 border border-white/95 shadow-md z-10 flex flex-col justify-between p-0.5">
               <div className="w-2 sm:w-2.5 h-0.5 sm:h-1 bg-amber-700 mx-auto rounded-t-sm" />
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/40 rounded-full mx-auto mb-0.5 animate-pulse" />
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/60 rounded-full mx-auto mb-0.5 animate-pulse" />
             </div>
             {/* Yellow potion */}
-            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-gradient-to-b from-amber-300 to-yellow-500 border border-white/60 shadow-sm transform rotate-12 flex flex-col justify-between p-0.5">
+            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-gradient-to-b from-yellow-300 to-amber-400 border border-white/80 shadow-sm transform rotate-12 flex flex-col justify-between p-0.5">
               <div className="w-1.5 sm:w-2 h-0.5 sm:h-1 bg-amber-700 mx-auto rounded-t-sm" />
-              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/40 rounded-full mx-auto mb-0.5" />
+              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full mx-auto mb-0.5" />
             </div>
           </div>
 

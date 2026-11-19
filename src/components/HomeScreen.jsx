@@ -35,10 +35,10 @@ export default function HomeScreen({
               {/* Glass Gloss highlight */}
               <div className="absolute top-2 left-1 bottom-2 w-1 bg-gradient-to-b from-white/70 via-white/30 to-transparent rounded-full z-20 pointer-events-none" />
               {/* 4 Colored Water Layers */}
-              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-amber-400 to-yellow-500 border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-blue-500 to-indigo-600 border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-emerald-400 to-green-600 border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-gradient-to-r from-rose-500 to-red-600" />
+              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-amber-300 to-yellow-400 border-b border-black/15" />
+              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-blue-400 to-indigo-500 border-b border-black/15" />
+              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-emerald-300 to-teal-400 border-b border-black/15" />
+              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-gradient-to-r from-rose-400 to-red-500" />
             </div>
 
             {/* Center Main Test Tube (Taller, 0deg) */}
@@ -50,10 +50,10 @@ export default function HomeScreen({
               {/* Micro animated bubble */}
               <div className="absolute top-7 right-2 w-1.5 h-1.5 bg-white/60 rounded-full animate-ping z-20 pointer-events-none" style={{ animationDuration: '2.2s' }} />
               {/* 4 Colored Water Layers */}
-              <div className="w-full h-3.5 sm:h-4.5 bg-gradient-to-r from-fuchsia-400 to-pink-600 border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-4.5 bg-gradient-to-r from-yellow-300 to-amber-500 border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-4.5 bg-gradient-to-r from-cyan-400 to-teal-500 border-b border-black/20" />
-              <div className="w-full h-4 sm:h-6 rounded-b-xl bg-gradient-to-r from-purple-500 to-indigo-700" />
+              <div className="w-full h-3.5 sm:h-4.5 bg-gradient-to-r from-fuchsia-300 to-pink-500 border-b border-black/15" />
+              <div className="w-full h-3.5 sm:h-4.5 bg-gradient-to-r from-yellow-200 to-amber-400 border-b border-black/15" />
+              <div className="w-full h-3.5 sm:h-4.5 bg-gradient-to-r from-cyan-300 to-teal-400 border-b border-black/15" />
+              <div className="w-full h-4 sm:h-6 rounded-b-xl bg-gradient-to-r from-purple-400 to-indigo-500" />
             </div>
 
             {/* Right Test Tube (Tilted +12deg) */}
@@ -63,10 +63,10 @@ export default function HomeScreen({
               {/* Glass Gloss highlight */}
               <div className="absolute top-2 left-1 bottom-2 w-1 bg-gradient-to-b from-white/70 via-white/30 to-transparent rounded-full z-20 pointer-events-none" />
               {/* 4 Colored Water Layers */}
-              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-sky-400 to-blue-500 border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-orange-400 to-amber-600 border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-pink-400 to-rose-500 border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-gradient-to-r from-emerald-500 to-green-700" />
+              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-sky-300 to-blue-400 border-b border-black/15" />
+              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-orange-300 to-amber-400 border-b border-black/15" />
+              <div className="w-full h-3 sm:h-4 bg-gradient-to-r from-pink-300 to-rose-400 border-b border-black/15" />
+              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-gradient-to-r from-emerald-400 to-green-500" />
             </div>
           </div>
 

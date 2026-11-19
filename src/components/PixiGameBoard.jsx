@@ -817,12 +817,22 @@ export default function PixiGameBoard({
           // Solid 100% vibrant color
           liqG.fill({ color: colorInfo.num, alpha: 1.0 });
 
+          // Top surface subtle luminosity sheen for extra radiance
+          liqG.beginPath();
+          liqG.rect(-r_in + 1, y_top + 0.5, w_in - 2, Math.min(3.5, Math.max(1, (y_bottom - y_top) * 0.22)));
+          liqG.fill({ color: 0xffffff, alpha: 0.16 });
+
           // Crisp separator line between adjacent colors
           if (!isAbsoluteTop && y_top < y_center) {
             liqG.beginPath();
             liqG.moveTo(-r_in + 1, y_top);
             liqG.lineTo(r_in - 1, y_top);
-            liqG.stroke({ width: 1.5, color: 0x000000, alpha: 0.22 });
+            liqG.stroke({ width: 1.2, color: 0x000000, alpha: 0.15 });
+
+            liqG.beginPath();
+            liqG.moveTo(-r_in + 2, y_top - 0.5);
+            liqG.lineTo(r_in - 2, y_top - 0.5);
+            liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.35 });
           }
 
           // Top liquid surface meniscus curve
@@ -833,25 +843,31 @@ export default function PixiGameBoard({
               liqG.beginPath();
               liqG.moveTo(-r_in, y_tl);
               liqG.lineTo(r_in, y_tr);
-              liqG.stroke({ width: 2, color: colorInfo.lightNum || 0xffffff, alpha: 0.7 });
+              liqG.stroke({ width: 2, color: colorInfo.lightNum || 0xffffff, alpha: 0.85 });
             } else {
               let meniscusW = r_in - 1.5;
               if (y_top >= y_center) {
                 const dy = Math.max(0, Math.min(r_in, y_top - y_center));
                 meniscusW = Math.max(2, Math.sqrt(Math.max(0, r_in * r_in - dy * dy)) - 1);
               }
-              liqG.ellipse(0, y_top + waveRipple, meniscusW, 2.5);
-              liqG.fill({ color: colorInfo.lightNum || 0xffffff, alpha: 0.75 });
-              liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.45 });
+              liqG.ellipse(0, y_top + waveRipple, meniscusW, 2.6);
+              liqG.fill({ color: colorInfo.lightNum || 0xffffff, alpha: 0.90 });
+              liqG.stroke({ width: 1.0, color: 0xffffff, alpha: 0.65 });
             }
           }
 
-          // 3D vertical gloss streak
+          // 3D vertical primary gloss highlight
           if (y_top < y_floor - 4) {
             liqG.beginPath();
-            liqG.moveTo(-r_in + 3.5, y_top + 1);
-            liqG.lineTo(-r_in + 3.5, Math.min(y_bottom - 1, y_center + 4));
-            liqG.stroke({ width: 1.8, color: 0xffffff, alpha: 0.35 });
+            liqG.moveTo(-r_in + 3, y_top + 1);
+            liqG.lineTo(-r_in + 3, Math.min(y_bottom - 1, y_center + 4));
+            liqG.stroke({ width: 2.2, color: 0xffffff, alpha: 0.48 });
+
+            // Secondary softer gloss streak
+            liqG.beginPath();
+            liqG.moveTo(-r_in + 5.5, y_top + 2);
+            liqG.lineTo(-r_in + 5.5, Math.min(y_bottom - 2, y_center + 2));
+            liqG.stroke({ width: 1.0, color: 0xffffff, alpha: 0.22 });
           }
 
           currentBottom = y_top;
