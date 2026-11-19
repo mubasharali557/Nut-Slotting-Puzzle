@@ -332,11 +332,11 @@ export default function PixiGameBoard({
           const homeX = fromTube.x;
           const homeY = fromTube.y;
 
-          if (rawProgress < 0.26) {
+          if (rawProgress < 0.22) {
             // ==========================================
-            // PHASE 1: Move & Tilt towards target mouth
+            // PHASE 1: Move & Tilt towards target mouth (0.00 -> 0.22)
             // ==========================================
-            const sub = easeInOutCubic(rawProgress / 0.26);
+            const sub = easeInOutCubic(rawProgress / 0.22);
             const currTilt = maxTilt * sub;
 
             // Compute offset from mouth center to lower spout lip
@@ -354,13 +354,13 @@ export default function PixiGameBoard({
               rotation: currTilt,
             };
             transferredUnits = 0;
-          } else if (rawProgress < 0.76) {
+          } else if (rawProgress < 0.80) {
             // ==========================================
-            // PHASE 2: Realistic Continuous Pour Stream
+            // PHASE 2: Realistic Continuous Pour Stream (0.22 -> 0.80)
             // ==========================================
-            const sub = (rawProgress - 0.26) / 0.5;
+            const sub = (rawProgress - 0.22) / 0.58;
             // Slight tilt deepening and subtle fluid wobble
-            const tiltAngle = maxTilt * (1 + 0.04 * sub);
+            const tiltAngle = maxTilt * (1 + 0.03 * Math.sin(sub * Math.PI));
 
             const cosA = Math.cos(tiltAngle);
             const sinA = Math.sin(tiltAngle);
@@ -379,42 +379,43 @@ export default function PixiGameBoard({
             transferredUnits = sub * amount;
             isPouringStreamActive = true;
 
-            // Spout world position sits directly at the destination mouth opening
-            const spoutWorldX = toTube.x;
-            const spoutWorldY = toTube.y - 10;
-
-            // Surface of the liquid inside destination tube
-            const fluidH = toTube.height - 16;
-            const slotH = fluidH / CAPACITY;
+            // Surface of the liquid inside destination tube (fully fills near brim)
+            const topLipGap = 7;
+            const floorInset = 2.5;
+            const totalLiquidH = Math.max(40, toTube.height - floorInset - topLipGap);
+            const slotH = totalLiquidH / CAPACITY;
             const currentTotal = state.bottles[toIdx].length + transferredUnits;
-            const targetFluidY = toTube.y + toTube.height - (currentTotal * slotH);
+            const targetFluidY = toTube.y + (toTube.height - floorInset) - (currentTotal * slotH);
+
+            const streamFade = sub > 0.88 ? Math.max(0, (1 - sub) / 0.12) : 1.0;
 
             streamCoords = {
-              fromX: spoutWorldX,
-              fromY: spoutWorldY,
+              fromX: toTube.x,
+              fromY: toTube.y - 10,
               toX: toTube.x,
               toY: targetFluidY,
               color,
               time: state.animTime,
+              fade: streamFade,
             };
 
             // Splash particles at the impact surface
-            if (Math.random() < 0.6) {
+            if (Math.random() < 0.55 && streamFade > 0.1) {
               state.splashParticles.push({
-                x: toTube.x + (Math.random() * 12 - 6),
+                x: toTube.x + (Math.random() * 10 - 5),
                 y: targetFluidY + (Math.random() * 2 - 1),
-                vx: (Math.random() - 0.5) * 2.6,
-                vy: -Math.random() * 2.6 - 1.0,
-                radius: Math.random() * 2.2 + 1.0,
+                vx: (Math.random() - 0.5) * 2.4,
+                vy: -Math.random() * 2.4 - 0.8,
+                radius: Math.random() * 2.0 + 1.0,
                 color: TUBE_COLORS[color]?.num || 0xfacc15,
                 alpha: 1,
               });
             }
           } else if (rawProgress < 1.0) {
             // ==========================================
-            // PHASE 3: Rotate upright & settle back home
+            // PHASE 3: Rotate upright & settle back home (0.80 -> 1.00)
             // ==========================================
-            const sub = (rawProgress - 0.76) / 0.24;
+            const sub = (rawProgress - 0.80) / 0.20;
             const easedSub = easeOutQuad(sub);
             const currTilt = maxTilt * (1 - easeInOutCubic(sub));
 
@@ -433,6 +434,7 @@ export default function PixiGameBoard({
             };
 
             transferredUnits = amount;
+            isPouringStreamActive = false;
           } else {
             // ==========================================
             // Pouring Complete: Commit state cleanly
@@ -472,8 +474,10 @@ export default function PixiGameBoard({
             propsRef.current.onBottlesChange(newBottles);
 
             if (checkWin(newBottles)) {
-              gameAudio.playWin();
-              propsRef.current.onWin();
+              setTimeout(() => {
+                gameAudio.playWin();
+                propsRef.current.onWin();
+              }, 250);
             }
           }
         }
@@ -633,6 +637,17 @@ export default function PixiGameBoard({
           liqGraphics.clear();
           glsGraphics.clear();
 
+          let tubeRipple = 0;
+          if (isPourDest && state.isAnimating) {
+            const rawProg = Math.min(1, state.animTime / state.animDuration);
+            if (rawProg < 0.80) {
+              tubeRipple = Math.sin(state.time * 22) * 1.5;
+            } else {
+              const settleSub = (rawProg - 0.80) / 0.20;
+              tubeRipple = Math.sin(settleSub * Math.PI * 4) * Math.max(0, 1 - settleSub) * 1.5;
+            }
+          }
+
           renderTubeGraphics(
             t.width,
             t.height,
@@ -641,7 +656,7 @@ export default function PixiGameBoard({
             isSelected,
             liqGraphics,
             glsGraphics,
-            isPourDest ? Math.sin(state.time * 20) * 1.5 : 0
+            tubeRipple
           );
         }
 
@@ -653,15 +668,18 @@ export default function PixiGameBoard({
           const { fromX, fromY, toX, toY, color, time } = streamCoords;
           const streamColor = TUBE_COLORS[color]?.streamNum || 0xfacc15;
           const wobble = Math.sin(time * 24) * 0.9;
+          const streamFade = streamCoords.fade ?? 1.0;
+          const streamWidth = Math.max(1, 5.5 * streamFade);
+          const streamAlpha = Math.min(0.95, streamFade * 0.95);
 
           // Main fluid stream column
           streamLayer.beginPath();
           streamLayer.moveTo(fromX, fromY);
           streamLayer.lineTo(toX + wobble, toY);
           streamLayer.stroke({
-            width: 5.5,
+            width: streamWidth,
             color: streamColor,
-            alpha: 0.95,
+            alpha: streamAlpha,
             cap: 'round',
           });
 
@@ -670,15 +688,15 @@ export default function PixiGameBoard({
           streamLayer.moveTo(fromX, fromY);
           streamLayer.lineTo(toX + wobble * 0.5, toY);
           streamLayer.stroke({
-            width: 2,
+            width: Math.max(0.5, 2 * streamFade),
             color: 0xffffff,
-            alpha: 0.85,
+            alpha: 0.85 * streamFade,
             cap: 'round',
           });
 
           // Surface ripple at entry point
-          splashLayer.ellipse(toX, toY, 6.5, 2.2);
-          splashLayer.fill({ color: streamColor, alpha: 0.8 });
+          splashLayer.ellipse(toX, toY, 6.5 * streamFade, 2.2 * streamFade);
+          splashLayer.fill({ color: streamColor, alpha: 0.8 * streamFade });
         }
 
         // Update & Render Splash Droplets
@@ -729,19 +747,28 @@ export default function PixiGameBoard({
         waveRipple = 0
       ) {
         const radius = w / 2;
-        const inset = 2.5;
+        const inset = 2.5; // glass wall thickness
         const r_in = radius - inset;
         const w_in = w - 2 * inset;
 
-        const fluidH = h - 16;
-        const slotH = fluidH / CAPACITY;
+        // Fully-filled liquid geometry:
+        // Top lip opening gap is only 7px (just below the glass rim lip at y = 0),
+        // and floor is at h - inset (the inner glass bottom curve).
+        const topLipGap = 7;
+        const floorInset = inset;
+        const totalLiquidH = Math.max(40, h - floorInset - topLipGap);
+        const slotH = totalLiquidH / CAPACITY;
+
+        // Geometry of the curved inner bottom
+        const y_center = h - r_in - floorInset;
+        const y_floor = h - floorInset;
 
         // Dynamic fluid tilt offset when tube is rotating
         const tiltY = Math.min(10, Math.abs(r_in * Math.sin(rot * 0.75)));
         const isTiltRight = rot > 0;
 
         // Draw Liquid Layers from Bottom (l = 0) Upward
-        let currentBottom = h;
+        let currentBottom = y_floor;
         for (let l = 0; l < renderList.length; l++) {
           const item = renderList[l];
           const colorInfo = TUBE_COLORS[item.color] || { num: 0x2563eb, lightNum: 0x60a5fa };
@@ -753,12 +780,26 @@ export default function PixiGameBoard({
           liqG.beginPath();
 
           if (l === 0) {
-            // U-tube semicircular bottom
-            liqG.moveTo(-r_in, y_top);
-            liqG.lineTo(-r_in, h - r_in);
-            liqG.arc(0, h - r_in, r_in, Math.PI, 0, true);
-            liqG.lineTo(r_in, y_top);
-            liqG.closePath();
+            // First liquid block (bottom of the tube)
+            if (y_top >= y_center) {
+              // Liquid is still filling inside the bottom semicircular bowl
+              const dy = Math.max(0, Math.min(r_in, y_top - y_center));
+              const halfW = Math.sqrt(Math.max(0, r_in * r_in - dy * dy));
+              const theta = Math.asin(Math.min(1.0, Math.max(0, dy / r_in)));
+
+              liqG.moveTo(-halfW, y_top);
+              liqG.arc(0, y_center, r_in, Math.PI - theta, theta, true);
+              liqG.lineTo(halfW, y_top);
+              liqG.closePath();
+            } else {
+              // Liquid has filled past the semicircular bowl into the vertical cylinder
+              liqG.moveTo(-r_in, y_top);
+              liqG.lineTo(-r_in, y_center);
+              liqG.arc(0, y_center, r_in, Math.PI, 0, true);
+              liqG.lineTo(r_in, y_center);
+              liqG.lineTo(r_in, y_top);
+              liqG.closePath();
+            }
           } else if (isAbsoluteTop && tiltY > 1) {
             // Angled top layer surface when tilted under gravity
             const y_tl = isTiltRight ? y_top + tiltY : y_top - tiltY;
@@ -769,19 +810,19 @@ export default function PixiGameBoard({
             liqG.lineTo(r_in, y_bottom);
             liqG.closePath();
           } else {
-            // Rectangular liquid block
-            liqG.rect(-r_in, y_top, w_in, layerHeight + 0.5);
+            // Rectangular liquid block for layers above the curved bottom
+            liqG.rect(-r_in, y_top, w_in, Math.max(0.5, y_bottom - y_top + 0.5));
           }
 
           // Solid 100% vibrant color
           liqG.fill({ color: colorInfo.num, alpha: 1.0 });
 
           // Crisp separator line between adjacent colors
-          if (!isAbsoluteTop) {
+          if (!isAbsoluteTop && y_top < y_center) {
             liqG.beginPath();
             liqG.moveTo(-r_in + 1, y_top);
             liqG.lineTo(r_in - 1, y_top);
-            liqG.stroke({ width: 1.5, color: 0x000000, alpha: 0.28 });
+            liqG.stroke({ width: 1.5, color: 0x000000, alpha: 0.22 });
           }
 
           // Top liquid surface meniscus curve
@@ -794,17 +835,24 @@ export default function PixiGameBoard({
               liqG.lineTo(r_in, y_tr);
               liqG.stroke({ width: 2, color: colorInfo.lightNum || 0xffffff, alpha: 0.7 });
             } else {
-              liqG.ellipse(0, y_top + waveRipple, r_in - 1.5, 3);
-              liqG.fill({ color: colorInfo.lightNum || 0xffffff, alpha: 0.65 });
-              liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.4 });
+              let meniscusW = r_in - 1.5;
+              if (y_top >= y_center) {
+                const dy = Math.max(0, Math.min(r_in, y_top - y_center));
+                meniscusW = Math.max(2, Math.sqrt(Math.max(0, r_in * r_in - dy * dy)) - 1);
+              }
+              liqG.ellipse(0, y_top + waveRipple, meniscusW, 2.5);
+              liqG.fill({ color: colorInfo.lightNum || 0xffffff, alpha: 0.75 });
+              liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.45 });
             }
           }
 
           // 3D vertical gloss streak
-          liqG.beginPath();
-          liqG.moveTo(-r_in + 3.5, y_top + 1);
-          liqG.lineTo(-r_in + 3.5, y_bottom - 1);
-          liqG.stroke({ width: 1.8, color: 0xffffff, alpha: 0.35 });
+          if (y_top < y_floor - 4) {
+            liqG.beginPath();
+            liqG.moveTo(-r_in + 3.5, y_top + 1);
+            liqG.lineTo(-r_in + 3.5, Math.min(y_bottom - 1, y_center + 4));
+            liqG.stroke({ width: 1.8, color: 0xffffff, alpha: 0.35 });
+          }
 
           currentBottom = y_top;
         }
