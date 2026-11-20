@@ -34,11 +34,11 @@ export default function HomeScreen({
               <div className="absolute top-0 inset-x-1.5 h-2 bg-gradient-to-r from-amber-700 to-amber-800 rounded-t-sm border-b border-amber-950 z-20" />
               {/* Glass Gloss highlight */}
               <div className="absolute top-2 left-1 bottom-2 w-1 bg-gradient-to-b from-white/80 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
-              {/* 4 Colored Water Layers - Ultra-Vibrant Primary Colors */}
-              <div className="w-full h-3 sm:h-4 bg-[#ffe600] shadow-[0_0_8px_rgba(255,230,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#0066ff] shadow-[0_0_8px_rgba(0,102,255,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#00e65b] shadow-[0_0_8px_rgba(0,230,91,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-[#ff0038] shadow-[0_0_8px_rgba(255,0,56,0.35)]" />
+              {/* 4 Colored Water Layers - Pure Solid Primary Colors */}
+              <div className="w-full h-3 sm:h-4 bg-[#ffff00] shadow-[0_0_8px_rgba(255,255,0,0.35)] border-b border-black/20" />
+              <div className="w-full h-3 sm:h-4 bg-[#0044ff] shadow-[0_0_8px_rgba(0,68,255,0.35)] border-b border-black/20" />
+              <div className="w-full h-3 sm:h-4 bg-[#00dd00] shadow-[0_0_8px_rgba(0,221,0,0.35)] border-b border-black/20" />
+              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-[#ff0000] shadow-[0_0_8px_rgba(255,0,0,0.35)]" />
             </div>
 
             {/* Center Main Test Tube (Taller, 0deg) */}
@@ -49,11 +49,11 @@ export default function HomeScreen({
               <div className="absolute top-2 left-1.5 bottom-2.5 w-1.5 bg-gradient-to-b from-white/90 via-white/50 to-transparent rounded-full z-20 pointer-events-none" />
               {/* Micro animated bubble */}
               <div className="absolute top-7 right-2 w-1.5 h-1.5 bg-white/90 rounded-full animate-ping z-20 pointer-events-none" style={{ animationDuration: '2.2s' }} />
-              {/* 4 Colored Water Layers - Ultra-Vibrant Primary Colors */}
-              <div className="w-full h-3.5 sm:h-4.5 bg-[#ff0099] shadow-[0_0_8px_rgba(255,0,153,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-4.5 bg-[#ffe600] shadow-[0_0_8px_rgba(255,230,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-4.5 bg-[#00e5ff] shadow-[0_0_8px_rgba(0,229,255,0.35)] border-b border-black/20" />
-              <div className="w-full h-4 sm:h-6 rounded-b-xl bg-[#a600ff] shadow-[0_0_8px_rgba(166,0,255,0.35)]" />
+              {/* 4 Colored Water Layers - Pure Solid Primary Colors */}
+              <div className="w-full h-3.5 sm:h-4.5 bg-[#ff007f] shadow-[0_0_8px_rgba(255,0,127,0.35)] border-b border-black/20" />
+              <div className="w-full h-3.5 sm:h-4.5 bg-[#ffff00] shadow-[0_0_8px_rgba(255,255,0,0.35)] border-b border-black/20" />
+              <div className="w-full h-3.5 sm:h-4.5 bg-[#00ffff] shadow-[0_0_8px_rgba(0,255,255,0.35)] border-b border-black/20" />
+              <div className="w-full h-4 sm:h-6 rounded-b-xl bg-[#9900ff] shadow-[0_0_8px_rgba(153,0,255,0.35)]" />
             </div>
 
             {/* Right Test Tube (Tilted +12deg) */}
@@ -62,11 +62,11 @@ export default function HomeScreen({
               <div className="absolute top-0 inset-x-1.5 h-2 bg-gradient-to-r from-amber-700 to-amber-800 rounded-t-sm border-b border-amber-950 z-20" />
               {/* Glass Gloss highlight */}
               <div className="absolute top-2 left-1 bottom-2 w-1 bg-gradient-to-b from-white/80 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
-              {/* 4 Colored Water Layers - Ultra-Vibrant Primary Colors */}
-              <div className="w-full h-3 sm:h-4 bg-[#0066ff] shadow-[0_0_8px_rgba(0,102,255,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#ff6600] shadow-[0_0_8px_rgba(255,102,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#ff0038] shadow-[0_0_8px_rgba(255,0,56,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-[#80ff00] shadow-[0_0_8px_rgba(128,255,0,0.35)]" />
+              {/* 4 Colored Water Layers - Pure Solid Primary Colors */}
+              <div className="w-full h-3 sm:h-4 bg-[#0044ff] shadow-[0_0_8px_rgba(0,68,255,0.35)] border-b border-black/20" />
+              <div className="w-full h-3 sm:h-4 bg-[#ff7700] shadow-[0_0_8px_rgba(255,119,0,0.35)] border-b border-black/20" />
+              <div className="w-full h-3 sm:h-4 bg-[#ff0000] shadow-[0_0_8px_rgba(255,0,0,0.35)] border-b border-black/20" />
+              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-[#99ff00] shadow-[0_0_8px_rgba(153,255,0,0.35)]" />
             </div>
           </div>
 
