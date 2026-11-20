@@ -524,10 +524,10 @@ export default function PixiGameBoard({
           tubeContainer.rotation = rot;
           tubeContainer.pivot.set(0, 0); // stable mouth-center pivot
 
-          // Base shadow on ground
+          // Base shadow on ground (Flat shelf shadow matching flask base)
           if (rot === 0) {
-            const shadowAlpha = isSelected ? 0.40 : 0.40;
-            shadowsLayer.ellipse(t.x, t.y + t.height + 6, t.width * 0.42, 3.5);
+            const shadowAlpha = isSelected ? 0.45 : 0.40;
+            shadowsLayer.ellipse(t.x, t.y + t.height + 4, t.width * 0.48, 4.0);
             shadowsLayer.fill({ color: 0x000000, alpha: shadowAlpha });
           }
 
@@ -736,7 +736,9 @@ export default function PixiGameBoard({
         }
       });
 
-      // Render single test tube graphics in its local coordinate space
+      // Render single test tube flask graphics in its local coordinate space
+      // Styled matching the reference image: flared lip collar, narrow neck, curving shoulders,
+      // flat base with rounded corners, organic fluid wave surface, and sparkling micro-bubbles!
       function renderTubeGraphics(
         w,
         h,
@@ -747,22 +749,24 @@ export default function PixiGameBoard({
         glsG,
         waveRipple = 0
       ) {
-        const radius = w / 2;
-        const inset = 2.5; // glass wall thickness
-        const r_in = radius - inset;
-        const w_in = w - 2 * inset;
+        const r = w / 2;
+        const r_rim = r * 0.96;
+        const lip_h = Math.max(5, Math.round(h * 0.046));
+        const neck_y = Math.max(12, Math.round(h * 0.11));
+        const r_neck = r * 0.70;
+        const shoulder_y = Math.max(24, Math.round(h * 0.20));
+        const r_base = Math.max(4, Math.min(8, Math.round(w * 0.18)));
+
+        const inset = 2.4; // glass wall thickness
+        const r_in = r - inset;
+        const r_neck_in = r_neck - inset;
+        const r_base_in = Math.max(2, r_base - inset);
+        const y_floor = h - inset;
 
         // Fully-filled liquid geometry:
-        // Top lip opening gap is only 7px (just below the glass rim lip at y = 0),
-        // and floor is at h - inset (the inner glass bottom curve).
-        const topLipGap = 7;
-        const floorInset = inset;
-        const totalLiquidH = Math.max(40, h - floorInset - topLipGap);
+        // Available liquid column from flat base floor up to shoulder line
+        const totalLiquidH = Math.max(40, y_floor - shoulder_y);
         const slotH = totalLiquidH / CAPACITY;
-
-        // Geometry of the curved inner bottom
-        const y_center = h - r_in - floorInset;
-        const y_floor = h - floorInset;
 
         // Dynamic fluid tilt offset when tube is rotating
         const tiltY = Math.min(10, Math.abs(r_in * Math.sin(rot * 0.75)));
@@ -772,50 +776,50 @@ export default function PixiGameBoard({
         let currentBottom = y_floor;
         for (let l = 0; l < renderList.length; l++) {
           const item = renderList[l];
-          const colorInfo = TUBE_COLORS[item.color] || { num: 0x0066ff, lightNum: 0x80b3ff };
+          const colorInfo = TUBE_COLORS[item.color] || { num: 0x0055ff, lightNum: 0x73a6ff };
           const layerHeight = slotH * item.fraction;
           const y_bottom = currentBottom;
           const y_top = y_bottom - layerHeight;
           const isAbsoluteTop = l === renderList.length - 1;
 
+          // Effective top width if reaching into shoulder
+          const curTopW = y_top < shoulder_y 
+            ? Math.max(r_neck_in, r_in - (r_in - r_neck_in) * ((shoulder_y - y_top) / Math.max(1, shoulder_y - neck_y)))
+            : r_in;
+
           liqG.beginPath();
 
           if (l === 0) {
-            // First liquid block (bottom of the tube)
-            if (y_top >= y_center) {
-              // Liquid is still filling inside the bottom semicircular bowl
-              const dy = Math.max(0, Math.min(r_in, y_top - y_center));
-              const halfW = Math.sqrt(Math.max(0, r_in * r_in - dy * dy));
-              const theta = Math.asin(Math.min(1.0, Math.max(0, dy / r_in)));
-
-              liqG.moveTo(-halfW, y_top);
-              liqG.arc(0, y_center, r_in, Math.PI - theta, theta, true);
-              liqG.lineTo(halfW, y_top);
-              liqG.closePath();
-            } else {
-              // Liquid has filled past the semicircular bowl into the vertical cylinder
-              liqG.moveTo(-r_in, y_top);
-              liqG.lineTo(-r_in, y_center);
-              liqG.arc(0, y_center, r_in, Math.PI, 0, true);
-              liqG.lineTo(r_in, y_center);
-              liqG.lineTo(r_in, y_top);
-              liqG.closePath();
-            }
+            // Base liquid block with flat bottom and rounded corners
+            liqG.moveTo(-r_in, y_top);
+            liqG.lineTo(-r_in, y_floor - r_base_in);
+            liqG.quadraticCurveTo(-r_in, y_floor, -r_in + r_base_in, y_floor);
+            liqG.lineTo(r_in - r_base_in, y_floor);
+            liqG.quadraticCurveTo(r_in, y_floor, r_in, y_floor - r_base_in);
+            liqG.lineTo(r_in, y_top);
+            liqG.closePath();
           } else if (isAbsoluteTop && tiltY > 1) {
             // Angled top layer surface when tilted under gravity
             const y_tl = isTiltRight ? y_top + tiltY : y_top - tiltY;
             const y_tr = isTiltRight ? y_top - tiltY : y_top + tiltY;
+            liqG.moveTo(-curTopW, y_bottom);
+            liqG.lineTo(-curTopW, y_tl);
+            liqG.lineTo(curTopW, y_tr);
+            liqG.lineTo(curTopW, y_bottom);
+            liqG.closePath();
+          } else if (y_top < shoulder_y) {
+            // Upper layer tapering smoothly into shoulder curve
             liqG.moveTo(-r_in, y_bottom);
-            liqG.lineTo(-r_in, y_tl);
-            liqG.lineTo(r_in, y_tr);
+            liqG.lineTo(-curTopW, y_top);
+            liqG.lineTo(curTopW, y_top);
             liqG.lineTo(r_in, y_bottom);
             liqG.closePath();
           } else {
-            // Rectangular liquid block for layers above the curved bottom
-            liqG.rect(-r_in, y_top, w_in, Math.max(0.5, y_bottom - y_top + 0.5));
+            // Regular rectangular liquid block in cylindrical body
+            liqG.rect(-r_in, y_top, r_in * 2, Math.max(0.5, y_bottom - y_top + 0.5));
           }
 
-          // Solid 100% clean, pure primary liquid color
+          // Solid 100% clean, ultra-vibrant pure liquid pigment
           liqG.fill({ color: colorInfo.num, alpha: 1.0 });
 
           // Crisp separator line between adjacent liquid layers for razor-sharp distinction
@@ -823,44 +827,90 @@ export default function PixiGameBoard({
             liqG.beginPath();
             liqG.moveTo(-r_in + 1, y_top);
             liqG.lineTo(r_in - 1, y_top);
-            liqG.stroke({ width: 1.4, color: 0x000000, alpha: 0.28 });
+            liqG.stroke({ width: 1.5, color: 0x000000, alpha: 0.28 });
 
             liqG.beginPath();
-            liqG.moveTo(-r_in + 2, y_top - 0.6);
-            liqG.lineTo(r_in - 2, y_top - 0.6);
-            liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.26 });
+            liqG.moveTo(-r_in + 2, y_top - 0.5);
+            liqG.lineTo(r_in - 2, y_top - 0.5);
+            liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.30 });
           }
 
-          // Top liquid surface meniscus curve
+          // Top liquid surface organic wave / meniscus curve (matching reference image)
           if (isAbsoluteTop) {
             if (tiltY > 1) {
               const y_tl = isTiltRight ? y_top + tiltY : y_top - tiltY;
               const y_tr = isTiltRight ? y_top - tiltY : y_top + tiltY;
               liqG.beginPath();
-              liqG.moveTo(-r_in, y_tl);
-              liqG.lineTo(r_in, y_tr);
-              liqG.stroke({ width: 2, color: colorInfo.lightNum || 0xffffff, alpha: 0.85 });
+              liqG.moveTo(-curTopW, y_tl);
+              liqG.lineTo(curTopW, y_tr);
+              liqG.stroke({ width: 2.4, color: colorInfo.lightNum || 0xffffff, alpha: 0.90 });
             } else {
-              let meniscusW = r_in - 1.5;
-              if (y_top >= y_center) {
-                const dy = Math.max(0, Math.min(r_in, y_top - y_center));
-                meniscusW = Math.max(2, Math.sqrt(Math.max(0, r_in * r_in - dy * dy)) - 1);
-              }
-              liqG.ellipse(0, y_top + waveRipple, meniscusW, 2.6);
-              liqG.fill({ color: colorInfo.lightNum || 0xffffff, alpha: 0.90 });
-              liqG.stroke({ width: 1.0, color: 0xffffff, alpha: 0.65 });
+              // Dynamic organic fluid wave curve
+              const waveAmp = 2.4 + Math.sin(state.time * 4 + waveRipple) * 0.8;
+              liqG.beginPath();
+              liqG.moveTo(-curTopW, y_top);
+              liqG.bezierCurveTo(
+                -curTopW * 0.35, y_top - waveAmp,
+                curTopW * 0.35, y_top + waveAmp,
+                curTopW, y_top
+              );
+              liqG.stroke({ width: 2.2, color: colorInfo.lightNum || 0xffffff, alpha: 0.95 });
+
+              // Subtle luminous meniscus surface cap
+              liqG.beginPath();
+              liqG.moveTo(-curTopW, y_top);
+              liqG.bezierCurveTo(
+                -curTopW * 0.35, y_top - waveAmp,
+                curTopW * 0.35, y_top + waveAmp,
+                curTopW, y_top
+              );
+              liqG.bezierCurveTo(
+                curTopW * 0.35, y_top + waveAmp + 1.8,
+                -curTopW * 0.35, y_top - waveAmp + 1.8,
+                -curTopW, y_top
+              );
+              liqG.fill({ color: colorInfo.lightNum || 0xffffff, alpha: 0.30 });
+            }
+          }
+
+          // Effervescent sparkling micro-bubbles inside liquid (just like reference image!)
+          const bubblePattern = [
+            { rx: -0.42, ry: 0.32, rad: 1.5, alpha: 0.65 },
+            { rx: -0.12, ry: 0.68, rad: 1.1, alpha: 0.50 },
+            { rx: 0.28, ry: 0.28, rad: 1.8, alpha: 0.70 },
+            { rx: 0.52, ry: 0.60, rad: 1.2, alpha: 0.55 },
+            { rx: -0.30, ry: 0.82, rad: 0.9, alpha: 0.40 },
+            { rx: 0.12, ry: 0.50, rad: 1.6, alpha: 0.60 },
+            { rx: 0.40, ry: 0.76, rad: 1.0, alpha: 0.45 },
+          ];
+          for (let bIdx = 0; bIdx < bubblePattern.length; bIdx++) {
+            const b = bubblePattern[bIdx];
+            const bx = b.rx * (curTopW - 3);
+            const by = y_top + b.ry * (y_bottom - y_top);
+            if (by >= y_top + 2.5 && by <= y_bottom - 2.5) {
+              liqG.beginPath();
+              liqG.circle(bx, by, b.rad);
+              liqG.fill({ color: 0xffffff, alpha: b.alpha });
             }
           }
 
           currentBottom = y_top;
         }
 
-        // Glass Tube Body Outline & Specular Highlights
+        // Glass Flask Outer Contour (Neck, Shoulders, Flat base with rounded corners)
         glsG.beginPath();
-        glsG.moveTo(-radius, 0);
-        glsG.lineTo(-radius, h - radius);
-        glsG.arc(0, h - radius, radius, Math.PI, 0, true);
-        glsG.lineTo(radius, 0);
+        glsG.moveTo(-r_rim, 0);
+        glsG.lineTo(r_rim, 0);
+        glsG.lineTo(r_rim, lip_h);
+        glsG.bezierCurveTo(r_rim * 0.95, lip_h + 2, r_neck, neck_y - 2, r_neck, neck_y);
+        glsG.bezierCurveTo(r_neck, neck_y + 4, r, shoulder_y - 4, r, shoulder_y);
+        glsG.lineTo(r, h - r_base);
+        glsG.quadraticCurveTo(r, h, r - r_base, h);
+        glsG.lineTo(-r + r_base, h);
+        glsG.quadraticCurveTo(-r, h, -r, h - r_base);
+        glsG.lineTo(-r, shoulder_y);
+        glsG.bezierCurveTo(-r, shoulder_y - 4, -r_neck, neck_y + 4, -r_neck, neck_y);
+        glsG.bezierCurveTo(-r_neck, neck_y - 2, -r_rim * 0.95, lip_h + 2, -r_rim, lip_h);
         glsG.closePath();
 
         // Tube Skin Customization (classic, golden, potion, neon)
@@ -888,39 +938,57 @@ export default function PixiGameBoard({
         }
 
         // Transparent crystal glass body fill:
-        // When filled with liquid, keep alpha 0.0 so the vibrant primary colors shine through with 100% clarity & zero haze
+        // When filled with liquid, keep alpha 0.0 so the vibrant primary colors shine through with 100% clarity
         const isTubeEmpty = renderList.length === 0;
         glsG.fill({
-          color: isSelected ? 0x0066ff : bodyFillColor,
-          alpha: isSelected ? 0.20 : (isTubeEmpty ? 0.05 : 0.0),
+          color: isSelected ? 0x0055ff : bodyFillColor,
+          alpha: isSelected ? 0.20 : (isTubeEmpty ? 0.06 : 0.0),
         });
 
         // Outer glass wall stroke
         glsG.stroke({
-          width: isSelected ? 3.4 : 2.8,
+          width: isSelected ? 3.4 : 2.6,
           color: isSelected ? 0x38bdf8 : wallStrokeColor,
-          alpha: isSelected ? 1.0 : 0.85,
+          alpha: isSelected ? 1.0 : 0.88,
         });
 
-        // Top open lip rim
-        glsG.ellipse(0, 0, radius + 2.5, 4);
+        // Flared Glass Lip Collar Stroke & Shape
+        glsG.beginPath();
+        glsG.roundRect(-r_rim - 1.5, 0, (r_rim + 1.5) * 2, lip_h, lip_h * 0.45);
         glsG.stroke({
-          width: isSelected ? 3.0 : 2.5,
+          width: isSelected ? 3.0 : 2.4,
           color: isSelected ? 0x38bdf8 : rimStrokeColor,
           alpha: isSelected ? 1.0 : 0.95,
         });
 
-        // Left prominent glass reflection highlight
+        // Inner Lip Rim Oval Highlight
         glsG.beginPath();
-        glsG.moveTo(-radius + 3, 8);
-        glsG.lineTo(-radius + 3, h - radius);
-        glsG.stroke({ width: 2, color: 0xffffff, alpha: 0.55 });
+        glsG.ellipse(0, lip_h * 0.4, r_rim * 0.72, 1.8);
+        glsG.stroke({ width: 1.4, color: 0xffffff, alpha: 0.90 });
+
+        // Left prominent vertical glass reflection highlight
+        glsG.beginPath();
+        glsG.moveTo(-r + 3.2, shoulder_y + 3);
+        glsG.lineTo(-r + 3.2, h - r_base - 2);
+        glsG.stroke({ width: 2.2, color: 0xffffff, alpha: 0.68 });
+
+        // Curved gloss along left shoulder
+        glsG.beginPath();
+        glsG.moveTo(-r_neck + 2.0, neck_y);
+        glsG.quadraticCurveTo(-r_neck + 2.0, neck_y + (shoulder_y - neck_y) * 0.5, -r + 3.2, shoulder_y + 3);
+        glsG.stroke({ width: 1.8, color: 0xffffff, alpha: 0.55 });
 
         // Right subtle glass reflection
         glsG.beginPath();
-        glsG.moveTo(radius - 3, 12);
-        glsG.lineTo(radius - 3, h - radius - 6);
-        glsG.stroke({ width: 1, color: 0xffffff, alpha: 0.25 });
+        glsG.moveTo(r - 3.2, shoulder_y + 6);
+        glsG.lineTo(r - 3.2, h - r_base - 6);
+        glsG.stroke({ width: 1.0, color: 0xffffff, alpha: 0.24 });
+
+        // Bottom base glass highlight
+        glsG.beginPath();
+        glsG.moveTo(-r + r_base, h - 2);
+        glsG.lineTo(r - r_base, h - 2);
+        glsG.stroke({ width: 1.2, color: 0xffffff, alpha: 0.35 });
       }
 
       // Responsive Resize Listener (Window + ResizeObserver for mobile orientation/resizing)

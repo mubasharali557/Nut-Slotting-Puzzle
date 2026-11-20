@@ -26,47 +26,98 @@ export default function HomeScreen({
       <div className="flex flex-col items-center text-center my-auto">
         {/* Animated Title Emblem: Only this element rotates/animates slightly faster */}
         <div className="animate-title-rotate select-none flex flex-col items-center">
-          {/* Traditional Trio of Water Sort Glass Test Tubes */}
-          <div className="relative flex items-end justify-center -space-x-2 sm:-space-x-2.5 pb-1 filter drop-shadow-[0_10px_22px_rgba(0,0,0,0.6)]">
-            {/* Left Test Tube (Tilted -12deg) */}
-            <div className="relative w-6 h-16 sm:w-8 sm:h-22 rounded-b-xl rounded-t-sm bg-slate-950/40 backdrop-blur-sm border-2 border-white/85 shadow-[0_8px_24px_rgba(0,0,0,0.7)] transform -rotate-12 flex flex-col justify-end overflow-hidden p-0.5">
-              {/* Wooden Cork */}
-              <div className="absolute top-0 inset-x-1.5 h-2 bg-gradient-to-r from-amber-700 to-amber-800 rounded-t-sm border-b border-amber-950 z-20" />
-              {/* Glass Gloss highlight */}
-              <div className="absolute top-2 left-1 bottom-2 w-1 bg-gradient-to-b from-white/80 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
-              {/* 4 Colored Water Layers - Pure Solid Primary Colors */}
-              <div className="w-full h-3 sm:h-4 bg-[#ffff00] shadow-[0_0_8px_rgba(255,255,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#0044ff] shadow-[0_0_8px_rgba(0,68,255,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#00dd00] shadow-[0_0_8px_rgba(0,221,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-[#ff0000] shadow-[0_0_8px_rgba(255,0,0,0.35)]" />
+          {/* Traditional Trio of Water Sort Glass Flasks (Matching Reference Image) */}
+          <div className="relative flex items-end justify-center -space-x-1.5 sm:-space-x-2 pb-1 filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.65)]">
+            {/* Left Flask (Tilted -12deg) */}
+            <div className="relative w-6.5 h-18 sm:w-8.5 sm:h-24 transform -rotate-12 flex flex-col justify-end">
+              {/* Flared Glass Lip Collar */}
+              <div className="absolute top-0 inset-x-[-1.5px] h-2 bg-gradient-to-r from-slate-200 via-white to-slate-200 rounded-full border border-white shadow-sm z-30" />
+              {/* Narrow Neck */}
+              <div className="absolute top-1.5 inset-x-1 h-2.5 bg-slate-900/50 border-x-2 border-white/85 z-20" />
+              {/* Main Body */}
+              <div className="relative w-full h-[85%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white/90 shadow-inner flex flex-col justify-end overflow-hidden p-0.5">
+                {/* Glass Gloss highlight */}
+                <div className="absolute top-1 left-0.5 bottom-1.5 w-1 bg-gradient-to-b from-white/90 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
+                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Colors with Micro-Bubbles */}
+                <div className="relative w-full h-3 sm:h-4 bg-[#ffe600] border-b border-black/20">
+                  <div className="absolute top-0.5 left-1.5 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-0.5 right-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3 sm:h-4 bg-[#0055ff] border-b border-black/20">
+                  <div className="absolute top-0.5 right-1.5 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-0.5 left-2 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3 sm:h-4 bg-[#00e626] border-b border-black/20">
+                  <div className="absolute top-0.5 left-2 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-0.5 right-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3.5 sm:h-5 rounded-b-sm bg-[#ff0028]">
+                  <div className="absolute top-1 right-2 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1 left-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+              </div>
             </div>
 
-            {/* Center Main Test Tube (Taller, 0deg) */}
-            <div className="relative w-7.5 h-20 sm:w-9.5 sm:h-26 rounded-b-2xl rounded-t-sm bg-slate-950/40 backdrop-blur-sm border-2 border-white shadow-[0_12px_28px_rgba(0,0,0,0.8)] z-10 flex flex-col justify-end overflow-hidden p-0.5">
-              {/* Wooden Cork with Gold Ring */}
-              <div className="absolute top-0 inset-x-2 h-2.5 bg-gradient-to-r from-amber-600 via-amber-500 to-amber-700 rounded-t-sm border-b-2 border-yellow-300 z-20" />
-              {/* Glass Gloss highlight */}
-              <div className="absolute top-2 left-1.5 bottom-2.5 w-1.5 bg-gradient-to-b from-white/90 via-white/50 to-transparent rounded-full z-20 pointer-events-none" />
+            {/* Center Main Flask (Taller, 0deg) */}
+            <div className="relative w-8 h-22 sm:w-10 sm:h-28 z-10 flex flex-col justify-end">
+              {/* Flared Glass Lip Collar */}
+              <div className="absolute top-0 inset-x-[-2px] h-2.5 bg-gradient-to-r from-slate-200 via-white to-slate-200 rounded-full border border-white shadow-md z-30" />
+              {/* Narrow Neck */}
+              <div className="absolute top-2 inset-x-1.5 h-3 bg-slate-900/50 border-x-2 border-white/90 z-20" />
               {/* Micro animated bubble */}
-              <div className="absolute top-7 right-2 w-1.5 h-1.5 bg-white/90 rounded-full animate-ping z-20 pointer-events-none" style={{ animationDuration: '2.2s' }} />
-              {/* 4 Colored Water Layers - Pure Solid Primary Colors */}
-              <div className="w-full h-3.5 sm:h-4.5 bg-[#ff007f] shadow-[0_0_8px_rgba(255,0,127,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-4.5 bg-[#ffff00] shadow-[0_0_8px_rgba(255,255,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-4.5 bg-[#00ffff] shadow-[0_0_8px_rgba(0,255,255,0.35)] border-b border-black/20" />
-              <div className="w-full h-4 sm:h-6 rounded-b-xl bg-[#9900ff] shadow-[0_0_8px_rgba(153,0,255,0.35)]" />
+              <div className="absolute top-8 right-2.5 w-1.5 h-1.5 bg-white/90 rounded-full animate-ping z-20 pointer-events-none" style={{ animationDuration: '2.2s' }} />
+              {/* Main Body */}
+              <div className="relative w-full h-[85%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white shadow-[0_12px_28px_rgba(0,0,0,0.8)] flex flex-col justify-end overflow-hidden p-0.5">
+                {/* Glass Gloss highlight */}
+                <div className="absolute top-1 left-1 bottom-2 w-1.5 bg-gradient-to-b from-white/95 via-white/50 to-transparent rounded-full z-20 pointer-events-none" />
+                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Colors with Micro-Bubbles */}
+                <div className="relative w-full h-3.5 sm:h-4.5 bg-[#ff0088] border-b border-black/20">
+                  <div className="absolute top-1 left-2 w-1.2 h-1.2 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1 right-2 w-1 h-1 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3.5 sm:h-4.5 bg-[#ffe600] border-b border-black/20">
+                  <div className="absolute top-1 right-2 w-1.2 h-1.2 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1 left-2.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3.5 sm:h-4.5 bg-[#00f0ff] border-b border-black/20">
+                  <div className="absolute top-1 left-2.5 w-1.2 h-1.2 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1 right-2 w-1 h-1 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-4 sm:h-6 rounded-b-sm bg-[#9900ff]">
+                  <div className="absolute top-1.5 right-2 w-1.2 h-1.2 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1.5 left-2 w-1 h-1 bg-white/60 rounded-full" />
+                </div>
+              </div>
             </div>
 
-            {/* Right Test Tube (Tilted +12deg) */}
-            <div className="relative w-6 h-16 sm:w-8 sm:h-22 rounded-b-xl rounded-t-sm bg-slate-950/40 backdrop-blur-sm border-2 border-white/85 shadow-[0_8px_24px_rgba(0,0,0,0.7)] transform rotate-12 flex flex-col justify-end overflow-hidden p-0.5">
-              {/* Wooden Cork */}
-              <div className="absolute top-0 inset-x-1.5 h-2 bg-gradient-to-r from-amber-700 to-amber-800 rounded-t-sm border-b border-amber-950 z-20" />
-              {/* Glass Gloss highlight */}
-              <div className="absolute top-2 left-1 bottom-2 w-1 bg-gradient-to-b from-white/80 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
-              {/* 4 Colored Water Layers - Pure Solid Primary Colors */}
-              <div className="w-full h-3 sm:h-4 bg-[#0044ff] shadow-[0_0_8px_rgba(0,68,255,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#ff7700] shadow-[0_0_8px_rgba(255,119,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3 sm:h-4 bg-[#ff0000] shadow-[0_0_8px_rgba(255,0,0,0.35)] border-b border-black/20" />
-              <div className="w-full h-3.5 sm:h-5 rounded-b-lg bg-[#99ff00] shadow-[0_0_8px_rgba(153,255,0,0.35)]" />
+            {/* Right Flask (Tilted +12deg) */}
+            <div className="relative w-6.5 h-18 sm:w-8.5 sm:h-24 transform rotate-12 flex flex-col justify-end">
+              {/* Flared Glass Lip Collar */}
+              <div className="absolute top-0 inset-x-[-1.5px] h-2 bg-gradient-to-r from-slate-200 via-white to-slate-200 rounded-full border border-white shadow-sm z-30" />
+              {/* Narrow Neck */}
+              <div className="absolute top-1.5 inset-x-1 h-2.5 bg-slate-900/50 border-x-2 border-white/85 z-20" />
+              {/* Main Body */}
+              <div className="relative w-full h-[85%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white/90 shadow-inner flex flex-col justify-end overflow-hidden p-0.5">
+                {/* Glass Gloss highlight */}
+                <div className="absolute top-1 left-0.5 bottom-1.5 w-1 bg-gradient-to-b from-white/90 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
+                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Colors with Micro-Bubbles */}
+                <div className="relative w-full h-3 sm:h-4 bg-[#0055ff] border-b border-black/20">
+                  <div className="absolute top-0.5 left-1.5 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-0.5 right-2 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3 sm:h-4 bg-[#ff7300] border-b border-black/20">
+                  <div className="absolute top-0.5 right-2 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-0.5 left-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3 sm:h-4 bg-[#ff0028] border-b border-black/20">
+                  <div className="absolute top-0.5 left-2 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-0.5 right-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+                <div className="relative w-full h-3.5 sm:h-5 rounded-b-sm bg-[#88ff00]">
+                  <div className="absolute top-1 right-2 w-1 h-1 bg-white/80 rounded-full" />
+                  <div className="absolute bottom-1 left-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
+                </div>
+              </div>
             </div>
           </div>
 
