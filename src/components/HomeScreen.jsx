@@ -27,7 +27,7 @@ export default function HomeScreen({
         {/* Animated Title Emblem: Only this element rotates/animates slightly faster */}
         <div className="animate-title-rotate select-none flex flex-col items-center">
           {/* Traditional Trio of Water Sort Glass Flasks (Matching Reference Image) */}
-          <div className="relative flex items-end justify-center -space-x-1.5 sm:-space-x-2 pb-1 filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.65)]">
+          <div className="relative flex items-end justify-center gap-2 sm:gap-3 pb-1 filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.65)]">
             {/* Left Flask (Tilted -12deg) */}
             <div className="relative w-6.5 h-18 sm:w-8.5 sm:h-24 transform -rotate-12 flex flex-col justify-end">
               {/* Flared Glass Lip Collar */}

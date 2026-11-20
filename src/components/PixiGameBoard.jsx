@@ -133,18 +133,18 @@ export default function PixiGameBoard({
         let colSpacing = 68;
 
         if (isTwoRows) {
-          // Horizontal fit across columns
-          colSpacing = Math.min(84, Math.max(34, Math.floor((screenW - 20) / maxCols)));
-          tubeW = Math.min(42, Math.max(22, Math.floor(colSpacing * 0.58)));
+          // Horizontal fit across columns with clear, comfortable gaps so bottles never look crowded
+          colSpacing = Math.min(88, Math.max(38, Math.floor((screenW - 24) / maxCols)));
+          tubeW = Math.min(38, Math.max(20, Math.floor(colSpacing * 0.50)));
 
-          // Vertical fit for two rows
-          rowGap = Math.max(16, Math.min(26, Math.round(availableH * 0.06)));
+          // Vertical fit for two rows with generous row gap
+          rowGap = Math.max(20, Math.min(32, Math.round(availableH * 0.08)));
           const maxTubeH = Math.floor((availableH - rowGap) / 2);
-          tubeH = Math.min(Math.round(tubeW * 3.3), maxTubeH, 140);
+          tubeH = Math.min(Math.round(tubeW * 3.3), maxTubeH, 138);
 
           // Maintain 3.3:1 tube aspect ratio if clamped by height
           if (tubeH === maxTubeH && tubeH < Math.round(tubeW * 3.3)) {
-            tubeW = Math.max(20, Math.round(tubeH / 3.3));
+            tubeW = Math.max(18, Math.round(tubeH / 3.3));
           }
 
           const totalGridH = 2 * tubeH + rowGap;
@@ -152,10 +152,10 @@ export default function PixiGameBoard({
           r1Y = topClearance + Math.max(0, Math.floor((availableH - totalGridH) / 2));
           r2Y = r1Y + tubeH + rowGap;
         } else {
-          // Single row layout (1-4 tubes)
-          colSpacing = Math.min(95, Math.max(48, Math.floor((screenW - 32) / (numTubes + 0.5))));
-          tubeW = Math.min(48, Math.max(28, Math.floor(colSpacing * 0.55)));
-          tubeH = Math.min(Math.round(tubeW * 3.3), Math.round(availableH * 0.72), 150);
+          // Single row layout (1-4 tubes) with comfortable, clean spacing
+          colSpacing = Math.min(105, Math.max(54, Math.floor((screenW - 32) / (numTubes + 0.5))));
+          tubeW = Math.min(44, Math.max(26, Math.floor(colSpacing * 0.48)));
+          tubeH = Math.min(Math.round(tubeW * 3.3), Math.round(availableH * 0.72), 145);
 
           const totalGridH = tubeH;
           r1Y = topClearance + Math.max(0, Math.floor((availableH - totalGridH) / 2));
