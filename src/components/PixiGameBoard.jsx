@@ -763,6 +763,8 @@ export default function PixiGameBoard({
         const r_base_in = Math.max(2, r_base - inset);
         const y_floor = h - inset;
 
+        const animTime = stateRef.current ? stateRef.current.time : 0;
+
         // Fully-filled liquid geometry:
         // Available liquid column from flat base floor up to shoulder line
         const totalLiquidH = Math.max(40, y_floor - shoulder_y);
@@ -846,7 +848,7 @@ export default function PixiGameBoard({
               liqG.stroke({ width: 2.4, color: colorInfo.lightNum || 0xffffff, alpha: 0.90 });
             } else {
               // Dynamic organic fluid wave curve
-              const waveAmp = 2.4 + Math.sin(state.time * 4 + waveRipple) * 0.8;
+              const waveAmp = 2.4 + Math.sin(animTime * 4 + waveRipple) * 0.8;
               liqG.beginPath();
               liqG.moveTo(-curTopW, y_top);
               liqG.bezierCurveTo(
