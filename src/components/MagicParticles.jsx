@@ -19,36 +19,46 @@ export default function MagicParticles({ type = 'magic' }) {
     };
     window.addEventListener('resize', handleResize);
 
-    // Color palettes per particle type
+    // Color palettes per particle type - Pure Primary Colors & Spectrum Accents
     let colors = [
-      'rgba(147, 197, 253, ', // soft cyan/blue
-      'rgba(216, 180, 254, ', // soft lavender
-      'rgba(253, 224, 71, ',  // golden fairy glow
-      'rgba(167, 243, 208, ', // soft mint emerald
-      'rgba(255, 255, 255, ', // pure white sparkle
+      'rgba(255, 0, 0, ',    // Pure Red sparkle
+      'rgba(0, 68, 255, ',   // Pure Blue sparkle
+      'rgba(255, 255, 0, ',  // Pure Yellow sparkle
+      'rgba(0, 221, 0, ',    // Pure Green sparkle
+      'rgba(255, 119, 0, ',  // Pure Orange
+      'rgba(0, 255, 255, ',  // Pure Cyan
+      'rgba(255, 255, 255, ', // Starlight sparkle
     ];
 
-    if (type === 'fireflies') {
+    if (type === 'primary') {
       colors = [
-        'rgba(163, 230, 53, ', // lime green
-        'rgba(74, 222, 128, ',  // emerald
-        'rgba(250, 204, 21, ',  // golden yellow
-        'rgba(217, 249, 157, ', // pale lime
+        'rgba(255, 0, 0, ',    // Pure Red
+        'rgba(0, 68, 255, ',   // Pure Blue
+        'rgba(255, 255, 0, ',  // Pure Yellow
+        'rgba(0, 221, 0, ',    // Pure Green
+        'rgba(255, 255, 255, ', // Pure Starlight
+      ];
+    } else if (type === 'fireflies') {
+      colors = [
+        'rgba(0, 221, 0, ',    // Pure Green
+        'rgba(255, 255, 0, ',  // Pure Yellow
+        'rgba(153, 255, 0, ',  // Lime
+        'rgba(0, 68, 255, ',   // Pure Blue
       ];
     } else if (type === 'aurora') {
       colors = [
-        'rgba(45, 212, 191, ',  // teal
-        'rgba(192, 132, 252, ', // cosmic purple
-        'rgba(56, 189, 248, ',  // cyan
-        'rgba(244, 114, 182, ', // neon pink
-        'rgba(255, 255, 255, ', // starlight
+        'rgba(0, 255, 255, ',  // Cyan
+        'rgba(0, 68, 255, ',   // Pure Blue
+        'rgba(255, 0, 127, ',  // Pink
+        'rgba(153, 0, 255, ',  // Purple
+        'rgba(255, 255, 255, ', // Starlight
       ];
     } else if (type === 'embers') {
       colors = [
-        'rgba(251, 146, 60, ',  // amber orange
-        'rgba(245, 158, 11, ',  // gold
-        'rgba(239, 68, 68, ',   // warm red
-        'rgba(253, 224, 71, ',  // bright yellow
+        'rgba(255, 0, 0, ',    // Pure Red
+        'rgba(255, 119, 0, ',  // Pure Orange
+        'rgba(255, 255, 0, ',  // Pure Yellow
+        'rgba(255, 255, 255, ', // Starlight
       ];
     }
 

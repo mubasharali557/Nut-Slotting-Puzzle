@@ -55,7 +55,7 @@ export default function App() {
   });
   const [unlockedThemes, setUnlockedThemes] = useState(() => {
     const saved = localStorage.getItem('watersort_unlocked_themes');
-    return saved ? JSON.parse(saved) : ['apothecary'];
+    return saved ? JSON.parse(saved) : ['apothecary', 'primary'];
   });
 
   const [activeSkin, setActiveSkin] = useState(() => {
@@ -326,6 +326,16 @@ export default function App() {
                 alt={currentThemeObj.name}
                 className="w-full h-full object-cover object-center transition-all duration-700"
               />
+            ) : currentThemeObj.isDynamicPrimary ? (
+              // Primary Spectrum Theme: Rich deep midnight space with glowing pure primary auroras
+              <div className="w-full h-full bg-slate-950 relative overflow-hidden">
+                <div className="absolute -top-16 -left-16 w-[480px] h-[480px] bg-[#ff0000]/30 rounded-full blur-[110px] animate-pulse" style={{ animationDuration: '6s' }} />
+                <div className="absolute -top-16 -right-16 w-[480px] h-[480px] bg-[#ffff00]/24 rounded-full blur-[110px] animate-pulse" style={{ animationDuration: '7s' }} />
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[520px] bg-[#0044ff]/35 rounded-full blur-[130px]" />
+                <div className="absolute -bottom-16 -left-16 w-[480px] h-[480px] bg-[#00dd00]/28 rounded-full blur-[110px] animate-pulse" style={{ animationDuration: '8s' }} />
+                <div className="absolute -bottom-16 -right-16 w-[440px] h-[440px] bg-[#ff0000]/22 rounded-full blur-[110px]" />
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(2,6,23,0.85)_100%)] pointer-events-none" />
+              </div>
             ) : currentThemeObj.isDynamicAurora ? (
               // Aurora Theme: Deep cosmic space gradient with northern lights waves
               <div className="w-full h-full bg-gradient-to-b from-slate-950 via-teal-950 to-indigo-950 relative overflow-hidden">
@@ -353,17 +363,55 @@ export default function App() {
           </div>
         )}
 
+        {/* Luminous Pure Primary Colors Ambient Lighting Blooms in Background */}
+        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
+          {/* Pure Red Glow (Top-Left) */}
+          <div
+            className="absolute -top-20 -left-20 w-80 sm:w-[450px] h-80 sm:h-[450px] rounded-full bg-[#ff0000]/24 blur-[95px] pointer-events-none animate-pulse"
+            style={{ animationDuration: '6s' }}
+          />
+
+          {/* Pure Yellow Radiant Halo (Top-Right) */}
+          <div
+            className="absolute -top-20 -right-20 w-80 sm:w-[450px] h-80 sm:h-[450px] rounded-full bg-[#ffff00]/20 blur-[95px] pointer-events-none animate-pulse"
+            style={{ animationDuration: '7s' }}
+          />
+
+          {/* Pure Electric Blue Deep Center Nebula */}
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[540px] sm:w-[720px] h-[380px] sm:h-[520px] rounded-full bg-[#0044ff]/28 blur-[110px] pointer-events-none" />
+
+          {/* Pure Green Vibrant Emerald Glow (Bottom-Left) */}
+          <div
+            className="absolute -bottom-20 -left-16 w-80 sm:w-[440px] h-80 sm:h-[440px] rounded-full bg-[#00dd00]/22 blur-[95px] pointer-events-none animate-pulse"
+            style={{ animationDuration: '8s' }}
+          />
+
+          {/* Pure Red Accent Glow (Bottom-Right) */}
+          <div
+            className="absolute -bottom-20 -right-16 w-72 sm:w-[400px] h-72 sm:h-[400px] rounded-full bg-[#ff0000]/20 blur-[95px] pointer-events-none"
+          />
+
+          {/* Soft Primary Color Sweep Aurora Mesh */}
+          <div className="absolute inset-0 bg-gradient-to-tr from-[#0044ff]/16 via-transparent to-[#ffff00]/12 pointer-events-none mix-blend-screen" />
+        </div>
+
         {/* Ambient Subtle Vignette - Sleek Dark Theme */}
-        <div className={`absolute inset-0 ${isHome ? 'bg-gradient-to-b from-black/40 via-transparent to-black/60' : 'bg-gradient-to-b from-black/35 via-transparent to-black/55'} pointer-events-none`} />
+        <div className={`absolute inset-0 z-[2] ${isHome ? 'bg-gradient-to-b from-black/40 via-transparent to-black/60' : 'bg-gradient-to-b from-black/35 via-transparent to-black/55'} pointer-events-none`} />
       </div>
 
-      {/* Dynamic Ambient Particles per Active Theme */}
+      {/* Dynamic Ambient Particles with Pure Primary Colors */}
       {isHome ? (
-        <SnowEffect />
+        <>
+          <SnowEffect />
+          <MagicParticles type="primary" />
+        </>
       ) : currentThemeObj.particleType === 'snow' ? (
-        <SnowEffect />
+        <>
+          <SnowEffect />
+          <MagicParticles type="primary" />
+        </>
       ) : (
-        <MagicParticles type={currentThemeObj.particleType} />
+        <MagicParticles type={currentThemeObj.particleType || 'primary'} />
       )}
 
       {/* Main Container */}
