@@ -1,12 +1,12 @@
-// Ultra-vibrant, bright, luminous liquid colors with maximum visual distinction
+// Ultra-vibrant, bright, luminous liquid colors with maximum visual distinction across all screen types
 export const TUBE_COLORS = {
   blue: {
     id: 'blue',
     name: 'Royal Sapphire Blue',
-    hex: '#2563eb',
-    num: 0x2563eb,
+    hex: '#1d4ed8',
+    num: 0x1d4ed8,
     lightNum: 0x93c5fd,
-    streamNum: 0x1d4ed8,
+    streamNum: 0x1e40af,
   },
   orange: {
     id: 'orange',
@@ -19,10 +19,10 @@ export const TUBE_COLORS = {
   green: {
     id: 'green',
     name: 'Vibrant Emerald',
-    hex: '#10b981',
-    num: 0x10b981,
-    lightNum: 0xa7f3d0,
-    streamNum: 0x059669,
+    hex: '#16a34a',
+    num: 0x16a34a,
+    lightNum: 0xbbf7d0,
+    streamNum: 0x15803d,
   },
   pink: {
     id: 'pink',
@@ -42,11 +42,11 @@ export const TUBE_COLORS = {
   },
   teal: {
     id: 'teal',
-    name: 'Deep Marine Teal',
-    hex: '#005f73',
-    num: 0x005f73,
-    lightNum: 0x0a9396,
-    streamNum: 0x005f73,
+    name: 'Deep Forest Teal',
+    hex: '#0f766e',
+    num: 0x0f766e,
+    lightNum: 0x99f6e4,
+    streamNum: 0x115e59,
   },
   purple: {
     id: 'purple',
@@ -66,11 +66,11 @@ export const TUBE_COLORS = {
   },
   cyan: {
     id: 'cyan',
-    name: 'Icy Diamond Cyan',
-    hex: '#00e5ff',
-    num: 0x00e5ff,
-    lightNum: 0xa5f3fc,
-    streamNum: 0x06b6d4,
+    name: 'Luminous Aqua-Mint',
+    hex: '#00f5d4',
+    num: 0x00f5d4,
+    lightNum: 0xccfbf1,
+    streamNum: 0x14b8a6,
   },
   lime: {
     id: 'lime',

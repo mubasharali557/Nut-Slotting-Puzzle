@@ -303,17 +303,17 @@ export default function App() {
       {/* Full-Screen Dynamic Background Image & Live Applied Theme */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {isHome ? (
-          // Home Screen: Cozy Winter Village Scene - Lighter, Brighter & Crisp
+          // Home Screen: Cozy Winter Village Scene - Sleek Dark-Themed Atmosphere
           <div className="relative w-full h-full">
             <img
               src="/winter-scene.jpg"
               alt="Water Sort Home Background"
-              className="w-full h-full object-cover object-center filter brightness-105 contrast-105"
+              className="w-full h-full object-cover object-center filter brightness-90 contrast-105"
             />
-            {/* Subtle soft overlay so the snowy village and warm lights stay clear and bright */}
-            <div className="absolute inset-0 bg-black/15 pointer-events-none" />
-            {/* Ambient warm celestial glow centered behind the home title */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-gradient-to-b from-amber-300/15 via-sky-400/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+            {/* Elegant dark overlay giving a rich modern dark-theme atmosphere */}
+            <div className="absolute inset-0 bg-black/45 pointer-events-none" />
+            {/* Subtle moonlit celestial glow centered behind the home title */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-gradient-to-b from-indigo-500/10 via-sky-950/15 to-transparent rounded-full blur-3xl pointer-events-none" />
           </div>
         ) : (
           // Gameplay Screen: Live Applied Theme Background & Lighting
@@ -351,8 +351,8 @@ export default function App() {
           </div>
         )}
 
-        {/* Ambient Subtle Vignette */}
-        <div className={`absolute inset-0 ${isHome ? 'bg-gradient-to-b from-black/10 via-transparent to-black/20' : 'bg-gradient-to-b from-black/20 via-transparent to-black/30'} pointer-events-none`} />
+        {/* Ambient Subtle Vignette - Sleek Dark Theme */}
+        <div className={`absolute inset-0 ${isHome ? 'bg-gradient-to-b from-black/40 via-transparent to-black/60' : 'bg-gradient-to-b from-black/35 via-transparent to-black/55'} pointer-events-none`} />
       </div>
 
       {/* Dynamic Ambient Particles per Active Theme */}
@@ -408,9 +408,9 @@ export default function App() {
               <div className="w-full max-w-lg px-2 sm:px-6 pt-1 sm:pt-1.5 pb-0.5 z-20 flex flex-col gap-1 flex-shrink-0">
                 <div className="w-full flex items-center justify-between gap-1.5 sm:gap-2">
                   {/* Level / Stage Badge */}
-                  <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-cyan-400/40 shadow-md">
-                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-300 animate-pulse" />
-                    <span className="text-[11px] sm:text-sm font-black text-white tracking-wide whitespace-nowrap">
+                  <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-950/90 backdrop-blur-md border border-slate-700/60 shadow-md">
+                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
+                    <span className="text-[11px] sm:text-sm font-black text-slate-100 tracking-wide whitespace-nowrap">
                       Stage {stage}
                     </span>
                   </div>
@@ -419,8 +419,8 @@ export default function App() {
                   <div
                     className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full backdrop-blur-md border shadow-lg transition-all ${
                       chances <= 2
-                        ? 'bg-rose-950/90 border-rose-400 text-rose-300 shadow-rose-500/30 animate-pulse'
-                        : 'bg-slate-900/85 border-cyan-400/50 text-white shadow-cyan-500/20'
+                        ? 'bg-rose-950/90 border-rose-500/60 text-rose-300 shadow-rose-950/50 animate-pulse'
+                        : 'bg-slate-950/90 border-slate-700/60 text-slate-100 shadow-slate-950/50'
                     }`}
                   >
                     <div className="flex items-center gap-1 sm:gap-1.5">
@@ -429,7 +429,7 @@ export default function App() {
                           chances <= 2 ? 'text-rose-400' : 'text-rose-500'
                         }`}
                       />
-                      <span className="text-[9px] sm:text-xs font-black uppercase tracking-wider text-slate-300">
+                      <span className="text-[9px] sm:text-xs font-black uppercase tracking-wider text-slate-400">
                         Chances:
                       </span>
                     </div>
@@ -446,19 +446,19 @@ export default function App() {
                       >
                         {chances}
                       </span>
-                      <span className="text-[9px] sm:text-[10px] font-bold text-slate-400">
+                      <span className="text-[9px] sm:text-[10px] font-bold text-slate-500">
                         /{maxChances}
                       </span>
                     </div>
 
                     {/* Mini Stamina Bar Gauge */}
-                    <div className="w-8 sm:w-14 h-1.5 sm:h-2 rounded-full bg-slate-800 border border-white/10 overflow-hidden shadow-inner ml-0.5">
+                    <div className="w-8 sm:w-14 h-1.5 sm:h-2 rounded-full bg-slate-900 border border-slate-700/50 overflow-hidden shadow-inner ml-0.5">
                       <div
                         className={`h-full rounded-full transition-all duration-300 ${
                           chances / maxChances > 0.5
-                            ? 'bg-gradient-to-r from-emerald-400 to-green-500 shadow-[0_0_6px_#10b981]'
+                            ? 'bg-gradient-to-r from-emerald-500 to-green-500 shadow-[0_0_6px_#10b981]'
                             : chances / maxChances > 0.25
-                            ? 'bg-gradient-to-r from-amber-400 to-yellow-500 shadow-[0_0_6px_#f59e0b]'
+                            ? 'bg-gradient-to-r from-amber-500 to-yellow-500 shadow-[0_0_6px_#f59e0b]'
                             : 'bg-gradient-to-r from-rose-500 to-red-600 shadow-[0_0_6px_#ef4444]'
                         }`}
                         style={{ width: `${Math.round((chances / maxChances) * 100)}%` }}
@@ -472,25 +472,25 @@ export default function App() {
                       gameAudio.playClick();
                       setIsPaused(true);
                     }}
-                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-900/80 hover:bg-slate-800 backdrop-blur-md border border-white/20 shadow-md flex items-center justify-center text-white active:scale-90 transition-transform cursor-pointer flex-shrink-0"
+                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/90 hover:bg-slate-900 backdrop-blur-md border border-slate-700/60 shadow-md flex items-center justify-center text-slate-300 hover:text-white active:scale-90 transition-transform cursor-pointer flex-shrink-0"
                     title="Pause Game"
                   >
-                    <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-white" />
+                    <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
                   </button>
                 </div>
 
                 {/* Sorted Bottles Progress Bar */}
                 <div className="w-full max-w-xs sm:max-w-sm mx-auto px-1 flex flex-col items-center">
-                  <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-300 mb-0.5">
+                  <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 mb-0.5">
                     <span className="flex items-center gap-1">
                       <span className="text-slate-400">Bottles Sorted:</span>
-                      <span className="text-cyan-300 font-bold">{completedCount} / {targetCompleted}</span>
+                      <span className="text-cyan-400 font-bold">{completedCount} / {targetCompleted}</span>
                     </span>
                     <span className="text-amber-400 font-bold">{progressPercent}%</span>
                   </div>
-                  <div className="w-full h-1.5 rounded-full bg-slate-900/80 border border-white/10 overflow-hidden shadow-inner">
+                  <div className="w-full h-1.5 rounded-full bg-slate-950/90 border border-slate-800 overflow-hidden shadow-inner">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-cyan-400 via-blue-500 to-indigo-500 shadow-[0_0_8px_rgba(6,182,212,0.8)] transition-all duration-500"
+                      className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 shadow-[0_0_8px_rgba(6,182,212,0.6)] transition-all duration-500"
                       style={{ width: `${progressPercent}%` }}
                     />
                   </div>
@@ -511,11 +511,11 @@ export default function App() {
 
               {/* Bottom In-Game Controls & Power-Up Boosters */}
               <div className="w-full flex flex-col items-center pb-2.5 sm:pb-3 pt-0.5 px-2 sm:px-4 z-20 flex-shrink-0">
-                <div className="flex items-center justify-center gap-1.5 sm:gap-3 bg-slate-950/80 backdrop-blur-md px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-white/15 shadow-[0_4px_20px_rgba(0,0,0,0.5)] max-w-full overflow-x-auto scrollbar-none">
+                <div className="flex items-center justify-center gap-1.5 sm:gap-3 bg-slate-950/90 backdrop-blur-xl px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-slate-800 shadow-[0_8px_30px_rgba(0,0,0,0.8)] max-w-full overflow-x-auto scrollbar-none">
                   {/* Hint Booster Button */}
                   <button
                     onClick={handleHint}
-                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-amber-500/20 to-yellow-600/30 hover:from-amber-500/30 hover:to-yellow-600/40 text-amber-300 border border-amber-400/60 shadow-md shadow-amber-500/10 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
+                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-amber-500/15 to-yellow-600/20 hover:from-amber-500/25 hover:to-yellow-600/30 text-amber-300 border border-amber-500/40 shadow-md shadow-amber-950/20 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
                     title="Highlight next valid move"
                   >
                     <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400/30 text-amber-300" />
@@ -528,8 +528,8 @@ export default function App() {
                     disabled={extraBottleUsed}
                     className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border shadow-md transition-all text-[10px] sm:text-xs font-black uppercase whitespace-nowrap ${
                       !extraBottleUsed
-                        ? 'bg-gradient-to-b from-emerald-500/20 to-green-600/30 hover:from-emerald-500/30 hover:to-green-600/40 text-emerald-300 border-emerald-400/60 shadow-emerald-500/10 hover:scale-105 active:scale-95 cursor-pointer'
-                        : 'bg-slate-900/40 text-slate-500 border-white/10 cursor-not-allowed opacity-40'
+                        ? 'bg-gradient-to-b from-emerald-500/15 to-green-600/20 hover:from-emerald-500/25 hover:to-green-600/30 text-emerald-300 border-emerald-500/40 shadow-emerald-950/20 hover:scale-105 active:scale-95 cursor-pointer'
+                        : 'bg-slate-900/40 text-slate-600 border-slate-800 cursor-not-allowed opacity-40'
                     }`}
                     title={extraBottleUsed ? 'Extra tube already used for this stage' : 'Add an extra empty tube booster (+1 chance)'}
                   >
@@ -543,14 +543,14 @@ export default function App() {
                     disabled={history.length === 0}
                     className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border shadow-md transition-all text-[10px] sm:text-xs font-black uppercase whitespace-nowrap ${
                       history.length > 0
-                        ? 'bg-gradient-to-b from-cyan-500/20 to-blue-600/30 hover:from-cyan-500/30 hover:to-blue-600/40 text-cyan-200 border-cyan-400/60 shadow-cyan-500/10 hover:scale-105 active:scale-95 cursor-pointer'
-                        : 'bg-slate-900/40 text-slate-500 border-white/10 cursor-not-allowed opacity-40'
+                        ? 'bg-gradient-to-b from-cyan-500/15 to-blue-600/20 hover:from-cyan-500/25 hover:to-blue-600/30 text-cyan-300 border-cyan-500/40 shadow-cyan-950/20 hover:scale-105 active:scale-95 cursor-pointer'
+                        : 'bg-slate-900/40 text-slate-600 border-slate-800 cursor-not-allowed opacity-40'
                     }`}
                   >
                     <Undo2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span>Undo</span>
                     {history.length > 0 && (
-                      <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-cyan-500 text-white text-[9px] sm:text-[10px] flex items-center justify-center font-bold">
+                      <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-cyan-600 text-white text-[9px] sm:text-[10px] flex items-center justify-center font-bold">
                         {history.length}
                       </span>
                     )}
@@ -559,7 +559,7 @@ export default function App() {
                   {/* Restart Button */}
                   <button
                     onClick={handleRestart}
-                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-orange-500/20 to-amber-600/30 hover:from-orange-500/30 hover:to-amber-600/40 text-orange-300 border border-orange-400/60 shadow-md shadow-orange-500/10 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
+                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-orange-500/15 to-amber-600/20 hover:from-orange-500/25 hover:to-amber-600/30 text-orange-300 border border-orange-500/40 shadow-md shadow-orange-950/20 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
                   >
                     <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
                     <span>Restart</span>

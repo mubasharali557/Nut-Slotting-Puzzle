@@ -49,11 +49,11 @@ export default function GameNavbar({
 
   return (
     <header className="w-full max-w-5xl mx-auto px-1.5 sm:px-4 pt-1 sm:pt-2.5 pb-0.5 z-30 select-none">
-      {/* Outer Floating Glow Capsule Navbar */}
-      <div className="relative w-full rounded-2xl sm:rounded-full bg-gradient-to-r from-blue-950/85 via-indigo-950/90 to-purple-950/85 backdrop-blur-md border border-cyan-400/70 sm:border-2 sm:border-cyan-400 shadow-[0_0_20px_rgba(6,182,212,0.45),inset_0_1px_2px_rgba(255,255,255,0.4)] px-2 sm:px-5 py-1.5 sm:py-2 flex items-center justify-between gap-1 sm:gap-2">
+      {/* Outer Floating Dark-Themed Capsule Navbar */}
+      <div className="relative w-full rounded-2xl sm:rounded-full bg-gradient-to-r from-slate-950/92 via-slate-900/95 to-slate-950/92 backdrop-blur-xl border border-slate-700/60 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.08)] px-2 sm:px-5 py-1.5 sm:py-2 flex items-center justify-between gap-1 sm:gap-2">
         
         {/* Top Glass Horizontal Reflection Line */}
-        <div className="absolute top-0.5 inset-x-8 h-[1.5px] bg-gradient-to-r from-transparent via-cyan-200/60 to-transparent pointer-events-none rounded-full" />
+        <div className="absolute top-0.5 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-slate-400/30 to-transparent pointer-events-none rounded-full" />
 
         {/* LEFT: Game Logo with Potion Vials & Ribbons */}
         <div
@@ -103,8 +103,8 @@ export default function GameNavbar({
             onClick={() => handleTabClick('home')}
             className={`relative flex flex-col items-center justify-center p-1.5 sm:px-3 sm:py-1.5 rounded-xl transition-all duration-200 ${
               currentScreen === 'home'
-                ? 'bg-gradient-to-b from-indigo-600/90 to-purple-700/90 border border-cyan-400/80 shadow-[0_0_12px_rgba(99,102,241,0.5)] text-white'
-                : 'text-slate-300 hover:text-white hover:bg-white/5'
+                ? 'bg-gradient-to-b from-slate-900/95 to-slate-950/98 border border-indigo-500/50 shadow-[0_0_12px_rgba(99,102,241,0.25)] text-white'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
             title="Home"
           >
@@ -113,7 +113,7 @@ export default function GameNavbar({
               Home
             </span>
             {currentScreen === 'home' && (
-              <div className="absolute -bottom-1 w-4 sm:w-6 h-1 rounded-full bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 shadow-[0_0_6px_#facc15]" />
+              <div className="absolute -bottom-1 w-4 sm:w-6 h-1 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 shadow-[0_0_6px_#facc15]" />
             )}
           </button>
 
@@ -122,8 +122,8 @@ export default function GameNavbar({
             onClick={() => handleTabClick('levels')}
             className={`relative flex flex-col items-center justify-center p-1.5 sm:px-3 sm:py-1.5 rounded-xl transition-all duration-200 ${
               currentScreen === 'game'
-                ? 'bg-gradient-to-b from-indigo-600/90 to-purple-700/90 border border-cyan-400/80 shadow-[0_0_12px_rgba(99,102,241,0.5)] text-white'
-                : 'text-slate-300 hover:text-white hover:bg-white/5'
+                ? 'bg-gradient-to-b from-slate-900/95 to-slate-950/98 border border-indigo-500/50 shadow-[0_0_12px_rgba(99,102,241,0.25)] text-white'
+                : 'text-slate-400 hover:text-white hover:bg-white/5'
             }`}
             title="Levels"
           >
@@ -132,14 +132,14 @@ export default function GameNavbar({
               Levels
             </span>
             {currentScreen === 'game' && (
-              <div className="absolute -bottom-1 w-4 sm:w-6 h-1 rounded-full bg-gradient-to-r from-amber-300 via-yellow-400 to-amber-500 shadow-[0_0_6px_#facc15]" />
+              <div className="absolute -bottom-1 w-4 sm:w-6 h-1 rounded-full bg-gradient-to-r from-amber-400 via-yellow-400 to-amber-500 shadow-[0_0_6px_#facc15]" />
             )}
           </button>
 
           {/* Achievements Tab */}
           <button
             onClick={() => handleTabClick('achievements')}
-            className="flex flex-col items-center justify-center p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all"
+            className="flex flex-col items-center justify-center p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             title="Achievements"
           >
             <Trophy className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -151,7 +151,7 @@ export default function GameNavbar({
           {/* How to Play Tab */}
           <button
             onClick={() => handleTabClick('howToPlay')}
-            className="flex flex-col items-center justify-center p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all"
+            className="flex flex-col items-center justify-center p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             title="How to Play"
           >
             <HelpCircle className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -163,7 +163,7 @@ export default function GameNavbar({
           {/* Settings Tab */}
           <button
             onClick={() => handleTabClick('settings')}
-            className="flex flex-col items-center justify-center p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-300 hover:text-white hover:bg-white/5 transition-all"
+            className="flex flex-col items-center justify-center p-1.5 sm:px-2.5 sm:py-1.5 rounded-xl text-slate-400 hover:text-white hover:bg-white/5 transition-all"
             title="Settings"
           >
             <Settings className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
@@ -176,7 +176,7 @@ export default function GameNavbar({
         {/* RIGHT: Player Profile ID, Stars Count & Sound Toggle */}
         <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
           {/* Player Profile with Realistic 3D Avatar */}
-          <div className="flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-indigo-950/90 to-purple-950/90 border border-cyan-400/40 shadow-sm shadow-cyan-500/10">
+          <div className="flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full bg-gradient-to-r from-slate-950/90 to-slate-900/90 border border-slate-700/60 shadow-inner">
             <PlayerAvatar size="sm" />
             <div className="flex flex-col leading-none">
               <span className="text-[7px] font-black uppercase text-amber-300 tracking-wider hidden sm:inline">
@@ -190,7 +190,7 @@ export default function GameNavbar({
 
           {/* Golden Stars Pill Counter */}
           <div
-            className={`relative flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-gradient-to-b from-indigo-900/90 to-purple-950/90 border border-purple-400/50 shadow-sm transition-all duration-300 ${
+            className={`relative flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-gradient-to-b from-slate-950/95 to-slate-900/95 border border-amber-500/40 shadow-sm transition-all duration-300 ${
               starBonusActive ? 'scale-110 border-amber-300 shadow-[0_0_15px_#facc15]' : ''
             }`}
           >
@@ -217,8 +217,8 @@ export default function GameNavbar({
             }}
             className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full border flex items-center justify-center transition-all active:scale-90 shadow-md ${
               soundEnabled
-                ? 'bg-gradient-to-b from-cyan-400 to-blue-600 border-white text-white shadow-cyan-500/40'
-                : 'bg-slate-800/80 border-slate-600 text-slate-400'
+                ? 'bg-gradient-to-b from-cyan-600 to-blue-800 border-cyan-400/60 text-white shadow-cyan-900/40'
+                : 'bg-slate-900/90 border-slate-700/60 text-slate-400 hover:text-white'
             }`}
             title={soundEnabled ? 'Mute Sound' : 'Enable Sound'}
           >
