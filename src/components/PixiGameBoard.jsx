@@ -772,7 +772,7 @@ export default function PixiGameBoard({
         let currentBottom = y_floor;
         for (let l = 0; l < renderList.length; l++) {
           const item = renderList[l];
-          const colorInfo = TUBE_COLORS[item.color] || { num: 0x2563eb, lightNum: 0x60a5fa };
+          const colorInfo = TUBE_COLORS[item.color] || { num: 0x0066ff, lightNum: 0x80b3ff };
           const layerHeight = slotH * item.fraction;
           const y_bottom = currentBottom;
           const y_top = y_bottom - layerHeight;
@@ -815,25 +815,20 @@ export default function PixiGameBoard({
             liqG.rect(-r_in, y_top, w_in, Math.max(0.5, y_bottom - y_top + 0.5));
           }
 
-          // Solid 100% vibrant color
+          // Solid 100% ultra-vibrant pure primary color
           liqG.fill({ color: colorInfo.num, alpha: 1.0 });
 
-          // Top surface subtle luminosity sheen for extra radiance
-          liqG.beginPath();
-          liqG.rect(-r_in + 1, y_top + 0.5, w_in - 2, Math.min(3.5, Math.max(1, (y_bottom - y_top) * 0.22)));
-          liqG.fill({ color: 0xffffff, alpha: 0.16 });
-
-          // Crisp separator line between adjacent colors
-          if (!isAbsoluteTop && y_top < y_center) {
+          // Crisp separator line between adjacent liquid layers for razor-sharp distinction
+          if (!isAbsoluteTop) {
             liqG.beginPath();
             liqG.moveTo(-r_in + 1, y_top);
             liqG.lineTo(r_in - 1, y_top);
-            liqG.stroke({ width: 1.2, color: 0x000000, alpha: 0.15 });
+            liqG.stroke({ width: 1.4, color: 0x000000, alpha: 0.28 });
 
             liqG.beginPath();
-            liqG.moveTo(-r_in + 2, y_top - 0.5);
-            liqG.lineTo(r_in - 2, y_top - 0.5);
-            liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.35 });
+            liqG.moveTo(-r_in + 2, y_top - 0.6);
+            liqG.lineTo(r_in - 2, y_top - 0.6);
+            liqG.stroke({ width: 0.8, color: 0xffffff, alpha: 0.26 });
           }
 
           // Top liquid surface meniscus curve
@@ -857,21 +852,7 @@ export default function PixiGameBoard({
             }
           }
 
-          // 3D vertical primary gloss highlight
-          if (y_top < y_floor - 4) {
-            liqG.beginPath();
-            liqG.moveTo(-r_in + 3, y_top + 1);
-            liqG.lineTo(-r_in + 3, Math.min(y_bottom - 1, y_center + 4));
-            liqG.stroke({ width: 2.2, color: 0xffffff, alpha: 0.48 });
-
-            // Secondary softer gloss streak
-            liqG.beginPath();
-            liqG.moveTo(-r_in + 5.5, y_top + 2);
-            liqG.lineTo(-r_in + 5.5, Math.min(y_bottom - 2, y_center + 2));
-            liqG.stroke({ width: 1.0, color: 0xffffff, alpha: 0.22 });
-          }
-
-          // Subtle Luminous Watermark Vector Emblem per Color (Zero Ambiguity & Perfect Clarity)
+          // Delicate Luminous Watermark Vector Emblem per Color (Zero Ambiguity & Crystal-Clear Pigment)
           if (item.fraction > 0.65) {
             const cy = (y_top + y_bottom) / 2;
             const s = Math.min(5.5, Math.max(3.2, (y_bottom - y_top) * 0.22));
@@ -881,7 +862,7 @@ export default function PixiGameBoard({
               liqG.moveTo(0, cy - s);
               liqG.bezierCurveTo(s * 0.85, cy, s * 0.85, cy + s * 0.55, 0, cy + s * 0.8);
               liqG.bezierCurveTo(-s * 0.85, cy + s * 0.55, -s * 0.85, cy, 0, cy - s);
-              liqG.fill({ color: 0xffffff, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.20 });
             } else if (item.color === 'cyan') {
               // Crystalline 4-point Diamond Star
               liqG.moveTo(0, cy - s * 1.1);
@@ -893,13 +874,13 @@ export default function PixiGameBoard({
               liqG.lineTo(-s * 1.1, cy);
               liqG.lineTo(-s * 0.35, cy - s * 0.3);
               liqG.closePath();
-              liqG.fill({ color: 0xffffff, alpha: 0.38 });
+              liqG.fill({ color: 0xffffff, alpha: 0.22 });
             } else if (item.color === 'orange') {
               // Flame Emblem
               liqG.moveTo(0, cy - s);
               liqG.bezierCurveTo(s * 0.8, cy - s * 0.2, s * 0.8, cy + s * 0.55, 0, cy + s * 0.8);
               liqG.bezierCurveTo(-s * 0.8, cy + s * 0.55, -s * 0.8, cy - s * 0.2, 0, cy - s);
-              liqG.fill({ color: 0xffffff, alpha: 0.30 });
+              liqG.fill({ color: 0xffffff, alpha: 0.18 });
             } else if (item.color === 'yellow') {
               // 5-Point Star Emblem
               for (let pt = 0; pt < 10; pt++) {
@@ -911,24 +892,24 @@ export default function PixiGameBoard({
                 else liqG.lineTo(px, py);
               }
               liqG.closePath();
-              liqG.fill({ color: 0xffffff, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.20 });
             } else if (item.color === 'green') {
               // Emerald Leaf Emblem
               liqG.moveTo(-s * 0.9, cy);
               liqG.quadraticCurveTo(0, cy - s * 0.75, s * 0.9, cy);
               liqG.quadraticCurveTo(0, cy + s * 0.75, -s * 0.9, cy);
-              liqG.fill({ color: 0xffffff, alpha: 0.30 });
+              liqG.fill({ color: 0xffffff, alpha: 0.20 });
             } else if (item.color === 'pink') {
               // Heart Emblem
               liqG.moveTo(0, cy + s * 0.65);
               liqG.bezierCurveTo(-s * 0.9, cy + s * 0.1, -s * 0.9, cy - s * 0.75, 0, cy - s * 0.2);
               liqG.bezierCurveTo(s * 0.9, cy - s * 0.75, s * 0.9, cy + s * 0.1, 0, cy + s * 0.65);
-              liqG.fill({ color: 0xffffff, alpha: 0.30 });
+              liqG.fill({ color: 0xffffff, alpha: 0.20 });
             } else if (item.color === 'purple') {
               // Amethyst Crescent Moon
               liqG.arc(0, cy, s * 0.75, -Math.PI * 0.45, Math.PI * 0.45);
               liqG.arc(-s * 0.3, cy, s * 0.65, Math.PI * 0.45, -Math.PI * 0.45, true);
-              liqG.fill({ color: 0xffffff, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.20 });
             } else if (item.color === 'red') {
               // Ruby Gem Emblem
               liqG.moveTo(-s * 0.6, cy - s * 0.55);
@@ -937,17 +918,17 @@ export default function PixiGameBoard({
               liqG.lineTo(0, cy + s * 0.8);
               liqG.lineTo(-s * 0.9, cy - s * 0.1);
               liqG.closePath();
-              liqG.fill({ color: 0xffffff, alpha: 0.34 });
+              liqG.fill({ color: 0xffffff, alpha: 0.22 });
             } else if (item.color === 'lime') {
               // Kiwi Sprout / Clover Emblem
               liqG.circle(0, cy - s * 0.32, s * 0.38);
               liqG.circle(-s * 0.32, cy + s * 0.24, s * 0.38);
               liqG.circle(s * 0.32, cy + s * 0.24, s * 0.38);
-              liqG.fill({ color: 0xffffff, alpha: 0.28 });
+              liqG.fill({ color: 0xffffff, alpha: 0.18 });
             } else if (item.color === 'teal') {
               // Deep Ocean Ripple Ring
               liqG.circle(0, cy, s * 0.6);
-              liqG.stroke({ width: 1.5, color: 0xffffff, alpha: 0.35 });
+              liqG.stroke({ width: 1.5, color: 0xffffff, alpha: 0.24 });
             }
           }
 
@@ -986,10 +967,12 @@ export default function PixiGameBoard({
           rimStrokeColor = 0xd946ef;
         }
 
-        // Transparent glass body fill
+        // Transparent crystal glass body fill:
+        // When filled with liquid, keep alpha 0.0 so the vibrant primary colors shine through with 100% clarity & zero haze
+        const isTubeEmpty = renderList.length === 0;
         glsG.fill({
-          color: isSelected ? 0x0284c7 : bodyFillColor,
-          alpha: isSelected ? 0.22 : bodyFillAlpha,
+          color: isSelected ? 0x0066ff : bodyFillColor,
+          alpha: isSelected ? 0.20 : (isTubeEmpty ? 0.05 : 0.0),
         });
 
         // Outer glass wall stroke
