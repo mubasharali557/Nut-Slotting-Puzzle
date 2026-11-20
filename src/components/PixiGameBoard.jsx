@@ -852,39 +852,44 @@ export default function PixiGameBoard({
             }
           }
 
-          // Delicate Luminous Watermark Vector Emblem per Color (Zero Ambiguity & Crystal-Clear Pigment)
+          // Bright, High-Contrast Luminous Vector Emblem per Color (Sharp, Clear & Easily Distinguishable)
           if (item.fraction > 0.65) {
             const cy = (y_top + y_bottom) / 2;
-            const s = Math.min(5.5, Math.max(3.2, (y_bottom - y_top) * 0.22));
+            const s = Math.min(8.2, Math.max(5.0, (y_bottom - y_top) * 0.28));
             liqG.beginPath();
             if (item.color === 'blue') {
               // Water Drop Emblem
-              liqG.moveTo(0, cy - s);
-              liqG.bezierCurveTo(s * 0.85, cy, s * 0.85, cy + s * 0.55, 0, cy + s * 0.8);
-              liqG.bezierCurveTo(-s * 0.85, cy + s * 0.55, -s * 0.85, cy, 0, cy - s);
-              liqG.fill({ color: 0xffffff, alpha: 0.20 });
+              liqG.moveTo(0, cy - s * 1.15);
+              liqG.bezierCurveTo(s * 0.9, cy - s * 0.1, s * 0.9, cy + s * 0.7, 0, cy + s);
+              liqG.bezierCurveTo(-s * 0.9, cy + s * 0.7, -s * 0.9, cy - s * 0.1, 0, cy - s * 1.15);
+              liqG.closePath();
+              liqG.stroke({ width: 1.6, color: 0x000000, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.88 });
             } else if (item.color === 'cyan') {
               // Crystalline 4-point Diamond Star
-              liqG.moveTo(0, cy - s * 1.1);
-              liqG.lineTo(s * 0.35, cy - s * 0.3);
-              liqG.lineTo(s * 1.1, cy);
-              liqG.lineTo(s * 0.35, cy + s * 0.3);
-              liqG.lineTo(0, cy + s * 1.1);
-              liqG.lineTo(-s * 0.35, cy + s * 0.3);
-              liqG.lineTo(-s * 1.1, cy);
-              liqG.lineTo(-s * 0.35, cy - s * 0.3);
+              liqG.moveTo(0, cy - s * 1.2);
+              liqG.lineTo(s * 0.32, cy - s * 0.32);
+              liqG.lineTo(s * 1.2, cy);
+              liqG.lineTo(s * 0.32, cy + s * 0.32);
+              liqG.lineTo(0, cy + s * 1.2);
+              liqG.lineTo(-s * 0.32, cy + s * 0.32);
+              liqG.lineTo(-s * 1.2, cy);
+              liqG.lineTo(-s * 0.32, cy - s * 0.32);
               liqG.closePath();
-              liqG.fill({ color: 0xffffff, alpha: 0.22 });
+              liqG.stroke({ width: 1.8, color: 0x000000, alpha: 0.38 });
+              liqG.fill({ color: 0xffffff, alpha: 0.90 });
             } else if (item.color === 'orange') {
               // Flame Emblem
-              liqG.moveTo(0, cy - s);
-              liqG.bezierCurveTo(s * 0.8, cy - s * 0.2, s * 0.8, cy + s * 0.55, 0, cy + s * 0.8);
-              liqG.bezierCurveTo(-s * 0.8, cy + s * 0.55, -s * 0.8, cy - s * 0.2, 0, cy - s);
-              liqG.fill({ color: 0xffffff, alpha: 0.18 });
+              liqG.moveTo(0, cy - s * 1.15);
+              liqG.bezierCurveTo(s * 0.85, cy - s * 0.3, s * 0.85, cy + s * 0.65, 0, cy + s * 0.95);
+              liqG.bezierCurveTo(-s * 0.85, cy + s * 0.65, -s * 0.85, cy - s * 0.3, 0, cy - s * 1.15);
+              liqG.closePath();
+              liqG.stroke({ width: 1.6, color: 0x000000, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.88 });
             } else if (item.color === 'yellow') {
-              // 5-Point Star Emblem
+              // 5-Point Star Emblem (Extra contrast outline for bright yellow)
               for (let pt = 0; pt < 10; pt++) {
-                const rad = pt % 2 === 0 ? s : s * 0.44;
+                const rad = pt % 2 === 0 ? s * 1.1 : s * 0.48;
                 const angle = (pt * Math.PI) / 5 - Math.PI / 2;
                 const px = Math.cos(angle) * rad;
                 const py = cy + Math.sin(angle) * rad;
@@ -892,43 +897,58 @@ export default function PixiGameBoard({
                 else liqG.lineTo(px, py);
               }
               liqG.closePath();
-              liqG.fill({ color: 0xffffff, alpha: 0.20 });
+              liqG.stroke({ width: 2.0, color: 0x000000, alpha: 0.45 });
+              liqG.fill({ color: 0xffffff, alpha: 0.92 });
             } else if (item.color === 'green') {
               // Emerald Leaf Emblem
-              liqG.moveTo(-s * 0.9, cy);
-              liqG.quadraticCurveTo(0, cy - s * 0.75, s * 0.9, cy);
-              liqG.quadraticCurveTo(0, cy + s * 0.75, -s * 0.9, cy);
-              liqG.fill({ color: 0xffffff, alpha: 0.20 });
+              liqG.moveTo(-s * 1.05, cy);
+              liqG.quadraticCurveTo(0, cy - s * 0.85, s * 1.05, cy);
+              liqG.quadraticCurveTo(0, cy + s * 0.85, -s * 1.05, cy);
+              liqG.closePath();
+              liqG.stroke({ width: 1.6, color: 0x000000, alpha: 0.34 });
+              liqG.fill({ color: 0xffffff, alpha: 0.88 });
             } else if (item.color === 'pink') {
               // Heart Emblem
-              liqG.moveTo(0, cy + s * 0.65);
-              liqG.bezierCurveTo(-s * 0.9, cy + s * 0.1, -s * 0.9, cy - s * 0.75, 0, cy - s * 0.2);
-              liqG.bezierCurveTo(s * 0.9, cy - s * 0.75, s * 0.9, cy + s * 0.1, 0, cy + s * 0.65);
-              liqG.fill({ color: 0xffffff, alpha: 0.20 });
+              liqG.moveTo(0, cy + s * 0.8);
+              liqG.bezierCurveTo(-s * 1.05, cy + s * 0.15, -s * 1.05, cy - s * 0.85, 0, cy - s * 0.25);
+              liqG.bezierCurveTo(s * 1.05, cy - s * 0.85, s * 1.05, cy + s * 0.15, 0, cy + s * 0.8);
+              liqG.closePath();
+              liqG.stroke({ width: 1.6, color: 0x000000, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.88 });
             } else if (item.color === 'purple') {
               // Amethyst Crescent Moon
-              liqG.arc(0, cy, s * 0.75, -Math.PI * 0.45, Math.PI * 0.45);
-              liqG.arc(-s * 0.3, cy, s * 0.65, Math.PI * 0.45, -Math.PI * 0.45, true);
-              liqG.fill({ color: 0xffffff, alpha: 0.20 });
+              liqG.arc(0, cy, s * 0.9, -Math.PI * 0.45, Math.PI * 0.45);
+              liqG.arc(-s * 0.35, cy, s * 0.75, Math.PI * 0.45, -Math.PI * 0.45, true);
+              liqG.closePath();
+              liqG.stroke({ width: 1.6, color: 0x000000, alpha: 0.30 });
+              liqG.fill({ color: 0xffffff, alpha: 0.88 });
             } else if (item.color === 'red') {
               // Ruby Gem Emblem
-              liqG.moveTo(-s * 0.6, cy - s * 0.55);
-              liqG.lineTo(s * 0.6, cy - s * 0.55);
-              liqG.lineTo(s * 0.9, cy - s * 0.1);
-              liqG.lineTo(0, cy + s * 0.8);
-              liqG.lineTo(-s * 0.9, cy - s * 0.1);
+              liqG.moveTo(-s * 0.7, cy - s * 0.65);
+              liqG.lineTo(s * 0.7, cy - s * 0.65);
+              liqG.lineTo(s * 1.05, cy - s * 0.1);
+              liqG.lineTo(0, cy + s * 0.95);
+              liqG.lineTo(-s * 1.05, cy - s * 0.1);
               liqG.closePath();
-              liqG.fill({ color: 0xffffff, alpha: 0.22 });
+              liqG.stroke({ width: 1.6, color: 0x000000, alpha: 0.32 });
+              liqG.fill({ color: 0xffffff, alpha: 0.90 });
             } else if (item.color === 'lime') {
-              // Kiwi Sprout / Clover Emblem
-              liqG.circle(0, cy - s * 0.32, s * 0.38);
-              liqG.circle(-s * 0.32, cy + s * 0.24, s * 0.38);
-              liqG.circle(s * 0.32, cy + s * 0.24, s * 0.38);
-              liqG.fill({ color: 0xffffff, alpha: 0.18 });
+              // Kiwi Sprout / Clover Emblem (Extra contrast outline for bright lime)
+              liqG.circle(0, cy - s * 0.4, s * 0.46);
+              liqG.circle(-s * 0.42, cy + s * 0.3, s * 0.46);
+              liqG.circle(s * 0.42, cy + s * 0.3, s * 0.46);
+              liqG.stroke({ width: 2.0, color: 0x000000, alpha: 0.42 });
+              liqG.fill({ color: 0xffffff, alpha: 0.90 });
             } else if (item.color === 'teal') {
-              // Deep Ocean Ripple Ring
-              liqG.circle(0, cy, s * 0.6);
-              liqG.stroke({ width: 1.5, color: 0xffffff, alpha: 0.24 });
+              // Deep Ocean Ripple Ring & Center Dot
+              liqG.circle(0, cy, s * 0.75);
+              liqG.stroke({ width: 2.4, color: 0x000000, alpha: 0.35 });
+              liqG.beginPath();
+              liqG.circle(0, cy, s * 0.75);
+              liqG.stroke({ width: 1.8, color: 0xffffff, alpha: 0.90 });
+              liqG.beginPath();
+              liqG.circle(0, cy, s * 0.32);
+              liqG.fill({ color: 0xffffff, alpha: 0.90 });
             }
           }
 
