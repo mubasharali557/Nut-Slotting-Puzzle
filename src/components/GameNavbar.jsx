@@ -50,10 +50,10 @@ export default function GameNavbar({
   return (
     <header className="w-full max-w-5xl mx-auto px-1.5 sm:px-4 pt-1 sm:pt-2.5 pb-0.5 z-30 select-none">
       {/* Outer Floating Dark-Themed Capsule Navbar */}
-      <div className="relative w-full rounded-2xl sm:rounded-full bg-gradient-to-r from-slate-950/92 via-slate-900/95 to-slate-950/92 backdrop-blur-xl border border-slate-700/60 shadow-[0_8px_32px_rgba(0,0,0,0.7),inset_0_1px_1px_rgba(255,255,255,0.08)] px-2 sm:px-5 py-1.5 sm:py-2 flex items-center justify-between gap-1 sm:gap-2">
+      <div className="relative w-full rounded-2xl sm:rounded-full bg-gradient-to-r from-slate-950/98 via-slate-900/98 to-slate-950/98 backdrop-blur-xl border border-slate-700/80 shadow-[0_12px_36px_rgba(0,0,0,0.85),inset_0_1px_1px_rgba(255,255,255,0.1)] px-2 sm:px-5 py-1.5 sm:py-2 flex items-center justify-between gap-1 sm:gap-2">
         
         {/* Top Glass Horizontal Reflection Line */}
-        <div className="absolute top-0.5 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-slate-400/30 to-transparent pointer-events-none rounded-full" />
+        <div className="absolute top-0.5 inset-x-8 h-[1px] bg-gradient-to-r from-transparent via-slate-400/40 to-transparent pointer-events-none rounded-full" />
 
         {/* LEFT: Game Logo with Potion Vials & Ribbons */}
         <div
@@ -63,34 +63,34 @@ export default function GameNavbar({
           {/* Potion Bottles Trio Graphic */}
           <div className="relative flex items-end -space-x-1 sm:-space-x-1.5 pb-0.5 scale-90 sm:scale-100 origin-left">
             {/* Blue potion */}
-            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-gradient-to-b from-sky-400 to-blue-500 border border-white/80 shadow-sm transform -rotate-12 flex flex-col justify-between p-0.5">
+            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-[#0066ff] border border-white/85 shadow-sm transform -rotate-12 flex flex-col justify-between p-0.5">
               <div className="w-1.5 sm:w-2 h-0.5 sm:h-1 bg-amber-700 mx-auto rounded-t-sm" />
-              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full mx-auto mb-0.5" />
+              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/70 rounded-full mx-auto mb-0.5" />
             </div>
             {/* Magenta center potion */}
-            <div className="w-4.5 h-7.5 sm:w-5 sm:h-8.5 rounded-b-lg rounded-t-sm bg-gradient-to-b from-pink-400 to-fuchsia-500 border border-white/95 shadow-md z-10 flex flex-col justify-between p-0.5">
+            <div className="w-4.5 h-7.5 sm:w-5 sm:h-8.5 rounded-b-lg rounded-t-sm bg-[#ff0099] border border-white shadow-md z-10 flex flex-col justify-between p-0.5">
               <div className="w-2 sm:w-2.5 h-0.5 sm:h-1 bg-amber-700 mx-auto rounded-t-sm" />
-              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/60 rounded-full mx-auto mb-0.5 animate-pulse" />
+              <div className="w-1.5 sm:w-2 h-1.5 sm:h-2 bg-white/70 rounded-full mx-auto mb-0.5 animate-pulse" />
             </div>
             {/* Yellow potion */}
-            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-gradient-to-b from-yellow-300 to-amber-400 border border-white/80 shadow-sm transform rotate-12 flex flex-col justify-between p-0.5">
+            <div className="w-3.5 h-6 sm:w-4 sm:h-7 rounded-b-md rounded-t-sm bg-[#ffe600] border border-white/85 shadow-sm transform rotate-12 flex flex-col justify-between p-0.5">
               <div className="w-1.5 sm:w-2 h-0.5 sm:h-1 bg-amber-700 mx-auto rounded-t-sm" />
-              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/60 rounded-full mx-auto mb-0.5" />
+              <div className="w-1 sm:w-1.5 h-1 sm:h-1.5 bg-white/70 rounded-full mx-auto mb-0.5" />
             </div>
           </div>
 
           {/* Logo Typography & Ribbon */}
           <div className="flex flex-col items-start leading-none">
             <div className="flex items-center text-xs sm:text-base font-black italic tracking-wide">
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-amber-400 to-orange-500 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-yellow-300 via-amber-400 to-amber-500 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                 Color
               </span>
-              <span className="text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 to-blue-400 ml-0.5 sm:ml-1 drop-shadow-[0_1px_2px_rgba(0,0,0,0.8)]">
+              <span className="text-transparent bg-clip-text bg-gradient-to-b from-cyan-300 to-blue-500 ml-0.5 sm:ml-1 drop-shadow-[0_1px_3px_rgba(0,0,0,0.9)]">
                 Sort
               </span>
             </div>
             {/* Purple Ribbon Badge */}
-            <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-widest text-white px-1.5 sm:px-2 py-0.2 rounded-full bg-gradient-to-r from-purple-600 to-indigo-600 border border-purple-400/50 shadow-sm -mt-0.5">
+            <span className="text-[7px] sm:text-[9px] font-black uppercase tracking-widest text-white px-1.5 sm:px-2 py-0.2 rounded-full bg-gradient-to-r from-indigo-950 via-purple-950 to-indigo-950 border border-purple-500/50 shadow-sm -mt-0.5">
               Puzzle
             </span>
           </div>

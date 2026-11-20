@@ -303,17 +303,19 @@ export default function App() {
       {/* Full-Screen Dynamic Background Image & Live Applied Theme */}
       <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
         {isHome ? (
-          // Home Screen: Cozy Winter Village Scene - Sleek Dark-Themed Atmosphere
+          // Home Screen: Deep Midnight Winter Village Scene - Sleek & Atmospheric Dark Theme
           <div className="relative w-full h-full">
             <img
               src="/winter-scene.jpg"
               alt="Water Sort Home Background"
-              className="w-full h-full object-cover object-center filter brightness-90 contrast-105"
+              className="w-full h-full object-cover object-center filter brightness-65 contrast-125 saturate-110"
             />
-            {/* Elegant dark overlay giving a rich modern dark-theme atmosphere */}
-            <div className="absolute inset-0 bg-black/45 pointer-events-none" />
-            {/* Subtle moonlit celestial glow centered behind the home title */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[550px] h-[380px] bg-gradient-to-b from-indigo-500/10 via-sky-950/15 to-transparent rounded-full blur-3xl pointer-events-none" />
+            {/* Rich Midnight Velvet Gradient Overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-indigo-950/70 to-slate-950/90 pointer-events-none" />
+            {/* Ambient Radial Spotlight: Deep Cosmic Violet / Cyan Backglow */}
+            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-b from-cyan-500/15 via-indigo-600/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+            {/* Radial Vignette Framing the Center Content */}
+            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(2,6,23,0.85)_100%)] pointer-events-none" />
           </div>
         ) : (
           // Gameplay Screen: Live Applied Theme Background & Lighting
