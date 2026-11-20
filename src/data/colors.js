@@ -1,29 +1,29 @@
-// Ultra-vibrant, pure, luminous primary and secondary liquid colors
-// Bold, 100% saturated pigments matching classic high-contrast arcade gameplay
+// Pure, ultra-vibrant, saturated primary and secondary liquid colors
+// Bold, crystal-clear pigments with high luminescence and clean distinction
 export const TUBE_COLORS = {
   red: {
     id: 'red',
-    name: 'Vivid Pure Red',
-    hex: '#ff0028',
-    num: 0xff0028,
-    lightNum: 0xff6680,
-    streamNum: 0xdd0022,
+    name: 'Vivid Candy Red',
+    hex: '#ff0033',
+    num: 0xff0033,
+    lightNum: 0xff6688,
+    streamNum: 0xd9002c,
   },
   blue: {
     id: 'blue',
     name: 'Electric Cobalt Blue',
-    hex: '#0055ff',
-    num: 0x0055ff,
-    lightNum: 0x73a6ff,
-    streamNum: 0x0044dd,
+    hex: '#004cff',
+    num: 0x004cff,
+    lightNum: 0x73a2ff,
+    streamNum: 0x003cd6,
   },
   yellow: {
     id: 'yellow',
     name: 'Dazzling Sun Yellow',
-    hex: '#ffe600',
-    num: 0xffe600,
-    lightNum: 0xfff280,
-    streamNum: 0xccb800,
+    hex: '#ffea00',
+    num: 0xffea00,
+    lightNum: 0xfff480,
+    streamNum: 0xd6c400,
   },
   green: {
     id: 'green',
@@ -36,10 +36,10 @@ export const TUBE_COLORS = {
   orange: {
     id: 'orange',
     name: 'Radiant Tangerine Orange',
-    hex: '#ff7300',
-    num: 0xff7300,
-    lightNum: 0xffab66,
-    streamNum: 0xdd6300,
+    hex: '#ff7700',
+    num: 0xff7700,
+    lightNum: 0xffaf66,
+    streamNum: 0xd66400,
   },
   purple: {
     id: 'purple',
@@ -47,15 +47,15 @@ export const TUBE_COLORS = {
     hex: '#9900ff',
     num: 0x9900ff,
     lightNum: 0xcc80ff,
-    streamNum: 0x7d00d1,
+    streamNum: 0x7a00cc,
   },
   pink: {
     id: 'pink',
     name: 'Vivid Candy Pink',
-    hex: '#ff0088',
-    num: 0xff0088,
-    lightNum: 0xff80c4,
-    streamNum: 0xd60072,
+    hex: '#ff007f',
+    num: 0xff007f,
+    lightNum: 0xff80c0,
+    streamNum: 0xd6006b,
   },
   cyan: {
     id: 'cyan',
@@ -63,7 +63,7 @@ export const TUBE_COLORS = {
     hex: '#00f0ff',
     num: 0x00f0ff,
     lightNum: 0x8ff8ff,
-    streamNum: 0x00c4d1,
+    streamNum: 0x00c8d6,
   },
   lime: {
     id: 'lime',
@@ -71,14 +71,14 @@ export const TUBE_COLORS = {
     hex: '#88ff00',
     num: 0x88ff00,
     lightNum: 0xc4ff80,
-    streamNum: 0x6ed100,
+    streamNum: 0x73d600,
   },
   teal: {
     id: 'teal',
     name: 'Vibrant Mint Teal',
-    hex: '#00d4a0',
-    num: 0x00d4a0,
+    hex: '#00d9a6',
+    num: 0x00d9a6,
     lightNum: 0x80fed9,
-    streamNum: 0x00ad82,
+    streamNum: 0x00b388,
   },
 };

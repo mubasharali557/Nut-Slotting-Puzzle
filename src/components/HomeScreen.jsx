@@ -35,26 +35,14 @@ export default function HomeScreen({
               {/* Narrow Neck */}
               <div className="absolute top-1.5 inset-x-1 h-2.5 bg-slate-900/50 border-x-2 border-white/85 z-20" />
               {/* Main Body */}
-              <div className="relative w-full h-[85%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white/90 shadow-inner flex flex-col justify-end overflow-hidden p-0.5">
+              <div className="relative w-full h-[90%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white/90 shadow-inner flex flex-col justify-end overflow-hidden p-0.5">
                 {/* Glass Gloss highlight */}
                 <div className="absolute top-1 left-0.5 bottom-1.5 w-1 bg-gradient-to-b from-white/90 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
-                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Colors with Micro-Bubbles */}
-                <div className="relative w-full h-3 sm:h-4 bg-[#ffe600] border-b border-black/20">
-                  <div className="absolute top-0.5 left-1.5 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-0.5 right-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3 sm:h-4 bg-[#0055ff] border-b border-black/20">
-                  <div className="absolute top-0.5 right-1.5 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-0.5 left-2 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3 sm:h-4 bg-[#00e626] border-b border-black/20">
-                  <div className="absolute top-0.5 left-2 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-0.5 right-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3.5 sm:h-5 rounded-b-sm bg-[#ff0028]">
-                  <div className="absolute top-1 right-2 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-1 left-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
+                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#ffea00] border-b border-black/25" />
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/25" />
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#00e626] border-b border-black/25" />
+                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#ff0033]" />
               </div>
             </div>
 
@@ -64,29 +52,15 @@ export default function HomeScreen({
               <div className="absolute top-0 inset-x-[-2px] h-2.5 bg-gradient-to-r from-slate-200 via-white to-slate-200 rounded-full border border-white shadow-md z-30" />
               {/* Narrow Neck */}
               <div className="absolute top-2 inset-x-1.5 h-3 bg-slate-900/50 border-x-2 border-white/90 z-20" />
-              {/* Micro animated bubble */}
-              <div className="absolute top-8 right-2.5 w-1.5 h-1.5 bg-white/90 rounded-full animate-ping z-20 pointer-events-none" style={{ animationDuration: '2.2s' }} />
               {/* Main Body */}
-              <div className="relative w-full h-[85%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white shadow-[0_12px_28px_rgba(0,0,0,0.8)] flex flex-col justify-end overflow-hidden p-0.5">
+              <div className="relative w-full h-[90%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white shadow-[0_12px_28px_rgba(0,0,0,0.8)] flex flex-col justify-end overflow-hidden p-0.5">
                 {/* Glass Gloss highlight */}
                 <div className="absolute top-1 left-1 bottom-2 w-1.5 bg-gradient-to-b from-white/95 via-white/50 to-transparent rounded-full z-20 pointer-events-none" />
-                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Colors with Micro-Bubbles */}
-                <div className="relative w-full h-3.5 sm:h-4.5 bg-[#ff0088] border-b border-black/20">
-                  <div className="absolute top-1 left-2 w-1.2 h-1.2 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-1 right-2 w-1 h-1 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3.5 sm:h-4.5 bg-[#ffe600] border-b border-black/20">
-                  <div className="absolute top-1 right-2 w-1.2 h-1.2 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-1 left-2.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3.5 sm:h-4.5 bg-[#00f0ff] border-b border-black/20">
-                  <div className="absolute top-1 left-2.5 w-1.2 h-1.2 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-1 right-2 w-1 h-1 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-4 sm:h-6 rounded-b-sm bg-[#9900ff]">
-                  <div className="absolute top-1.5 right-2 w-1.2 h-1.2 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-1.5 left-2 w-1 h-1 bg-white/60 rounded-full" />
-                </div>
+                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
+                <div className="w-full h-4 sm:h-5.5 bg-[#ff007f] border-b border-black/25" />
+                <div className="w-full h-4 sm:h-5.5 bg-[#ffea00] border-b border-black/25" />
+                <div className="w-full h-4 sm:h-5.5 bg-[#00f0ff] border-b border-black/25" />
+                <div className="w-full h-4.5 sm:h-6.5 rounded-b-sm bg-[#9900ff]" />
               </div>
             </div>
 
@@ -97,26 +71,14 @@ export default function HomeScreen({
               {/* Narrow Neck */}
               <div className="absolute top-1.5 inset-x-1 h-2.5 bg-slate-900/50 border-x-2 border-white/85 z-20" />
               {/* Main Body */}
-              <div className="relative w-full h-[85%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white/90 shadow-inner flex flex-col justify-end overflow-hidden p-0.5">
+              <div className="relative w-full h-[90%] rounded-b-md rounded-t-xl bg-slate-950/40 backdrop-blur-sm border-2 border-white/90 shadow-inner flex flex-col justify-end overflow-hidden p-0.5">
                 {/* Glass Gloss highlight */}
                 <div className="absolute top-1 left-0.5 bottom-1.5 w-1 bg-gradient-to-b from-white/90 via-white/40 to-transparent rounded-full z-20 pointer-events-none" />
-                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Colors with Micro-Bubbles */}
-                <div className="relative w-full h-3 sm:h-4 bg-[#0055ff] border-b border-black/20">
-                  <div className="absolute top-0.5 left-1.5 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-0.5 right-2 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3 sm:h-4 bg-[#ff7300] border-b border-black/20">
-                  <div className="absolute top-0.5 right-2 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-0.5 left-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3 sm:h-4 bg-[#ff0028] border-b border-black/20">
-                  <div className="absolute top-0.5 left-2 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-0.5 right-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
-                <div className="relative w-full h-3.5 sm:h-5 rounded-b-sm bg-[#88ff00]">
-                  <div className="absolute top-1 right-2 w-1 h-1 bg-white/80 rounded-full" />
-                  <div className="absolute bottom-1 left-1.5 w-0.8 h-0.8 bg-white/60 rounded-full" />
-                </div>
+                {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/25" />
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#ff7700] border-b border-black/25" />
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#ff0033] border-b border-black/25" />
+                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#88ff00]" />
               </div>
             </div>
           </div>
