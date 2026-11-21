@@ -27,58 +27,58 @@ export default function HomeScreen({
         {/* Animated Title Emblem: Only this element rotates/animates slightly faster */}
         <div className="animate-title-rotate select-none flex flex-col items-center">
           {/* Traditional Trio of Water Sort Glass Flasks (Matching Reference Image) */}
-          <div className="relative flex items-end justify-center gap-6 sm:gap-8 pb-1 filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.65)]">
-            {/* Left Flask (Tilted -8deg with generous breathing room) */}
-            <div className="relative w-7 h-18 sm:w-9 sm:h-24 transform -rotate-8 flex flex-col justify-end">
+          <div className="relative flex items-end justify-center gap-7 sm:gap-9 pb-2 filter drop-shadow-[0_12px_24px_rgba(0,0,0,0.65)]">
+            {/* Left Flask (Tilted -6deg with generous, clean spacing) */}
+            <div className="relative w-[34px] h-[92px] sm:w-[42px] sm:h-[114px] transform -rotate-6 flex flex-col justify-end">
               {/* Flared Glass Lip Collar (Clean Borderless) */}
-              <div className="absolute top-0 inset-x-[-1px] h-2 bg-gradient-to-r from-white/30 via-white/50 to-white/30 rounded-full shadow-sm z-30" />
+              <div className="absolute top-0 inset-x-[-1.5px] h-[7px] sm:h-[8px] bg-gradient-to-r from-white/30 via-white/50 to-white/30 rounded-full shadow-sm z-30" />
               {/* Narrow Neck */}
-              <div className="absolute top-1.5 inset-x-1 h-2.5 bg-white/10 z-20" />
+              <div className="absolute top-[6px] inset-x-[6px] sm:inset-x-[8px] h-[10px] sm:h-[12px] bg-white/10 z-20" />
               {/* Main Body (Borderless Crystal Glass) */}
-              <div className="relative w-full h-[90%] rounded-b-md rounded-t-xl bg-white/10 backdrop-blur-md shadow-lg flex flex-col justify-end overflow-hidden">
+              <div className="relative w-full h-[76px] sm:h-[94px] rounded-b-md rounded-t-xl bg-white/10 backdrop-blur-md shadow-lg flex flex-col justify-end overflow-hidden">
                 {/* Glass Gloss highlight */}
-                <div className="absolute top-1 left-0.5 bottom-1.5 w-1 bg-gradient-to-b from-white/60 via-white/30 to-transparent rounded-full z-20 pointer-events-none" />
+                <div className="absolute top-1 left-0.5 bottom-1.5 w-[3px] bg-gradient-to-b from-white/60 via-white/25 to-transparent rounded-full z-20 pointer-events-none" />
                 {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#ffea00] border-b border-black/20" />
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/20" />
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#00e626] border-b border-black/20" />
-                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#eb0000]" />
+                <div className="w-full h-[18px] sm:h-[22px] bg-[#ffea00] border-b border-black/20" />
+                <div className="w-full h-[18px] sm:h-[22px] bg-[#004cff] border-b border-black/20" />
+                <div className="w-full h-[18px] sm:h-[22px] bg-[#00e626] border-b border-black/20" />
+                <div className="w-full h-[22px] sm:h-[28px] rounded-b-sm bg-[#eb0000]" />
               </div>
             </div>
 
-            {/* Center Main Flask (Taller, 0deg) */}
-            <div className="relative w-8.5 h-22 sm:w-11 sm:h-28 z-10 flex flex-col justify-end">
+            {/* Center Main Flask (Taller Hero Flask, 0deg) */}
+            <div className="relative w-[40px] h-[106px] sm:w-[50px] sm:h-[130px] z-10 flex flex-col justify-end">
               {/* Flared Glass Lip Collar (Clean Borderless) */}
-              <div className="absolute top-0 inset-x-[-1.5px] h-2.5 bg-gradient-to-r from-white/35 via-white/60 to-white/35 rounded-full shadow-md z-30" />
+              <div className="absolute top-0 inset-x-[-2px] h-[8px] sm:h-[9px] bg-gradient-to-r from-white/35 via-white/60 to-white/35 rounded-full shadow-md z-30" />
               {/* Narrow Neck */}
-              <div className="absolute top-2 inset-x-1.5 h-3 bg-white/10 z-20" />
+              <div className="absolute top-[7px] inset-x-[7px] sm:inset-x-[9px] h-[12px] sm:h-[14px] bg-white/10 z-20" />
               {/* Main Body (Borderless Crystal Glass) */}
-              <div className="relative w-full h-[90%] rounded-b-md rounded-t-xl bg-white/10 backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.8)] flex flex-col justify-end overflow-hidden">
+              <div className="relative w-full h-[88px] sm:h-[107px] rounded-b-md rounded-t-xl bg-white/10 backdrop-blur-md shadow-[0_12px_28px_rgba(0,0,0,0.8)] flex flex-col justify-end overflow-hidden">
                 {/* Glass Gloss highlight */}
-                <div className="absolute top-1 left-1 bottom-2 w-1.5 bg-gradient-to-b from-white/70 via-white/35 to-transparent rounded-full z-20 pointer-events-none" />
+                <div className="absolute top-1 left-1 bottom-2 w-[4px] bg-gradient-to-b from-white/70 via-white/30 to-transparent rounded-full z-20 pointer-events-none" />
                 {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
-                <div className="w-full h-4 sm:h-5.5 bg-[#ff5ebc] border-b border-black/20" />
-                <div className="w-full h-4 sm:h-5.5 bg-[#ffea00] border-b border-black/20" />
-                <div className="w-full h-4 sm:h-5.5 bg-[#00e5ff] border-b border-black/20" />
-                <div className="w-full h-4.5 sm:h-6.5 rounded-b-sm bg-[#9900ff]" />
+                <div className="w-full h-[21px] sm:h-[25px] bg-[#ff5ebc] border-b border-black/20" />
+                <div className="w-full h-[21px] sm:h-[25px] bg-[#ffea00] border-b border-black/20" />
+                <div className="w-full h-[21px] sm:h-[25px] bg-[#00e5ff] border-b border-black/20" />
+                <div className="w-full h-[25px] sm:h-[32px] rounded-b-sm bg-[#9900ff]" />
               </div>
             </div>
 
-            {/* Right Flask (Tilted +8deg with generous breathing room) */}
-            <div className="relative w-7 h-18 sm:w-9 sm:h-24 transform rotate-8 flex flex-col justify-end">
+            {/* Right Flask (Tilted +6deg with generous, clean spacing) */}
+            <div className="relative w-[34px] h-[92px] sm:w-[42px] sm:h-[114px] transform rotate-6 flex flex-col justify-end">
               {/* Flared Glass Lip Collar (Clean Borderless) */}
-              <div className="absolute top-0 inset-x-[-1px] h-2 bg-gradient-to-r from-white/30 via-white/50 to-white/30 rounded-full shadow-sm z-30" />
+              <div className="absolute top-0 inset-x-[-1.5px] h-[7px] sm:h-[8px] bg-gradient-to-r from-white/30 via-white/50 to-white/30 rounded-full shadow-sm z-30" />
               {/* Narrow Neck */}
-              <div className="absolute top-1.5 inset-x-1 h-2.5 bg-white/10 z-20" />
+              <div className="absolute top-[6px] inset-x-[6px] sm:inset-x-[8px] h-[10px] sm:h-[12px] bg-white/10 z-20" />
               {/* Main Body (Borderless Crystal Glass) */}
-              <div className="relative w-full h-[90%] rounded-b-md rounded-t-xl bg-white/10 backdrop-blur-md shadow-lg flex flex-col justify-end overflow-hidden">
+              <div className="relative w-full h-[76px] sm:h-[94px] rounded-b-md rounded-t-xl bg-white/10 backdrop-blur-md shadow-lg flex flex-col justify-end overflow-hidden">
                 {/* Glass Gloss highlight */}
-                <div className="absolute top-1 left-0.5 bottom-1.5 w-1 bg-gradient-to-b from-white/60 via-white/30 to-transparent rounded-full z-20 pointer-events-none" />
+                <div className="absolute top-1 left-0.5 bottom-1.5 w-[3px] bg-gradient-to-b from-white/60 via-white/25 to-transparent rounded-full z-20 pointer-events-none" />
                 {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/20" />
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#ff7700] border-b border-black/20" />
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#ffffff] border-b border-black/20" />
-                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#141418]" />
+                <div className="w-full h-[18px] sm:h-[22px] bg-[#004cff] border-b border-black/20" />
+                <div className="w-full h-[18px] sm:h-[22px] bg-[#ff7700] border-b border-black/20" />
+                <div className="w-full h-[18px] sm:h-[22px] bg-[#ffffff] border-b border-black/20" />
+                <div className="w-full h-[22px] sm:h-[28px] rounded-b-sm bg-[#141418]" />
               </div>
             </div>
           </div>
@@ -101,7 +101,7 @@ export default function HomeScreen({
         </div>
 
         {/* Completely STATIC Traditional Level Banner (Zero animation, 100% stationary) */}
-        <div className="mt-3.5 sm:mt-6 flex flex-col items-center">
+        <div className="mt-5 sm:mt-8 flex flex-col items-center">
           {/* 3 Golden Stars with Radiant Warm Glow */}
           <div className="flex items-center justify-center gap-1.5 -mb-1.5 sm:-mb-2 z-10">
             <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.85)] transform -rotate-12" />
@@ -129,7 +129,7 @@ export default function HomeScreen({
       </div>
 
       {/* Bottom Traditional Main Action Hub */}
-      <div className="w-full max-w-xs flex flex-col items-center gap-2.5 sm:gap-5 mb-2 sm:mb-6 flex-shrink-0">
+      <div className="w-full max-w-xs flex flex-col items-center gap-3.5 sm:gap-6 mb-3 sm:mb-8 flex-shrink-0">
         {/* Big High-Contrast 3D Arcade PLAY Button - Radiant Emerald */}
         <button
           onClick={handlePlayClick}
