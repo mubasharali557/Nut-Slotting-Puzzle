@@ -67,11 +67,11 @@ export const TUBE_COLORS = {
   },
   lime: {
     id: 'lime',
-    name: 'Laser Electric Lime',
-    hex: '#88ff00',
-    num: 0x88ff00,
-    lightNum: 0xc4ff80,
-    streamNum: 0x73d600,
+    name: 'Pure Obsidian Black',
+    hex: '#141418',
+    num: 0x141418,
+    lightNum: 0x777788,
+    streamNum: 0x282830,
   },
   teal: {
     id: 'teal',

@@ -78,7 +78,7 @@ export default function HomeScreen({
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/25" />
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#ff7700] border-b border-black/25" />
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#eb0000] border-b border-black/25" />
-                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#88ff00]" />
+                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#141418] border-t border-white/10" />
               </div>
             </div>
           </div>
