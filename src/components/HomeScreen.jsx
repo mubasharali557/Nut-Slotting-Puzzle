@@ -42,7 +42,7 @@ export default function HomeScreen({
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#ffea00] border-b border-black/25" />
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/25" />
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#00e626] border-b border-black/25" />
-                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#ff0033]" />
+                <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#eb0000]" />
               </div>
             </div>
 
@@ -57,7 +57,7 @@ export default function HomeScreen({
                 {/* Glass Gloss highlight */}
                 <div className="absolute top-1 left-1 bottom-2 w-1.5 bg-gradient-to-b from-white/95 via-white/50 to-transparent rounded-full z-20 pointer-events-none" />
                 {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
-                <div className="w-full h-4 sm:h-5.5 bg-[#ff007f] border-b border-black/25" />
+                <div className="w-full h-4 sm:h-5.5 bg-[#ff5ebc] border-b border-black/25" />
                 <div className="w-full h-4 sm:h-5.5 bg-[#ffea00] border-b border-black/25" />
                 <div className="w-full h-4 sm:h-5.5 bg-[#00f0ff] border-b border-black/25" />
                 <div className="w-full h-4.5 sm:h-6.5 rounded-b-sm bg-[#9900ff]" />
@@ -77,7 +77,7 @@ export default function HomeScreen({
                 {/* 4 Colored Water Layers - Ultra-Vibrant Pure Solid Colors */}
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#004cff] border-b border-black/25" />
                 <div className="w-full h-3.5 sm:h-4.5 bg-[#ff7700] border-b border-black/25" />
-                <div className="w-full h-3.5 sm:h-4.5 bg-[#ff0033] border-b border-black/25" />
+                <div className="w-full h-3.5 sm:h-4.5 bg-[#eb0000] border-b border-black/25" />
                 <div className="w-full h-4 sm:h-5.5 rounded-b-sm bg-[#88ff00]" />
               </div>
             </div>

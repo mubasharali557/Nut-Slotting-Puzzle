@@ -3,11 +3,11 @@
 export const TUBE_COLORS = {
   red: {
     id: 'red',
-    name: 'Vivid Candy Red',
-    hex: '#ff0033',
-    num: 0xff0033,
-    lightNum: 0xff6688,
-    streamNum: 0xd9002c,
+    name: 'Fiery Scarlet Red',
+    hex: '#eb0000',
+    num: 0xeb0000,
+    lightNum: 0xff5555,
+    streamNum: 0xc40000,
   },
   blue: {
     id: 'blue',
@@ -51,11 +51,11 @@ export const TUBE_COLORS = {
   },
   pink: {
     id: 'pink',
-    name: 'Vivid Candy Pink',
-    hex: '#ff007f',
-    num: 0xff007f,
-    lightNum: 0xff80c0,
-    streamNum: 0xd6006b,
+    name: 'Radiant Bubblegum Pink',
+    hex: '#ff5ebc',
+    num: 0xff5ebc,
+    lightNum: 0xff99d6,
+    streamNum: 0xd93896,
   },
   cyan: {
     id: 'cyan',
