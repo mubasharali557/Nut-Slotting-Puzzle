@@ -18,9 +18,9 @@ export default function HomeScreen({
   };
 
   return (
-    <div className="relative w-full h-full flex flex-col items-center justify-between py-2 sm:py-6 px-3 sm:px-4 z-20 select-none overflow-hidden">
+    <div className="relative w-full h-full flex flex-col items-center justify-between py-1.5 sm:py-3 px-3 sm:px-4 z-20 select-none overflow-hidden">
       {/* Top Spacer */}
-      <div className="h-0.5 sm:h-2 flex-shrink-0" />
+      <div className="h-0.5 sm:h-1 flex-shrink-0" />
 
       {/* Center Hero: Traditional Water Sort Emblem & Static Badges */}
       <div className="flex flex-col items-center text-center my-auto">
@@ -101,7 +101,7 @@ export default function HomeScreen({
         </div>
 
         {/* Completely STATIC Traditional Level Banner (Zero animation, 100% stationary) */}
-        <div className="mt-5 sm:mt-8 mb-3 sm:mb-4 flex flex-col items-center">
+        <div className="mt-2 sm:mt-3 mb-2 sm:mb-2.5 flex flex-col items-center">
           {/* 3 Golden Stars with Radiant Warm Glow */}
           <div className="flex items-center justify-center gap-1.5 -mb-1.5 sm:-mb-2 z-10">
             <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.85)] transform -rotate-12" />
@@ -129,7 +129,7 @@ export default function HomeScreen({
       </div>
 
       {/* Bottom Traditional Main Action Hub */}
-      <div className="w-full max-w-xs flex flex-col items-center gap-3.5 sm:gap-6 mb-3 sm:mb-8 flex-shrink-0">
+      <div className="w-full max-w-xs flex flex-col items-center gap-2 sm:gap-2.5 mb-2 sm:mb-3 flex-shrink-0">
         {/* Big High-Contrast 3D Arcade PLAY Button - Radiant Emerald */}
         <button
           onClick={handlePlayClick}
