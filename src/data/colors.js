@@ -60,8 +60,8 @@ export const TUBE_COLORS = {
   cyan: {
     id: 'cyan',
     name: 'Luminous Aqua Cyan',
-    hex: '#00f0ff',
-    num: 0x00f0ff,
+    hex: '#00e5ff',
+    num: 0x00e5ff,
     lightNum: 0x8ff8ff,
     streamNum: 0x00c8d6,
   },
@@ -75,10 +75,10 @@ export const TUBE_COLORS = {
   },
   teal: {
     id: 'teal',
-    name: 'Vibrant Mint Teal',
-    hex: '#00d9a6',
-    num: 0x00d9a6,
-    lightNum: 0x80fed9,
-    streamNum: 0x00b388,
+    name: 'Pure Brilliant White',
+    hex: '#ffffff',
+    num: 0xffffff,
+    lightNum: 0xffffff,
+    streamNum: 0xf1f5f9,
   },
 };

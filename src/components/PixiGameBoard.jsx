@@ -381,8 +381,8 @@ export default function PixiGameBoard({
             isPouringStreamActive = true;
 
             // Surface of the liquid inside destination tube (fully fills near brim)
-            const topLipGap = 7;
-            const floorInset = 2.5;
+            const topLipGap = 6;
+            const floorInset = 0;
             const totalLiquidH = Math.max(40, toTube.height - floorInset - topLipGap);
             const slotH = totalLiquidH / CAPACITY;
             const currentTotal = state.bottles[toIdx].length + transferredUnits;
@@ -758,17 +758,17 @@ export default function PixiGameBoard({
         const shoulder_y = Math.max(26, Math.round(h * 0.22));
         const r_base = Math.max(5, Math.min(8, Math.round(w * 0.18)));
 
-        const inset = 2.4; // glass wall thickness
-        const r_in = r - inset;
-        const r_neck_in = r_neck - inset;
-        const r_base_in = Math.max(2, r_base - inset);
-        const y_floor = h - inset;
+        const inset = 0; // borderless design: liquid fills exact flask silhouette
+        const r_in = r;
+        const r_neck_in = r_neck;
+        const r_base_in = r_base;
+        const y_floor = h;
 
         const animTime = stateRef.current ? stateRef.current.time : 0;
 
         // Full-to-the-top liquid geometry:
         // When full (4 layers), colors fill completely up to the neck opening just beneath the rim
-        const y_full_top = lip_h + 3;
+        const y_full_top = lip_h + 2;
         const totalLiquidH = Math.max(40, y_floor - y_full_top);
         const slotH = totalLiquidH / CAPACITY;
 
@@ -945,58 +945,29 @@ export default function PixiGameBoard({
           rimStrokeColor = 0xd946ef;
         }
 
-        // Transparent crystal glass body fill:
-        // When filled with liquid, keep alpha 0.0 so the vibrant primary colors shine through with 100% clarity
+        // Transparent crystal glass body fill (clean borderless silhouette)
         const isTubeEmpty = renderList.length === 0;
         glsG.fill({
-          color: isSelected ? 0x004cff : bodyFillColor,
-          alpha: isSelected ? 0.20 : (isTubeEmpty ? 0.06 : 0.0),
+          color: isSelected ? 0x38bdf8 : bodyFillColor,
+          alpha: isSelected ? 0.18 : (isTubeEmpty ? 0.09 : 0.02),
         });
 
-        // Outer glass wall stroke
-        glsG.stroke({
-          width: isSelected ? 3.4 : 2.6,
-          color: isSelected ? 0x38bdf8 : wallStrokeColor,
-          alpha: isSelected ? 1.0 : 0.88,
-        });
-
-        // Flared Glass Lip Collar Stroke & Shape
+        // Translucent Glass Lip Collar (Clean borderless)
         glsG.beginPath();
-        glsG.roundRect(-r_rim - 1.2, 0, (r_rim + 1.2) * 2, lip_h, lip_h * 0.45);
-        glsG.stroke({
-          width: isSelected ? 3.0 : 2.4,
-          color: isSelected ? 0x38bdf8 : rimStrokeColor,
-          alpha: isSelected ? 1.0 : 0.95,
-        });
+        glsG.roundRect(-r_rim, 0, r_rim * 2, lip_h, lip_h * 0.45);
+        glsG.fill({ color: 0xffffff, alpha: 0.14 });
 
-        // Inner Lip Rim Oval Highlight
+        // Left subtle vertical specular gloss reflection (soft light shine, not a border)
         glsG.beginPath();
-        glsG.ellipse(0, lip_h * 0.35, r_rim * 0.72, 1.8);
-        glsG.stroke({ width: 1.4, color: 0xffffff, alpha: 0.90 });
-
-        // Left prominent vertical glass reflection highlight
-        glsG.beginPath();
-        glsG.moveTo(-r + 3.0, shoulder_y + 2);
-        glsG.lineTo(-r + 3.0, y_floor - 2);
-        glsG.stroke({ width: 2.2, color: 0xffffff, alpha: 0.68 });
+        glsG.moveTo(-r + 2.5, shoulder_y + 2);
+        glsG.lineTo(-r + 2.5, y_floor - 2);
+        glsG.stroke({ width: 1.6, color: 0xffffff, alpha: 0.35 });
 
         // Curved gloss along left shoulder
         glsG.beginPath();
         glsG.moveTo(-r_neck + 2.0, neck_y + 1);
-        glsG.quadraticCurveTo(-r_neck + 2.0, neck_y + (shoulder_y - neck_y) * 0.5, -r + 3.0, shoulder_y + 2);
-        glsG.stroke({ width: 1.8, color: 0xffffff, alpha: 0.55 });
-
-        // Right subtle glass reflection
-        glsG.beginPath();
-        glsG.moveTo(r - 3.0, shoulder_y + 4);
-        glsG.lineTo(r - 3.0, y_floor - 4);
-        glsG.stroke({ width: 1.0, color: 0xffffff, alpha: 0.22 });
-
-        // Bottom base glass highlight
-        glsG.beginPath();
-        glsG.moveTo(-r + r_base, h - 2);
-        glsG.lineTo(r - r_base, h - 2);
-        glsG.stroke({ width: 1.4, color: 0xffffff, alpha: 0.40 });
+        glsG.quadraticCurveTo(-r_neck + 2.0, neck_y + (shoulder_y - neck_y) * 0.5, -r + 2.5, shoulder_y + 2);
+        glsG.stroke({ width: 1.4, color: 0xffffff, alpha: 0.30 });
       }
 
       // Responsive Resize Listener (Window + ResizeObserver for mobile orientation/resizing)
