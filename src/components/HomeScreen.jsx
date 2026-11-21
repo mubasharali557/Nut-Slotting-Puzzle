@@ -101,7 +101,7 @@ export default function HomeScreen({
         </div>
 
         {/* Completely STATIC Traditional Level Banner (Zero animation, 100% stationary) */}
-        <div className="mt-5 sm:mt-8 flex flex-col items-center">
+        <div className="mt-5 sm:mt-8 mb-3 sm:mb-4 flex flex-col items-center">
           {/* 3 Golden Stars with Radiant Warm Glow */}
           <div className="flex items-center justify-center gap-1.5 -mb-1.5 sm:-mb-2 z-10">
             <Star className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-amber-400 fill-amber-400 filter drop-shadow-[0_0_8px_rgba(251,191,36,0.85)] transform -rotate-12" />

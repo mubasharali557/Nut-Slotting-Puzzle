@@ -306,9 +306,15 @@ export default function PixiGameBoard({
         splashLayer.clear();
         uiLayer.clear();
 
-        // Bottles remain 100% stationary when clicked - zero upward translation
+        // Smooth, subtle bottle lift animation on selection (natural pickup lift, zero extra shadows or glows)
+        const LIFT_PX = 16;
         for (let i = 0; i < layout.tubes.length; i++) {
-          state.selectedLift[i] = 0;
+          const isTargetSelected = state.selected === i && !state.isAnimating;
+          const targetLift = isTargetSelected ? LIFT_PX : 0;
+          const currentLift = state.selectedLift[i] || 0;
+          // Smooth exponential dampening for natural, responsive pickup / set-down
+          const speed = Math.min(1, 16 * deltaSec);
+          state.selectedLift[i] = currentLift + (targetLift - currentLift) * speed;
         }
 
         // Animation calculation variables
@@ -331,7 +337,7 @@ export default function PixiGameBoard({
           const maxTilt = isRight ? 1.28 : -1.28;
 
           const homeX = fromTube.x;
-          const homeY = fromTube.y;
+          const homeY = fromTube.y - (state.selectedLift[fromIdx] || 0);
 
           if (rawProgress < 0.22) {
             // ==========================================
@@ -508,7 +514,8 @@ export default function PixiGameBoard({
           const isCompleteTube = isComplete(state.bottles[i]);
 
           let posX = t.x;
-          let posY = t.y;
+          const lift = state.selectedLift[i] || 0;
+          let posY = t.y - lift;
           let rot = 0;
 
           if (isPourSource && sourceTransform) {
@@ -517,31 +524,18 @@ export default function PixiGameBoard({
             rot = sourceTransform.rotation;
             tubeContainer.zIndex = 50; // render on top of all tubes while pouring
           } else {
-            tubeContainer.zIndex = 10;
+            tubeContainer.zIndex = isSelected ? 30 : 10;
           }
 
           tubeContainer.position.set(posX, posY);
           tubeContainer.rotation = rot;
           tubeContainer.pivot.set(0, 0); // stable mouth-center pivot
 
-          // Base shadow on ground (Flat shelf shadow matching flask base)
-          if (rot === 0) {
-            const shadowAlpha = isSelected ? 0.45 : 0.40;
+          // Base shelf shadow: only when resting on the shelf and NOT clicked or selected
+          // (When clicked/selected or lifted, no shadow is generated)
+          if (rot === 0 && !isSelected && lift <= 0.5) {
             shadowsLayer.ellipse(t.x, t.y + t.height + 4, t.width * 0.48, 4.0);
-            shadowsLayer.fill({ color: 0x000000, alpha: shadowAlpha });
-          }
-
-          // In-place Selection indicator: Glowing halo and rim beacon (Zero vertical shift!)
-          if (isSelected) {
-            const pulse = (Math.sin(state.time * 8) + 1) * 0.5;
-            // Glowing mouth rim ring
-            uiLayer.ellipse(t.x, t.y, t.width * 0.54 + pulse * 1.5, 4.5 + pulse * 1);
-            uiLayer.stroke({ width: 2.5, color: 0x38bdf8, alpha: 0.9 + pulse * 0.1 });
-            // Subtle selection diamond/dot right at the rim
-            uiLayer.circle(t.x, t.y - 8, 3.2);
-            uiLayer.fill({ color: 0x38bdf8, alpha: 0.95 });
-            uiLayer.circle(t.x, t.y - 8, 1.6);
-            uiLayer.fill({ color: 0xffffff, alpha: 1.0 });
+            shadowsLayer.fill({ color: 0x000000, alpha: 0.36 });
           }
 
           // Hint Halos
@@ -948,8 +942,8 @@ export default function PixiGameBoard({
         // Transparent crystal glass body fill (clean borderless silhouette)
         const isTubeEmpty = renderList.length === 0;
         glsG.fill({
-          color: isSelected ? 0x38bdf8 : bodyFillColor,
-          alpha: isSelected ? 0.18 : (isTubeEmpty ? 0.09 : 0.02),
+          color: bodyFillColor,
+          alpha: isTubeEmpty ? 0.09 : 0.02,
         });
 
         // Translucent Glass Lip Collar (Clean borderless)
