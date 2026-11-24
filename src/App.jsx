@@ -1,13 +1,13 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import HomeScreen from './components/HomeScreen';
 import ThreeGameBoard from './components/ThreeGameBoard';
-import PauseModal from './components/PauseModal';
-import WinModal from './components/WinModal';
-import SettingsModal from './components/SettingsModal';
-import ShopModal from './components/ShopModal';
-import LevelsModal from './components/LevelsModal';
-import AchievementsModal from './components/AchievementsModal';
-import OutOfChancesModal from './components/OutOfChancesModal';
+const PauseModal = React.lazy(() => import('./components/PauseModal'));
+const WinModal = React.lazy(() => import('./components/WinModal'));
+const SettingsModal = React.lazy(() => import('./components/SettingsModal'));
+const ShopModal = React.lazy(() => import('./components/ShopModal'));
+const LevelsModal = React.lazy(() => import('./components/LevelsModal'));
+const AchievementsModal = React.lazy(() => import('./components/AchievementsModal'));
+const OutOfChancesModal = React.lazy(() => import('./components/OutOfChancesModal'));
 import GameNavbar from './components/GameNavbar';
 import AuthScreen from './components/AuthScreen';
 import { authService } from './utils/authService';
@@ -518,14 +518,14 @@ export default function App() {
 
   const isHome = screen === 'home';
   const currentTheme = GAME_THEMES.find((t) => t.id === activeTheme) || GAME_THEMES[0];
-  const gameplayBg = currentTheme?.bgImage || '/playbg3.png';
+  const gameplayBg = currentTheme?.bgImage || '/playbg3.webp';
 
   // Initial Auth Loading Spinner
   if (isAuthLoading) {
     return (
       <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0705] text-[#ffeed2] select-none">
         <img
-          src="/nut_sort_navbar_badge.png"
+          src="/nut_sort_navbar_badge.webp"
           alt="Nut Sort Logo"
           className="w-16 h-16 object-contain animate-bounce drop-shadow-[0_0_25px_rgba(251,191,36,0.5)]"
         />
@@ -858,119 +858,134 @@ export default function App() {
         )}
       </div>
 
-      {/* 3. MODALS & SCREENS */}
+      {/* 3. LAZY-LOADED MODALS */}
+      <React.Suspense fallback={null}>
+        {/* SCREEN 3: STAGES & LEVELS SCREEN (Matching Reference Image 3) */}
+        {isLevelsOpen && (
+          <LevelsModal
+            isOpen={isLevelsOpen}
+            onClose={() => setIsLevelsOpen(false)}
+            currentStage={stage}
+            highestUnlocked={highestUnlocked}
+            onSelectStage={(lvl) => {
+              loadStage(lvl);
+              setScreen('game');
+            }}
+            coins={coins}
+            stars={stars}
+            gems={gems}
+            onHome={() => {
+              setIsLevelsOpen(false);
+              setScreen('home');
+            }}
+          />
+        )}
 
-      {/* SCREEN 3: STAGES & LEVELS SCREEN (Matching Reference Image 3) */}
-      <LevelsModal
-        isOpen={isLevelsOpen}
-        onClose={() => setIsLevelsOpen(false)}
-        currentStage={stage}
-        highestUnlocked={highestUnlocked}
-        onSelectStage={(lvl) => {
-          loadStage(lvl);
-          setScreen('game');
-        }}
-        coins={coins}
-        stars={stars}
-        gems={gems}
-        onHome={() => {
-          setIsLevelsOpen(false);
-          setScreen('home');
-        }}
-      />
+        {/* SCREEN 4: CUSTOMIZING SHOP SYSTEM (Matching Reference Image 4) */}
+        {isShopOpen && (
+          <ShopModal
+            isOpen={isShopOpen}
+            onClose={() => setIsShopOpen(false)}
+            coins={coins}
+            stars={stars}
+            gems={gems}
+            activeTheme={activeTheme}
+            unlockedThemes={unlockedThemes}
+            onEquipTheme={handleEquipTheme}
+            onPurchaseTheme={handlePurchaseTheme}
+            activeSkin={activeSkin}
+            unlockedSkins={unlockedSkins}
+            onEquipSkin={handleEquipSkin}
+            onPurchaseSkin={handlePurchaseSkin}
+            activeNutSkin={activeNutSkin}
+            unlockedNutSkins={unlockedNutSkins}
+            onEquipNutSkin={handleEquipNutSkin}
+            onPurchaseNutSkin={handlePurchaseNutSkin}
+            onHome={() => {
+              setIsShopOpen(false);
+              setScreen('home');
+            }}
+          />
+        )}
 
-      {/* SCREEN 4: CUSTOMIZING SHOP SYSTEM (Matching Reference Image 4) */}
-      <ShopModal
-        isOpen={isShopOpen}
-        onClose={() => setIsShopOpen(false)}
-        coins={coins}
-        stars={stars}
-        gems={gems}
-        activeTheme={activeTheme}
-        unlockedThemes={unlockedThemes}
-        onEquipTheme={handleEquipTheme}
-        onPurchaseTheme={handlePurchaseTheme}
-        activeSkin={activeSkin}
-        unlockedSkins={unlockedSkins}
-        onEquipSkin={handleEquipSkin}
-        onPurchaseSkin={handlePurchaseSkin}
-        activeNutSkin={activeNutSkin}
-        unlockedNutSkins={unlockedNutSkins}
-        onEquipNutSkin={handleEquipNutSkin}
-        onPurchaseNutSkin={handlePurchaseNutSkin}
-        onHome={() => {
-          setIsShopOpen(false);
-          setScreen('home');
-        }}
-      />
+        {/* Settings Modal */}
+        {isSettingsOpen && (
+          <SettingsModal
+            isOpen={isSettingsOpen}
+            onClose={() => setIsSettingsOpen(false)}
+            soundEnabled={soundEnabled}
+            onToggleSound={toggleSound}
+            musicEnabled={musicEnabled}
+            onToggleMusic={toggleMusic}
+            vibrationEnabled={vibrationEnabled}
+            onToggleVibration={toggleVibration}
+            onResetProgress={() => loadStage(1)}
+            onLogout={handleLogout}
+            playerName={currentUser?.username}
+          />
+        )}
 
-      {/* Settings Modal */}
-      <SettingsModal
-        isOpen={isSettingsOpen}
-        onClose={() => setIsSettingsOpen(false)}
-        soundEnabled={soundEnabled}
-        onToggleSound={toggleSound}
-        musicEnabled={musicEnabled}
-        onToggleMusic={toggleMusic}
-        vibrationEnabled={vibrationEnabled}
-        onToggleVibration={toggleVibration}
-        onResetProgress={() => loadStage(1)}
-        onLogout={handleLogout}
-        playerName={currentUser?.username}
-      />
+        {/* Pause Modal */}
+        {isPaused && (
+          <PauseModal
+            isOpen={isPaused}
+            onClose={() => setIsPaused(false)}
+            onRestart={() => {
+              setIsPaused(false);
+              handleRestart();
+            }}
+            onHome={() => {
+              setIsPaused(false);
+              setScreen('home');
+            }}
+            soundEnabled={soundEnabled}
+            onToggleSound={toggleSound}
+          />
+        )}
 
-      {/* Pause Modal */}
-      <PauseModal
-        isOpen={isPaused}
-        onClose={() => setIsPaused(false)}
-        onRestart={() => {
-          setIsPaused(false);
-          handleRestart();
-        }}
-        onHome={() => {
-          setIsPaused(false);
-          setScreen('home');
-        }}
-        soundEnabled={soundEnabled}
-        onToggleSound={toggleSound}
-      />
+        {/* Win Modal */}
+        {isWinOpen && (
+          <WinModal
+            isOpen={isWinOpen}
+            stage={stage}
+            onNextStage={handleNextStage}
+            onReplay={handleRestart}
+            onHome={() => {
+              setIsWinOpen(false);
+              setScreen('home');
+            }}
+          />
+        )}
 
-      {/* Win Modal */}
-      <WinModal
-        isOpen={isWinOpen}
-        stage={stage}
-        onNextStage={handleNextStage}
-        onReplay={handleRestart}
-        onHome={() => {
-          setIsWinOpen(false);
-          setScreen('home');
-        }}
-      />
+        {/* Out of Chances Modal */}
+        {isOutOfChancesOpen && (
+          <OutOfChancesModal
+            isOpen={isOutOfChancesOpen}
+            stage={stage}
+            canUndo={history.length > 0}
+            onRestart={handleRestart}
+            onUndo={handleUndo}
+            onHome={() => {
+              setIsOutOfChancesOpen(false);
+              setScreen('home');
+            }}
+          />
+        )}
 
-      {/* Out of Chances Modal */}
-      <OutOfChancesModal
-        isOpen={isOutOfChancesOpen}
-        stage={stage}
-        canUndo={history.length > 0}
-        onRestart={handleRestart}
-        onUndo={handleUndo}
-        onHome={() => {
-          setIsOutOfChancesOpen(false);
-          setScreen('home');
-        }}
-      />
-
-      {/* Achievements / Trophies Modal */}
-      <AchievementsModal
-        isOpen={isAchievementsOpen}
-        onClose={() => setIsAchievementsOpen(false)}
-        totalStars={stars}
-        currentStage={stage}
-        onHome={() => {
-          setIsAchievementsOpen(false);
-          setScreen('home');
-        }}
-      />
+        {/* Achievements / Trophies Modal */}
+        {isAchievementsOpen && (
+          <AchievementsModal
+            isOpen={isAchievementsOpen}
+            onClose={() => setIsAchievementsOpen(false)}
+            totalStars={stars}
+            currentStage={stage}
+            onHome={() => {
+              setIsAchievementsOpen(false);
+              setScreen('home');
+            }}
+          />
+        )}
+      </React.Suspense>
 
     </div>
   );

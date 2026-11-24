@@ -4,8 +4,8 @@ export const GAME_THEMES = [
     name: 'Classic Workshop',
     desc: 'Warm honey-oak workbench studio with soft ambient lamp lighting (Default)',
     price: 0,
-    previewImg: '/playbg3.png',
-    bgImage: '/playbg3.png',
+    previewImg: '/playbg3.webp',
+    bgImage: '/playbg3.webp',
     isDefault: true,
   },
   {
@@ -13,24 +13,24 @@ export const GAME_THEMES = [
     name: 'Dark Timber Workshop',
     desc: 'Deep rustic dark walnut workshop with moody atmospheric lighting',
     price: 250,
-    previewImg: '/playbg.png',
-    bgImage: '/playbg.png',
+    previewImg: '/playbg.webp',
+    bgImage: '/playbg.webp',
   },
   {
     id: 'playbg1',
     name: 'Pastel Glow Arena',
     desc: 'Vibrant neon pastel studio with candy-coated reflections',
     price: 500,
-    previewImg: '/playbg1.png',
-    bgImage: '/playbg1.png',
+    previewImg: '/playbg1.webp',
+    bgImage: '/playbg1.webp',
   },
   {
     id: 'playbg2',
     name: 'Sunset Forge Studio',
     desc: 'Golden hour sunset workshop with glowing fiery highlights',
     price: 750,
-    previewImg: '/playbg2.png',
-    bgImage: '/playbg2.png',
+    previewImg: '/playbg2.webp',
+    bgImage: '/playbg2.webp',
   },
 ];
 
@@ -43,7 +43,7 @@ export const BOLT_SKINS = [
     price: 0,
     displayPrice: 500,
     icon: '🔩',
-    previewImg: '/shop/bolts/bolt_steel.png',
+    previewImg: '/shop/bolts/bolt_steel.webp',
     tint: 0xffffff,
   },
   {
@@ -53,7 +53,7 @@ export const BOLT_SKINS = [
     price: 100,
     displayPrice: 100,
     icon: '🪙',
-    previewImg: '/shop/bolts/bolt_brass.png',
+    previewImg: '/shop/bolts/bolt_brass.webp',
     tint: 0xd4af37,
   },
   {
@@ -64,7 +64,7 @@ export const BOLT_SKINS = [
     displayPrice: 150,
     isLocked: true,
     icon: '🪵',
-    previewImg: '/shop/bolts/bolt_wood.png',
+    previewImg: '/shop/bolts/bolt_wood.webp',
     tint: 0xb87333,
   },
   {
@@ -75,7 +75,7 @@ export const BOLT_SKINS = [
     displayPrice: 'NEW',
     isNew: true,
     icon: '⚙️',
-    previewImg: '/shop/bolts/bolt_black.png',
+    previewImg: '/shop/bolts/bolt_black.webp',
     tint: 0x64748b,
   },
   {
@@ -85,7 +85,7 @@ export const BOLT_SKINS = [
     price: 50,
     displayPrice: 50,
     icon: '👑',
-    previewImg: '/shop/bolts/bolt_gold.png',
+    previewImg: '/shop/bolts/bolt_gold.webp',
     tint: 0xffd700,
   },
   {
@@ -95,7 +95,7 @@ export const BOLT_SKINS = [
     price: 200,
     displayPrice: 200,
     icon: '🌀',
-    previewImg: '/shop/bolts/bolt_spiral.png',
+    previewImg: '/shop/bolts/bolt_spiral.webp',
     tint: 0x9e9e9e,
   },
 ];
@@ -109,7 +109,7 @@ export const NUT_SKINS = [
     price: 0,
     displayPrice: 500,
     icon: '⚙️',
-    previewImg: '/shop/nuts/nut_steel.png',
+    previewImg: '/shop/nuts/nut_steel.webp',
     textureKey: 'teal',
   },
   {
@@ -119,7 +119,7 @@ export const NUT_SKINS = [
     price: 100,
     displayPrice: 100,
     icon: '🔷',
-    previewImg: '/shop/nuts/nut_blue.png',
+    previewImg: '/shop/nuts/nut_blue.webp',
     textureKey: 'blue',
   },
   {
@@ -130,7 +130,7 @@ export const NUT_SKINS = [
     displayPrice: 150,
     isLocked: true,
     icon: '🟢',
-    previewImg: '/shop/nuts/nut_green.png',
+    previewImg: '/shop/nuts/nut_green.webp',
     textureKey: 'green',
   },
   {
@@ -141,7 +141,7 @@ export const NUT_SKINS = [
     displayPrice: 'NEW',
     isNew: true,
     icon: '🔴',
-    previewImg: '/shop/nuts/nut_red.png',
+    previewImg: '/shop/nuts/nut_red.webp',
     textureKey: 'red',
   },
   {
@@ -151,7 +151,7 @@ export const NUT_SKINS = [
     price: 50,
     displayPrice: 50,
     icon: '🟣',
-    previewImg: '/shop/nuts/nut_purple.png',
+    previewImg: '/shop/nuts/nut_purple.webp',
     textureKey: 'purple',
   },
   {
@@ -161,7 +161,7 @@ export const NUT_SKINS = [
     price: 80,
     displayPrice: 80,
     icon: '🪵',
-    previewImg: '/shop/nuts/nut_wood.png',
+    previewImg: '/shop/nuts/nut_wood.webp',
     textureKey: 'yellow',
   },
 ];

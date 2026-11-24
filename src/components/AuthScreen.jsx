@@ -107,7 +107,7 @@ export default function AuthScreen({ onAuthSuccess }) {
       
       {/* 1. Ambient Blurred Backdrop */}
       <img
-        src="/game.png"
+        src="/game.webp"
         alt=""
         aria-hidden="true"
         className="fixed inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-40 brightness-50 pointer-events-none"
@@ -122,7 +122,7 @@ export default function AuthScreen({ onAuthSuccess }) {
         {/* Logo and Game Brand Header */}
         <div className="flex flex-col items-center text-center">
           <img
-            src="/nut_sort_navbar_badge.png"
+            src="/nut_sort_navbar_badge.webp"
             alt="Nut Sort Logo"
             className="w-14 h-14 sm:w-16 sm:h-16 object-contain drop-shadow-[0_4px_12px_rgba(251,191,36,0.4)] animate-pulse"
           />

@@ -247,7 +247,7 @@ export default function HomeScreen({
     >
       {/* 1. EDGE-TO-EDGE AMBIENT BLURRED BACKDROP */}
       <img
-        src="/game.png"
+        src="/game.webp"
         alt=""
         aria-hidden="true"
         className="fixed inset-0 w-full h-full object-cover blur-3xl scale-110 opacity-55 brightness-75 pointer-events-none -z-10"
@@ -261,7 +261,7 @@ export default function HomeScreen({
         <div className="relative w-full h-full flex flex-col justify-between z-20 overflow-hidden">
           {/* Edge-to-edge warm workshop ambient backdrop */}
           <img
-            src="/playbg3.png"
+            src="/playbg3.webp"
             alt=""
             aria-hidden="true"
             className="absolute inset-0 w-full h-full object-cover blur-sm brightness-90 scale-105 pointer-events-none -z-10"
@@ -303,7 +303,7 @@ export default function HomeScreen({
           >
             <div className="relative w-full max-w-md aspect-[1950/900] flex items-center justify-center">
               <img
-                src="/mobile_hero_banner.png"
+                src="/mobile_hero_banner.webp"
                 alt="Nut Sort Color Puzzle"
                 className="w-full h-full object-contain pointer-events-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)]"
                 draggable={false}
@@ -328,7 +328,7 @@ export default function HomeScreen({
                 aria-label="Levels and Stage Map"
               >
                 <img
-                  src="/levels_button.png"
+                  src="/levels_button.webp"
                   alt="Levels"
                   className="w-full h-full object-contain pointer-events-none select-none block"
                   draggable={false}
@@ -346,7 +346,7 @@ export default function HomeScreen({
                 aria-label={`Play Level ${currentStage}`}
               >
                 <img
-                  src="/play_button_base.png"
+                  src="/play_button_base.webp"
                   alt="Play"
                   className="w-full h-full object-contain pointer-events-none select-none block"
                   draggable={false}
@@ -366,7 +366,7 @@ export default function HomeScreen({
                     }`}
                   >
                     <img
-                      src="/play_arrow_icon.png"
+                      src="/play_arrow_icon.webp"
                       alt=""
                       className="w-full h-full object-contain pointer-events-none select-none block"
                       draggable={false}
@@ -467,7 +467,7 @@ export default function HomeScreen({
           >
             {/* Crisp Uncropped, Undistorted HD Master Artwork */}
             <img
-              src="/game.png"
+              src="/game.webp"
               alt="Nut Sort Color Puzzle Game"
               className="w-full h-full object-contain pointer-events-none drop-shadow-[0_20px_60px_rgba(0,0,0,0.85)]"
               style={{ imageRendering: 'high-quality' }}
@@ -523,7 +523,7 @@ export default function HomeScreen({
                 aria-label="Levels and Stage Map"
               >
                 <img
-                  src="/levels_button.png"
+                  src="/levels_button.webp"
                   alt="Levels"
                   className="w-full h-full object-contain pointer-events-none select-none block"
                   draggable={false}
@@ -554,7 +554,7 @@ export default function HomeScreen({
               >
                 {/* 1. Stationary Button Base Frame (pill body, metallic border & PLAY text) */}
                 <img
-                  src="/play_button_base.png"
+                  src="/play_button_base.webp"
                   alt="Play"
                   className="w-full h-full object-contain pointer-events-none select-none block"
                   draggable={false}
@@ -585,7 +585,7 @@ export default function HomeScreen({
                   >
                     {/* High-res crisp arrow image */}
                     <img
-                      src="/play_arrow_icon.png"
+                      src="/play_arrow_icon.webp"
                       alt=""
                       className="w-full h-full object-contain pointer-events-none select-none block"
                       draggable={false}

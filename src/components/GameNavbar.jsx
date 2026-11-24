@@ -65,7 +65,7 @@ export default function GameNavbar({
             title="Nut Sort Color Puzzle"
           >
             <img
-              src="/nut_sort_navbar_badge.png"
+              src="/nut_sort_navbar_badge.webp"
               alt="Nut Sort Puzzle"
               className="h-6 sm:h-8 md:h-10 object-contain drop-shadow-[0_3px_8px_rgba(0,0,0,0.8)] filter brightness-105"
               style={{ imageRendering: 'high-quality' }}

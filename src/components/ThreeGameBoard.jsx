@@ -344,10 +344,10 @@ export default function ThreeGameBoard({
       const refAspect = 16 / 9;
       if (aspect < 1.0) {
         // Mobile portrait:
-        // Bring camera closer (z = 7.2) and gaze slightly up so bolts sit squarely on the wooden table
-        camera.fov = 44;
-        camera.position.set(0, 1.55, 7.2);
-        camera.lookAt(0, 0.45, 0);
+        // Set camera at z = 7.8 with FOV 43 so all bolts + spacing fit with 6-8% margins
+        camera.fov = 43;
+        camera.position.set(0, 1.60, 7.8);
+        camera.lookAt(0, 0.40, 0);
       } else if (aspect < refAspect) {
         // Intermediate screens / tablets
         const baseFovRad = (28 * Math.PI) / 180;
@@ -376,7 +376,7 @@ export default function ThreeGameBoard({
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.95;
     container.appendChild(renderer.domElement);
@@ -392,8 +392,8 @@ export default function ThreeGameBoard({
     const keyLight = new THREE.DirectionalLight(0xffffff, 1.4);
     keyLight.position.set(5, 12, 8);
     keyLight.castShadow = true;
-    keyLight.shadow.mapSize.width = 1024;
-    keyLight.shadow.mapSize.height = 1024;
+    keyLight.shadow.mapSize.width = 512;
+    keyLight.shadow.mapSize.height = 512;
     keyLight.shadow.bias = -0.0005;
     scene.add(keyLight);
 
@@ -585,9 +585,17 @@ export default function ThreeGameBoard({
       let colSpacing, r1Z, r1Y, r2Z, r2Y;
 
       if (isPortrait) {
-        // Mobile portrait: spans ~88% of mobile screen width, centered on table
-        const totalWidth = 2.9;
-        colSpacing = Math.min(1.05, totalWidth / Math.max(1, maxCols - 1));
+        // Dynamic camera frustum width calculation based on exact camera distance and FOV
+        const vfovRad = (camera.fov * Math.PI) / 180;
+        const targetZ = isTwoRows ? 0.0 : -0.1;
+        const distToPlane = Math.abs(camera.position.z - targetZ);
+        const visH = 2 * distToPlane * Math.tan(vfovRad / 2);
+        const visW = visH * currentAspect;
+
+        // Nut outer diameter is 0.56. Ensure full row fits with 6-8% side padding
+        const nutDiameter = 0.56;
+        const availableW = Math.max(1.6, visW * 0.88 - nutDiameter);
+        colSpacing = Math.min(0.95, availableW / Math.max(1, maxCols - 1));
 
         r1Z = isTwoRows ? -0.65 : 0.0;
         r1Y = isTwoRows ? -1.15 : -1.30;
