@@ -92,7 +92,11 @@ export default function AuthScreen({ onAuthSuccess }) {
       gameAudio.playWin();
       onAuthSuccess?.(result.user, result.progress);
     } catch (err) {
-      setError(err.message || 'Authentication failed. Please try again.');
+      let msg = err.message || 'Authentication failed. Please try again.';
+      if (msg.includes('is not valid JSON') || msg.includes('Unexpected token')) {
+        msg = 'Connection error. Switched to offline mode — please tap again or play as Guest.';
+      }
+      setError(msg);
     } finally {
       setIsLoading(false);
     }
