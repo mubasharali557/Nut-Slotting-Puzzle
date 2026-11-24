@@ -95,3 +95,4 @@ for dy in range(60):
 
 mobile_bg.save('test_mobile_bg.png')
 print('test_mobile_bg.png created successfully! Size:', mobile_bg.size)
+
