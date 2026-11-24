@@ -266,23 +266,9 @@ export default function HomeScreen({
 
       {isPortrait ? (
         /* ========================================================
-           MOBILE PORTRAIT UI (Unified, 100% Seamless Master Workshop Artwork)
+           MOBILE PORTRAIT UI (Unified, 100% Uncropped HD Master Artwork game.webp)
            ======================================================== */
         <div className="relative w-full h-full flex flex-col justify-between z-20 overflow-hidden">
-          {/* 1. SINGLE, UNIFIED, SEAMLESS WORKSHOP ARTWORK (Zero cuts, zero seams, zero overlapping layers) */}
-          <img
-            src="/game_mobile.webp"
-            alt="Nut Sort Color Puzzle"
-            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none -z-10"
-            style={{ imageRendering: 'high-quality' }}
-            draggable={false}
-            onError={(e) => {
-              if (e.currentTarget.src.indexOf('game.webp') === -1) {
-                e.currentTarget.src = '/game.webp';
-              }
-            }}
-          />
-
           {/* Top: Mobile-optimized Navbar */}
           <div className="relative z-30 w-full flex-shrink-0">
             <GameNavbar
@@ -301,25 +287,47 @@ export default function HomeScreen({
             />
           </div>
 
-          {/* Middle: Nuts & Bolts Solid Color Puzzle Section (Strictly Contained Animations) */}
-          <div className="relative flex-1 w-full flex items-center justify-center overflow-hidden pointer-events-auto">
-            {/* Canvas Particle System: Floating Golden Dust & Sparkles strictly confined inside puzzle */}
-            <canvas
-              ref={canvasRef}
-              className="absolute inset-0 w-full h-full pointer-events-none z-10"
-            />
-
-            {/* Interactive Mascot Click/Wave Zone */}
+          {/* Middle: Full, Uncropped, Undistorted Master Artwork (game.webp) */}
+          <div className="relative flex-1 w-full min-h-0 flex items-center justify-center px-3 py-2 pointer-events-auto">
             <div
-              onClick={handleMascotClick}
-              className={`relative z-20 w-full max-w-sm h-full flex items-center justify-center cursor-pointer transition-transform duration-300 ${
-                mascotBounce ? 'scale-105' : 'hover:scale-[1.02]'
-              }`}
-              title="Nut & Bolt Buddies! Click to wave!"
+              className="relative w-full max-w-md max-h-full flex items-center justify-center"
+              style={{ aspectRatio: '2752 / 1536' }}
             >
-              {/* Subtle mascot sparkle glints contained in puzzle */}
-              <div className="absolute top-[48%] left-[28%] w-2.5 h-2.5 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
-              <div className="absolute top-[44%] right-[32%] w-2 h-2 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+              {/* Crisp Uncropped, Undistorted HD Master Artwork */}
+              <img
+                src="/game.webp"
+                alt="Nut Sort Color Puzzle"
+                className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_16px_36px_rgba(0,0,0,0.85)]"
+                style={{ imageRendering: 'high-quality' }}
+                draggable={false}
+              />
+
+              {/* Canvas Particle System: Floating Golden Dust & Sparkles */}
+              <canvas
+                ref={canvasRef}
+                className="absolute inset-0 w-full h-full pointer-events-none z-10"
+              />
+
+              {/* Interactive Mascot Click/Wave Zone */}
+              <div
+                onClick={handleMascotClick}
+                className={`absolute z-20 cursor-pointer transition-transform duration-300 ${
+                  mascotBounce ? 'scale-110 -translate-y-1' : 'hover:scale-[1.03]'
+                }`}
+                style={{
+                  left: '31%',
+                  top: '31%',
+                  width: '38%',
+                  height: '31%',
+                }}
+                title="Nut & Bolt Buddies! Click to wave!"
+              >
+                {/* Mascot sparkle glints contained in puzzle */}
+                <div className="w-full h-full relative">
+                  <div className="absolute top-[18%] left-[10%] w-2.5 h-2.5 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
+                  <div className="absolute top-[22%] right-[16%] w-2 h-2 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+                </div>
+              </div>
             </div>
           </div>
 
