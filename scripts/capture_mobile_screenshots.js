@@ -6,7 +6,7 @@ async function sleep(ms) {
 }
 
 async function run() {
-  console.log('Launching headless Edge for Stage 2 & responsive verification...');
+  console.log('Launching headless Edge for unified Home Screen & Gameplay verification...');
   const edgePath = 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe';
   const edgeProc = spawn(edgePath, [
     '--headless=new',
@@ -55,7 +55,7 @@ async function run() {
     await send('Page.enable');
     await send('DOM.enable');
 
-    // 1. Mobile Portrait: 390x844
+    // Emulate iPhone / standard mobile: 390 x 844
     await send('Emulation.setDeviceMetricsOverride', {
       width: 390,
       height: 844,
@@ -68,14 +68,12 @@ async function run() {
     console.log('Navigating to http://localhost:5173/ ...');
     await send('Page.navigate', { url: 'http://localhost:5173/' });
 
-    // Set Stage 2 in localStorage and bypass auth
+    // Login as guest
     for (let attempt = 0; attempt < 15; attempt++) {
       await sleep(1000);
       const evalCheck = await send('Runtime.evaluate', {
         expression: `
           (() => {
-            localStorage.setItem('watersort_stage', '2');
-            localStorage.setItem('watersort_highest_stage', '2');
             const guestBtn = Array.from(document.querySelectorAll('button')).find(b => b.textContent && b.textContent.toLowerCase().includes('guest'));
             if (guestBtn) {
               guestBtn.click();
@@ -89,20 +87,25 @@ async function run() {
       });
       console.log('Mount attempt ' + attempt + ':', evalCheck.result?.value);
       if (evalCheck.result?.value === 'clicked_guest') {
-        await sleep(2000);
+        await sleep(2500);
         break;
       }
       if (evalCheck.result?.value === 'on_home') break;
     }
 
-    await sleep(2000);
+    await sleep(2500);
 
-    // Click Play to load Stage 2
+    // 1. Capture UNIFIED Mobile Home Screen
+    console.log('Capturing mobile_home_unified.png...');
+    const homeScreenshot = await send('Page.captureScreenshot', { format: 'png' });
+    fs.writeFileSync('mobile_home_unified.png', Buffer.from(homeScreenshot.data, 'base64'));
+    console.log('Saved mobile_home_unified.png');
+
+    // 2. Click Play to verify Gameplay Screen
     console.log('Clicking Play...');
     await send('Runtime.evaluate', {
       expression: `
         (() => {
-          localStorage.setItem('watersort_stage', '2');
           const buttons = Array.from(document.querySelectorAll('button'));
           const playBtn = buttons.find(b => 
             (b.title && b.title.toLowerCase().includes('play')) || 
@@ -116,29 +119,10 @@ async function run() {
 
     await sleep(3500);
 
-    // Capture Mobile Stage 2
-    console.log('Capturing mobile_stage2_verified.png (390x844)...');
-    const mobileScreen = await send('Page.captureScreenshot', { format: 'png' });
-    fs.writeFileSync('mobile_stage2_verified.png', Buffer.from(mobileScreen.data, 'base64'));
-    console.log('Saved mobile_stage2_verified.png');
-
-    // 2. Desktop Mode: 1280x720
-    console.log('Switching to Desktop 1280x720...');
-    await send('Emulation.setDeviceMetricsOverride', {
-      width: 1280,
-      height: 720,
-      deviceScaleFactor: 1,
-      mobile: false,
-      screenOrientation: { angle: 0, type: 'landscapePrimary' },
-    });
-    await send('Emulation.setTouchEmulationEnabled', { enabled: false });
-
-    await sleep(2000);
-
-    console.log('Capturing desktop_stage2_verified.png (1280x720)...');
-    const desktopScreen = await send('Page.captureScreenshot', { format: 'png' });
-    fs.writeFileSync('desktop_stage2_verified.png', Buffer.from(desktopScreen.data, 'base64'));
-    console.log('Saved desktop_stage2_verified.png');
+    console.log('Capturing mobile_game_unified.png...');
+    const gameScreenshot = await send('Page.captureScreenshot', { format: 'png' });
+    fs.writeFileSync('mobile_game_unified.png', Buffer.from(gameScreenshot.data, 'base64'));
+    console.log('Saved mobile_game_unified.png');
 
     ws.close();
   } finally {

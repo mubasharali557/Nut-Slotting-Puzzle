@@ -140,8 +140,18 @@ export default function HomeScreen({
 
     const onPointerMove = (e) => {
       const rect = canvas.getBoundingClientRect();
-      const x = (e.clientX - rect.left) * (canvas.width / rect.width);
-      const y = (e.clientY - rect.top) * (canvas.height / rect.height);
+      const clientX = e.clientX ?? e.touches?.[0]?.clientX;
+      const clientY = e.clientY ?? e.touches?.[0]?.clientY;
+      if (clientX === undefined || clientY === undefined) return;
+      if (
+        clientX < rect.left ||
+        clientX > rect.right ||
+        clientY < rect.top ||
+        clientY > rect.bottom
+      ) return;
+
+      const x = (clientX - rect.left) * (canvas.width / rect.width);
+      const y = (clientY - rect.top) * (canvas.height / rect.height);
       if (Math.random() > 0.4) {
         addTouchSparkles(x, y);
       }
@@ -256,27 +266,20 @@ export default function HomeScreen({
 
       {isPortrait ? (
         /* ========================================================
-           MOBILE PORTRAIT UI (Edge-to-edge, zero black voids, bold touch buttons)
+           MOBILE PORTRAIT UI (Unified, 100% Seamless Master Workshop Artwork)
            ======================================================== */
         <div className="relative w-full h-full flex flex-col justify-between z-20 overflow-hidden">
-          {/* Edge-to-edge warm workshop ambient backdrop */}
+          {/* 1. SINGLE, UNIFIED, SEAMLESS WORKSHOP ARTWORK (Zero cuts, zero seams, zero overlapping layers) */}
           <img
-            src="/playbg3.webp"
-            alt=""
-            aria-hidden="true"
-            className="absolute inset-0 w-full h-full object-cover blur-sm brightness-90 scale-105 pointer-events-none -z-10"
+            src="/game_mobile.webp"
+            alt="Nut Sort Color Puzzle"
+            className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none -z-10"
             style={{ imageRendering: 'high-quality' }}
             draggable={false}
           />
 
-          {/* Canvas Particle System: Floating Golden Dust & Sparkles */}
-          <canvas
-            ref={canvasRef}
-            className="absolute inset-0 w-full h-full pointer-events-none z-10"
-          />
-
           {/* Top: Mobile-optimized Navbar */}
-          <div className="relative z-30 w-full">
+          <div className="relative z-30 w-full flex-shrink-0">
             <GameNavbar
               isHome={true}
               currentStage={currentStage}
@@ -293,29 +296,30 @@ export default function HomeScreen({
             />
           </div>
 
-          {/* Middle: Prominent Hero Banner (Uncropped Title Logo + Nut & Bolt Mascot Buddies) */}
-          <div
-            onClick={handleMascotClick}
-            className={`relative flex-1 w-full flex items-center justify-center px-2 py-1 pointer-events-auto cursor-pointer z-20 transition-transform duration-300 ${
-              mascotBounce ? 'scale-105' : 'hover:scale-[1.02]'
-            }`}
-            title="Nut & Bolt Buddies! Click to wave!"
-          >
-            <div className="relative w-full max-w-md aspect-[1950/900] flex items-center justify-center">
-              <img
-                src="/mobile_hero_banner.webp"
-                alt="Nut Sort Color Puzzle"
-                className="w-full h-full object-contain pointer-events-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)]"
-                draggable={false}
-              />
-              {/* Sparkle glints */}
-              <div className="absolute top-[52%] left-[34%] w-2.5 h-2.5 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
-              <div className="absolute top-[48%] right-[38%] w-2 h-2 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+          {/* Middle: Nuts & Bolts Solid Color Puzzle Section (Strictly Contained Animations) */}
+          <div className="relative flex-1 w-full flex items-center justify-center overflow-hidden pointer-events-auto">
+            {/* Canvas Particle System: Floating Golden Dust & Sparkles strictly confined inside puzzle */}
+            <canvas
+              ref={canvasRef}
+              className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            />
+
+            {/* Interactive Mascot Click/Wave Zone */}
+            <div
+              onClick={handleMascotClick}
+              className={`relative z-20 w-full max-w-sm h-full flex items-center justify-center cursor-pointer transition-transform duration-300 ${
+                mascotBounce ? 'scale-105' : 'hover:scale-[1.02]'
+              }`}
+              title="Nut & Bolt Buddies! Click to wave!"
+            >
+              {/* Subtle mascot sparkle glints contained in puzzle */}
+              <div className="absolute top-[48%] left-[28%] w-2.5 h-2.5 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
+              <div className="absolute top-[44%] right-[32%] w-2 h-2 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
             </div>
           </div>
 
           {/* Lower Section: Workbench Table with Action Buttons & Bottom Navigation */}
-          <div className="relative z-30 w-full flex flex-col items-center pointer-events-auto bg-gradient-to-t from-[#140c06] via-[#24150b]/95 to-transparent pt-3 pb-[max(env(safe-area-inset-bottom,0px),12px)] px-4">
+          <div className="relative z-30 w-full flex flex-col items-center pointer-events-auto flex-shrink-0 pb-[max(env(safe-area-inset-bottom,0px),12px)] px-4">
             
             {/* Action Buttons: LEVELS & PLAY ▶ */}
             <div className="w-full flex items-center justify-center gap-3 max-w-sm mb-4">
