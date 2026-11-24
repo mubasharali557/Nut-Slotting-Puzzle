@@ -1,6 +1,6 @@
-# color-Sort-Puzzle
+# Nut Sorting Puzzle Game
 
-A modern, responsive, fluid liquid-sorting puzzle game built with React, Vite, PixiJS, Tailwind CSS, and Lucide Icons.
+A modern, responsive nut sorting puzzle game built with React, Vite, PixiJS, Tailwind CSS, and Lucide Icons.
 
 ## Features
 

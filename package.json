@@ -1,12 +1,13 @@
 {
-  "name": "color-sort-game",
+  "name": "nut-sorting-puzzle-game",
   "private": true,
   "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "start": "node server.js"
   },
   "dependencies": {
     "canvas-confetti": "^1.9.3",
@@ -15,7 +16,8 @@
     "pixi.js": "^8.23.0",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "react-router-dom": "^6.23.1"
+    "react-router-dom": "^6.23.1",
+    "three": "^0.187.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^4.3.1",

@@ -1,23 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import SnowEffect from './components/SnowEffect';
-import MagicParticles from './components/MagicParticles';
-import GameNavbar from './components/GameNavbar';
 import HomeScreen from './components/HomeScreen';
-import PixiGameBoard from './components/PixiGameBoard';
+import ThreeGameBoard from './components/ThreeGameBoard';
 import PauseModal from './components/PauseModal';
 import WinModal from './components/WinModal';
 import SettingsModal from './components/SettingsModal';
 import ShopModal from './components/ShopModal';
 import LevelsModal from './components/LevelsModal';
 import AchievementsModal from './components/AchievementsModal';
-import HowToPlayModal from './components/HowToPlayModal';
 import OutOfChancesModal from './components/OutOfChancesModal';
+import GameNavbar from './components/GameNavbar';
+import AuthScreen from './components/AuthScreen';
+import { authService } from './utils/authService';
 import { getStageData } from './data/levelStages';
-import { GAME_THEMES, TUBE_SKINS } from './data/themes';
+import { GAME_THEMES, BOLT_SKINS, NUT_SKINS } from './data/themes';
 import { gameAudio } from './utils/gameAudio';
-import { Undo2, RotateCcw, Heart, Pause, Sparkles, Lightbulb, FlaskConical } from 'lucide-react';
+import { Undo2, RotateCcw, Trophy, Settings, Palette, Heart, Sparkles } from 'lucide-react';
+import ColorStudioBar, { CUSTOM_COLOR_PALETTE } from './components/ColorStudioBar';
 
 export default function App() {
+  const [currentUser, setCurrentUser] = useState(null);
+  const [isAuthLoading, setIsAuthLoading] = useState(true);
   const [screen, setScreen] = useState('home'); // 'home' | 'game'
   const [stage, setStage] = useState(() => {
     const saved = localStorage.getItem('watersort_stage');
@@ -36,26 +38,46 @@ export default function App() {
     const saved = localStorage.getItem('watersort_stars');
     return saved ? parseInt(saved, 10) : 125;
   });
-  const [starBonusActive, setStarBonusActive] = useState(false);
-  const [soundEnabled, setSoundEnabled] = useState(true);
-  const [musicEnabled, setMusicEnabled] = useState(true);
-  const [vibrationEnabled, setVibrationEnabled] = useState(true);
+  const [gems, setGems] = useState(() => {
+    const saved = localStorage.getItem('watersort_gems');
+    return saved ? parseInt(saved, 10) : 15;
+  });
 
-  // Generous chances formula: increases by 4 chances per stage
-  // Stage 1: 6 chances, Stage 2: 10 chances, Stage 3: 14 chances, Stage 4: 18 chances, etc.
+  const [soundEnabled, setSoundEnabled] = useState(() => {
+    const saved = localStorage.getItem('watersort_sound');
+    return saved !== null ? saved === 'true' : true;
+  });
+  const [musicEnabled, setMusicEnabled] = useState(() => {
+    const saved = localStorage.getItem('watersort_music');
+    return saved !== null ? saved === 'true' : false;
+  });
+  const [vibrationEnabled, setVibrationEnabled] = useState(() => {
+    const saved = localStorage.getItem('watersort_vibration');
+    return saved !== null ? saved === 'true' : true;
+  });
+
+  // Chances formula: generous chances
   const getMaxChances = (stageNum) => {
-    return Math.max(6, 6 + (stageNum - 1) * 4);
+    return Math.max(8, 8 + (stageNum - 1) * 4);
   };
   const maxChances = getMaxChances(stage);
   const [chances, setChances] = useState(() => getMaxChances(stage));
 
-  // Themes & Bottle Skins State with LocalStorage Persistence
+  // Themes & Bolt Skins State
   const [activeTheme, setActiveTheme] = useState(() => {
-    return localStorage.getItem('watersort_active_theme') || 'apothecary';
+    const saved = localStorage.getItem('watersort_active_theme');
+    const valid = ['playbg3', 'playbg', 'playbg1', 'playbg2'];
+    return saved && valid.includes(saved) ? saved : 'playbg3';
   });
   const [unlockedThemes, setUnlockedThemes] = useState(() => {
     const saved = localStorage.getItem('watersort_unlocked_themes');
-    return saved ? JSON.parse(saved) : ['apothecary', 'primary'];
+    try {
+      const parsed = saved ? JSON.parse(saved) : ['playbg3'];
+      if (!parsed.includes('playbg3')) parsed.push('playbg3');
+      return parsed;
+    } catch {
+      return ['playbg3'];
+    }
   });
 
   const [activeSkin, setActiveSkin] = useState(() => {
@@ -64,6 +86,14 @@ export default function App() {
   const [unlockedSkins, setUnlockedSkins] = useState(() => {
     const saved = localStorage.getItem('watersort_unlocked_skins');
     return saved ? JSON.parse(saved) : ['classic'];
+  });
+
+  const [activeNutSkin, setActiveNutSkin] = useState(() => {
+    return localStorage.getItem('watersort_active_nut_skin') || 'steel_classic';
+  });
+  const [unlockedNutSkins, setUnlockedNutSkins] = useState(() => {
+    const saved = localStorage.getItem('watersort_unlocked_nut_skins');
+    return saved ? JSON.parse(saved) : ['steel_classic'];
   });
 
   const handlePurchaseTheme = (themeId, price) => {
@@ -108,6 +138,27 @@ export default function App() {
     gameAudio.playClick();
   };
 
+  const handlePurchaseNutSkin = (nutSkinId, price) => {
+    if (coins < price || unlockedNutSkins.includes(nutSkinId)) return false;
+    setCoins((c) => c - price);
+    setUnlockedNutSkins((prev) => {
+      const next = [...prev, nutSkinId];
+      localStorage.setItem('watersort_unlocked_nut_skins', JSON.stringify(next));
+      return next;
+    });
+    setActiveNutSkin(nutSkinId);
+    localStorage.setItem('watersort_active_nut_skin', nutSkinId);
+    gameAudio.playClick();
+    return true;
+  };
+
+  const handleEquipNutSkin = (nutSkinId) => {
+    if (!unlockedNutSkins.includes(nutSkinId)) return;
+    setActiveNutSkin(nutSkinId);
+    localStorage.setItem('watersort_active_nut_skin', nutSkinId);
+    gameAudio.playClick();
+  };
+
   // Modals
   const [isPaused, setIsPaused] = useState(false);
   const [isWinOpen, setIsWinOpen] = useState(false);
@@ -116,7 +167,6 @@ export default function App() {
   const [isShopOpen, setIsShopOpen] = useState(false);
   const [isLevelsOpen, setIsLevelsOpen] = useState(false);
   const [isAchievementsOpen, setIsAchievementsOpen] = useState(false);
-  const [isHowToPlayOpen, setIsHowToPlayOpen] = useState(false);
 
   // Gameplay Bottles State
   const [bottles, setBottles] = useState(() => getStageData(stage).bottles);
@@ -126,26 +176,35 @@ export default function App() {
   const [hint, setHint] = useState(null);
   const [extraBottleUsed, setExtraBottleUsed] = useState(false);
 
+  // Nut Color Customizer & Rearrange State (Exclusively for Nuts)
+  const [isColorStudioOpen, setIsColorStudioOpen] = useState(false);
+  const [activePaintColor, setActivePaintColor] = useState('red');
+  const [studioMode, setStudioMode] = useState('paint'); // 'paint' | 'swap'
+  const [colorWinBanner, setColorWinBanner] = useState(null); // Win Animation Banner for completed color set
+
   // Helper: check if a bottle is completed
   const isCompleteBottle = (b) => {
     return b && b.length === 4 && b.every((c) => c === b[0]);
   };
 
-  // Sync stage to localStorage
+  // Sync to localStorage
   useEffect(() => {
     localStorage.setItem('watersort_stage', stage.toString());
   }, [stage]);
 
-  // Sync coins to localStorage
   useEffect(() => {
     localStorage.setItem('watersort_coins', coins.toString());
   }, [coins]);
 
-  // Sync stars to localStorage
   useEffect(() => {
     localStorage.setItem('watersort_stars', stars.toString());
   }, [stars]);
 
+  useEffect(() => {
+    localStorage.setItem('watersort_gems', gems.toString());
+  }, [gems]);
+
+  // Load stage bottles and assign starting chances
   // Load stage bottles and assign starting chances
   const loadStage = useCallback((stageNum) => {
     const data = getStageData(stageNum);
@@ -160,6 +219,115 @@ export default function App() {
     setIsPaused(false);
   }, []);
 
+  // Apply loaded player progress from account
+  const applyProgress = useCallback((prog) => {
+    if (!prog) return;
+    const stg = Math.max(1, Number(prog.stage) || 1);
+    setStage(stg);
+    setHighestUnlocked(Math.max(1, Number(prog.highestUnlocked) || stg));
+    setCoins(Math.max(0, Number(prog.coins) || 0));
+    setStars(Math.max(0, Number(prog.stars) || 0));
+    setGems(Math.max(0, Number(prog.gems) || 0));
+    if (prog.activeTheme) setActiveTheme(prog.activeTheme);
+    if (Array.isArray(prog.unlockedThemes) && prog.unlockedThemes.length > 0) {
+      setUnlockedThemes(prog.unlockedThemes);
+    }
+    if (prog.activeSkin) setActiveSkin(prog.activeSkin);
+    if (Array.isArray(prog.unlockedSkins) && prog.unlockedSkins.length > 0) {
+      setUnlockedSkins(prog.unlockedSkins);
+    }
+    if (prog.activeNutSkin) setActiveNutSkin(prog.activeNutSkin);
+    if (Array.isArray(prog.unlockedNutSkins) && prog.unlockedNutSkins.length > 0) {
+      setUnlockedNutSkins(prog.unlockedNutSkins);
+    }
+    if (prog.soundEnabled !== undefined) setSoundEnabled(Boolean(prog.soundEnabled));
+    if (prog.musicEnabled !== undefined) setMusicEnabled(Boolean(prog.musicEnabled));
+    if (prog.vibrationEnabled !== undefined) setVibrationEnabled(Boolean(prog.vibrationEnabled));
+    loadStage(stg);
+  }, [loadStage]);
+
+  // Initial user authentication session check
+  useEffect(() => {
+    let mounted = true;
+    authService
+      .getCurrentUser()
+      .then((res) => {
+        if (!mounted) return;
+        if (res && res.user) {
+          setCurrentUser(res.user);
+          applyProgress(res.progress);
+        } else {
+          setCurrentUser(null);
+        }
+        setIsAuthLoading(false);
+      })
+      .catch(() => {
+        if (mounted) {
+          setCurrentUser(null);
+          setIsAuthLoading(false);
+        }
+      });
+    return () => {
+      mounted = false;
+    };
+  }, [applyProgress]);
+
+  // Auto-save user progress to backend whenever key progress changes
+  useEffect(() => {
+    if (!currentUser || isAuthLoading) return;
+    const saveTimer = setTimeout(() => {
+      authService.saveProgress(currentUser.username, {
+        stage,
+        highestUnlocked,
+        coins,
+        stars,
+        gems,
+        activeTheme,
+        unlockedThemes,
+        activeSkin,
+        unlockedSkins,
+        activeNutSkin,
+        unlockedNutSkins,
+        soundEnabled,
+        musicEnabled,
+        vibrationEnabled,
+      });
+    }, 400);
+    return () => clearTimeout(saveTimer);
+  }, [
+    currentUser,
+    isAuthLoading,
+    stage,
+    highestUnlocked,
+    coins,
+    stars,
+    gems,
+    activeTheme,
+    unlockedThemes,
+    activeSkin,
+    unlockedSkins,
+    activeNutSkin,
+    unlockedNutSkins,
+    soundEnabled,
+    musicEnabled,
+    vibrationEnabled,
+  ]);
+
+  const handleAuthSuccess = (user, progress) => {
+    setCurrentUser(user);
+    if (progress) {
+      applyProgress(progress);
+    }
+    setIsAuthLoading(false);
+  };
+
+  const handleLogout = async () => {
+    gameAudio.playClick();
+    await authService.logout();
+    setCurrentUser(null);
+    setScreen('home');
+  };
+
   // Update bottles and decrement chances on each move
   const handleBottlesChange = useCallback((newBottles) => {
     setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
@@ -168,106 +336,150 @@ export default function App() {
     setHint(null);
   }, [bottles]);
 
-  // Booster: Hint Helper (Highlights first valid move, prioritizing matching colors or empty containers)
-  const handleHint = () => {
-    if (screen !== 'game' || isWinOpen || isOutOfChancesOpen) return;
-    // Priority 1: Matching color or empty container
-    for (let from = 0; from < bottles.length; from++) {
-      const fromB = bottles[from];
-      if (fromB.length === 0 || isCompleteBottle(fromB)) continue;
-      const topColor = fromB[fromB.length - 1];
-      const isPureFrom = fromB.every((c) => c === topColor);
-
-      for (let to = 0; to < bottles.length; to++) {
-        if (from === to) continue;
-        const toB = bottles[to];
-        if (toB.length >= 4) continue;
-
-        if (toB.length === 0) {
-          if (isPureFrom) continue;
-          setHint({ from, to });
-          gameAudio.playHint();
-          setTimeout(() => setHint(null), 3500);
-          return;
-        } else if (toB[toB.length - 1] === topColor) {
-          setHint({ from, to });
-          gameAudio.playHint();
-          setTimeout(() => setHint(null), 3500);
-          return;
-        }
-      }
-    }
-    // Priority 2: Any container with available space (free pouring mechanic)
-    for (let from = 0; from < bottles.length; from++) {
-      const fromB = bottles[from];
-      if (fromB.length === 0 || isCompleteBottle(fromB)) continue;
-
-      for (let to = 0; to < bottles.length; to++) {
-        if (from === to) continue;
-        const toB = bottles[to];
-        if (toB.length < 4) {
-          setHint({ from, to });
-          gameAudio.playHint();
-          setTimeout(() => setHint(null), 3500);
-          return;
-        }
-      }
-    }
-  };
-
-  // Booster: Add Extra Empty Tube (+1 Bottle)
+  // Booster: Add Extra Empty Bolt
   const handleAddBottle = () => {
-    if (extraBottleUsed || screen !== 'game' || isWinOpen || isOutOfChancesOpen) return;
-    setExtraBottleUsed(true);
+    if (extraBottleUsed) return;
+    setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
     setBottles((prev) => [...prev, []]);
-    setChances((c) => Math.min(10, c + 1));
-    gameAudio.playAddBottle();
+    setExtraBottleUsed(true);
+    setChances((c) => c + 4);
+    gameAudio.playPowerUp();
   };
 
-  // Out of chances check: wait for pour animation to finish before showing modal
+  // Booster: Undo Move
+  const handleUndo = () => {
+    if (history.length === 0) return;
+    const prevBottles = history[history.length - 1];
+    setBottles(prevBottles);
+    setHistory((prev) => prev.slice(0, prev.length - 1));
+    setChances((c) => c + 1);
+    setHint(null);
+    gameAudio.playClick();
+  };
+
+  // Restart current stage
+  const handleRestart = () => {
+    gameAudio.playClick();
+    loadStage(stage);
+  };
+
+  // Nut Color Studio: Paint individual nut at specific layer
+  const handleNutPaint = (tubeIndex, nutIndex, colorId) => {
+    if (!bottles[tubeIndex] || bottles[tubeIndex][nutIndex] === undefined) return;
+    setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
+    const newBottles = bottles.map((col, tIdx) => {
+      if (tIdx !== tubeIndex) return col;
+      const updated = [...col];
+      updated[nutIndex] = colorId;
+      return updated;
+    });
+    setBottles(newBottles);
+  };
+
+  // Nut Color Studio: Rearrange / Swap two nuts between any positions
+  const handleNutSwap = (first, second) => {
+    if (!first || !second) return;
+    const b1 = bottles[first.tubeIndex];
+    const b2 = bottles[second.tubeIndex];
+    if (!b1 || !b2 || b1[first.nutIndex] === undefined || b2[second.nutIndex] === undefined) return;
+    setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
+    const newBottles = bottles.map((col, tIdx) => {
+      if (tIdx === first.tubeIndex && tIdx === second.tubeIndex) {
+        const copy = [...col];
+        const temp = copy[first.nutIndex];
+        copy[first.nutIndex] = copy[second.nutIndex];
+        copy[second.nutIndex] = temp;
+        return copy;
+      }
+      if (tIdx === first.tubeIndex) {
+        const copy = [...col];
+        copy[first.nutIndex] = b2[second.nutIndex];
+        return copy;
+      }
+      if (tIdx === second.tubeIndex) {
+        const copy = [...col];
+        copy[second.nutIndex] = b1[first.nutIndex];
+        return copy;
+      }
+      return col;
+    });
+    setBottles(newBottles);
+  };
+
+  // Nut Color Studio: Randomize nuts into balanced 4-packs
+  const handleRandomizeNuts = () => {
+    const paletteIds = CUSTOM_COLOR_PALETTE.map((c) => c.id);
+    const totalNuts = bottles.reduce((sum, b) => sum + b.length, 0);
+    const numColorsNeeded = Math.ceil(totalNuts / 4);
+    const pickedPalette = [...paletteIds].sort(() => Math.random() - 0.5).slice(0, Math.max(numColorsNeeded, 3));
+    let nutPool = [];
+    for (let c = 0; c < numColorsNeeded; c++) {
+      const colId = pickedPalette[c % pickedPalette.length];
+      for (let k = 0; k < 4; k++) nutPool.push(colId);
+    }
+    nutPool = nutPool.slice(0, totalNuts).sort(() => Math.random() - 0.5);
+
+    let poolIdx = 0;
+    const randomized = bottles.map((b) => {
+      if (b.length === 0) return [];
+      const newCol = [];
+      for (let i = 0; i < b.length; i++) {
+        newCol.push(nutPool[poolIdx++] || paletteIds[0]);
+      }
+      return newCol;
+    });
+    setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
+    setBottles(randomized);
+  };
+
+  // Nut Color Studio: Reset nuts to default stage setup
+  const handleResetNuts = () => {
+    const stageData = getStageData(stage);
+    setHistory((prev) => [...prev, bottles.map((b) => [...b])]);
+    setBottles(stageData.bottles.map((b) => [...b]));
+  };
+
+  // Color Completed Celebration Handler (Triggered when 4 matching nuts of a color are completed)
+  const handleColorCompleted = useCallback(({ tubeIndex, color }) => {
+    const def = CUSTOM_COLOR_PALETTE.find((c) => c.id === color) || {
+      name: color ? color.toUpperCase() : 'Color',
+      hex: '#facc15',
+    };
+    setColorWinBanner({
+      id: Date.now(),
+      tubeIndex,
+      color,
+      colorName: def.name,
+      hex: def.hex,
+    });
+    // Auto-dismiss celebration banner after 2.6s
+    setTimeout(() => {
+      setColorWinBanner((prev) => (prev?.tubeIndex === tubeIndex ? null : prev));
+    }, 2600);
+  }, []);
+
+  // Out of chances check
   useEffect(() => {
     if (chances === 0 && !isWinOpen && screen === 'game') {
-      const timer = setTimeout(() => {
-        if (!isWinOpen) {
-          setIsOutOfChancesOpen(true);
-        }
-      }, 1400);
-      return () => clearTimeout(timer);
-    } else if (chances > 0) {
-      setIsOutOfChancesOpen(false);
+      const allComplete = bottles.every((b) => b.length === 0 || isCompleteBottle(b));
+      if (!allComplete) {
+        setIsOutOfChancesOpen(true);
+      }
     }
-  }, [chances, isWinOpen, screen]);
+  }, [chances, isWinOpen, bottles, screen]);
 
-  // Undo Move (Restores 1 chance and previous bottle state)
-  const handleUndo = () => {
-    if (history.length === 0 || isWinOpen) return;
-    const prev = history[history.length - 1];
-    setHistory((h) => h.slice(0, -1));
-    setBottles(prev.map((b) => [...b]));
-    setChances((c) => Math.min(getMaxChances(stage), c + 1));
-    setIsOutOfChancesOpen(false);
-    gameAudio.playClick();
-  };
-
-  // Restart Current Stage
-  const handleRestart = () => {
-    loadStage(stage);
-    gameAudio.playClick();
-  };
-
-  // Win Handler - Adds points to stars icon in navbar & coins
+  // Stage Win Handler
   const handleWin = useCallback(() => {
     setIsWinOpen(true);
     setIsOutOfChancesOpen(false);
-    setStars((s) => s + 3); // Points added to the star icon!
+    setStars((s) => s + 3);
     setCoins((c) => c + 50);
-    setStarBonusActive(true);
+    setGems((g) => g + 1);
     setHighestUnlocked((prev) => {
       const nextUnlocked = Math.max(prev, Math.min(100, stage + 1));
       localStorage.setItem('watersort_highest_stage', nextUnlocked.toString());
       return nextUnlocked;
     });
-    setTimeout(() => setStarBonusActive(false), 3500);
   }, [stage]);
 
   // Next Stage Handler
@@ -283,427 +495,483 @@ export default function App() {
     loadStage(nextStage);
   };
 
-  // Toggle Sound preference
+  // Toggle Sound preferences & sync to localStorage and gameAudio
   const toggleSound = () => {
     const next = !soundEnabled;
     setSoundEnabled(next);
+    localStorage.setItem('watersort_sound', next.toString());
     gameAudio.soundEnabled = next;
   };
 
+  const toggleMusic = () => {
+    const next = !musicEnabled;
+    setMusicEnabled(next);
+    localStorage.setItem('watersort_music', next.toString());
+    gameAudio.musicEnabled = next;
+  };
+
+  const toggleVibration = () => {
+    const next = !vibrationEnabled;
+    setVibrationEnabled(next);
+    localStorage.setItem('watersort_vibration', next.toString());
+  };
+
   const isHome = screen === 'home';
-  const currentThemeObj = GAME_THEMES.find((t) => t.id === activeTheme) || GAME_THEMES[0];
-  const completedCount = bottles.filter(isCompleteBottle).length;
-  const uniqueColors = new Set(bottles.flat()).size;
-  const targetCompleted = Math.max(1, uniqueColors);
-  const progressPercent = Math.min(100, Math.round((completedCount / targetCompleted) * 100));
+  const currentTheme = GAME_THEMES.find((t) => t.id === activeTheme) || GAME_THEMES[0];
+  const gameplayBg = currentTheme?.bgImage || '/playbg3.png';
+
+  // Initial Auth Loading Spinner
+  if (isAuthLoading) {
+    return (
+      <div className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0a0705] text-[#ffeed2] select-none">
+        <img
+          src="/nut_sort_navbar_badge.png"
+          alt="Nut Sort Logo"
+          className="w-16 h-16 object-contain animate-bounce drop-shadow-[0_0_25px_rgba(251,191,36,0.5)]"
+        />
+        <div className="mt-4 flex items-center gap-2 text-sm font-black text-amber-300">
+          <div className="w-4 h-4 border-2 border-amber-400 border-t-transparent rounded-full animate-spin" />
+          <span>Loading Account...</span>
+        </div>
+      </div>
+    );
+  }
+
+  // Mandatory Authentication Check
+  if (!currentUser) {
+    return <AuthScreen onAuthSuccess={handleAuthSuccess} />;
+  }
 
   return (
-    <div className="relative w-full h-[100dvh] overflow-hidden bg-black flex flex-col justify-between font-sans select-none pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]">
+    <div className="relative w-full h-[100dvh] overflow-hidden bg-slate-950 flex flex-col justify-between font-sans select-none pt-[env(safe-area-inset-top,0px)] pb-[env(safe-area-inset-bottom,0px)] pl-[env(safe-area-inset-left,0px)] pr-[env(safe-area-inset-right,0px)]">
       
-      {/* Full-Screen Dynamic Background Image & Live Applied Theme */}
-      <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
-        {isHome ? (
-          // Home Screen: Deep Midnight Winter Village Scene - Sleek & Atmospheric Dark Theme
-          <div className="relative w-full h-full">
-            <img
-              src="/winter-scene.jpg"
-              alt="Water Sort Home Background"
-              className="w-full h-full object-cover object-center filter brightness-65 contrast-125 saturate-110"
-            />
-            {/* Rich Midnight Velvet Gradient Overlay */}
-            <div className="absolute inset-0 bg-gradient-to-b from-slate-950/85 via-indigo-950/70 to-slate-950/90 pointer-events-none" />
-            {/* Ambient Radial Spotlight: Deep Cosmic Violet / Cyan Backglow */}
-            <div className="absolute top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[650px] h-[450px] bg-gradient-to-b from-cyan-500/15 via-indigo-600/10 to-transparent rounded-full blur-3xl pointer-events-none" />
-            {/* Radial Vignette Framing the Center Content */}
-            <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_30%,_rgba(2,6,23,0.85)_100%)] pointer-events-none" />
-          </div>
-        ) : (
-          // Gameplay Screen: Live Applied Theme Background & Lighting
-          <div className="relative w-full h-full">
-            {currentThemeObj.bgImage ? (
-              <img
-                src={currentThemeObj.bgImage}
-                alt={currentThemeObj.name}
-                className="w-full h-full object-cover object-center transition-all duration-700"
-              />
-            ) : currentThemeObj.isDynamicPrimary ? (
-              // Primary Spectrum Theme: Rich deep midnight space with glowing pure primary auroras
-              <div className="w-full h-full bg-slate-950 relative overflow-hidden">
-                <div className="absolute -top-16 -left-16 w-[480px] h-[480px] bg-[#ff0000]/30 rounded-full blur-[110px] animate-pulse" style={{ animationDuration: '6s' }} />
-                <div className="absolute -top-16 -right-16 w-[480px] h-[480px] bg-[#ffff00]/24 rounded-full blur-[110px] animate-pulse" style={{ animationDuration: '7s' }} />
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[720px] h-[520px] bg-[#0044ff]/35 rounded-full blur-[130px]" />
-                <div className="absolute -bottom-16 -left-16 w-[480px] h-[480px] bg-[#00dd00]/28 rounded-full blur-[110px] animate-pulse" style={{ animationDuration: '8s' }} />
-                <div className="absolute -bottom-16 -right-16 w-[440px] h-[440px] bg-[#ff0000]/22 rounded-full blur-[110px]" />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_transparent_20%,_rgba(2,6,23,0.85)_100%)] pointer-events-none" />
-              </div>
-            ) : currentThemeObj.isDynamicAurora ? (
-              // Aurora Theme: Deep cosmic space gradient with northern lights waves
-              <div className="w-full h-full bg-gradient-to-b from-slate-950 via-teal-950 to-indigo-950 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-teal-400/25 via-emerald-600/15 to-transparent animate-pulse" style={{ animationDuration: '4s' }} />
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-purple-500/20 via-indigo-600/10 to-transparent" />
-              </div>
-            ) : currentThemeObj.isDynamicSunset ? (
-              // Sunset Theme: Rich warm golden hour horizon
-              <div className="w-full h-full bg-gradient-to-b from-purple-950 via-rose-950 to-amber-950 relative overflow-hidden">
-                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom,_var(--tw-gradient-stops))] from-amber-500/30 via-orange-600/15 to-transparent" />
-              </div>
-            ) : (
-              <img
-                src="/game-bg.png"
-                alt="Apothecary"
-                className="w-full h-full object-cover object-center"
-              />
-            )}
-
-            {/* Theme-Specific Ambient Lighting Overlay */}
-            <div className={`absolute inset-0 ${currentThemeObj.lightingOverlay} pointer-events-none transition-all duration-700`} />
-
-            {/* Theme-Specific Ambient Glow Vignette */}
-            <div className={`absolute inset-0 ${currentThemeObj.ambientGlow} pointer-events-none`} />
-          </div>
-        )}
-
-        {/* Luminous Pure Primary Colors Ambient Lighting Blooms in Background */}
-        <div className="absolute inset-0 pointer-events-none overflow-hidden z-[1]">
-          {/* Pure Red Glow (Top-Left) */}
-          <div
-            className="absolute -top-20 -left-20 w-80 sm:w-[450px] h-80 sm:h-[450px] rounded-full bg-[#ff0000]/24 blur-[95px] pointer-events-none animate-pulse"
-            style={{ animationDuration: '6s' }}
-          />
-
-          {/* Pure Yellow Radiant Halo (Top-Right) */}
-          <div
-            className="absolute -top-20 -right-20 w-80 sm:w-[450px] h-80 sm:h-[450px] rounded-full bg-[#ffff00]/20 blur-[95px] pointer-events-none animate-pulse"
-            style={{ animationDuration: '7s' }}
-          />
-
-          {/* Pure Electric Blue Deep Center Nebula */}
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[540px] sm:w-[720px] h-[380px] sm:h-[520px] rounded-full bg-[#0044ff]/28 blur-[110px] pointer-events-none" />
-
-          {/* Pure Green Vibrant Emerald Glow (Bottom-Left) */}
-          <div
-            className="absolute -bottom-20 -left-16 w-80 sm:w-[440px] h-80 sm:h-[440px] rounded-full bg-[#00dd00]/22 blur-[95px] pointer-events-none animate-pulse"
-            style={{ animationDuration: '8s' }}
-          />
-
-          {/* Pure Red Accent Glow (Bottom-Right) */}
-          <div
-            className="absolute -bottom-20 -right-16 w-72 sm:w-[400px] h-72 sm:h-[400px] rounded-full bg-[#ff0000]/20 blur-[95px] pointer-events-none"
-          />
-
-          {/* Soft Primary Color Sweep Aurora Mesh */}
-          <div className="absolute inset-0 bg-gradient-to-tr from-[#0044ff]/16 via-transparent to-[#ffff00]/12 pointer-events-none mix-blend-screen" />
-        </div>
-
-        {/* Ambient Subtle Vignette - Sleek Dark Theme */}
-        <div className={`absolute inset-0 z-[2] ${isHome ? 'bg-gradient-to-b from-black/40 via-transparent to-black/60' : 'bg-gradient-to-b from-black/35 via-transparent to-black/55'} pointer-events-none`} />
-      </div>
-
-      {/* Dynamic Ambient Particles with Pure Primary Colors */}
-      {isHome ? (
-        <>
-          <SnowEffect />
-          <MagicParticles type="primary" />
-        </>
-      ) : currentThemeObj.particleType === 'snow' ? (
-        <>
-          <SnowEffect />
-          <MagicParticles type="primary" />
-        </>
-      ) : (
-        <MagicParticles type={currentThemeObj.particleType || 'primary'} />
+      {/* 1. FULL-SCREEN HD GAMEPLAY BACKGROUND (Uncropped & Undistorted) */}
+      {!isHome && (
+        <img
+          src={gameplayBg}
+          alt="Ambient Background"
+          className="fixed inset-0 w-full h-full object-cover object-center pointer-events-none z-0 filter blur-2xl scale-110 opacity-55 brightness-75"
+          style={{ imageRendering: 'high-quality' }}
+        />
       )}
 
-      {/* Main Container */}
-      <div className="relative z-20 w-full h-full flex flex-col justify-between overflow-hidden">
-        
-        {/* Top Game Navbar (Matching Reference Image Design) */}
-        <GameNavbar
-          currentScreen={screen}
-          onNavigate={(targetScreen) => {
-            if (targetScreen === 'game') loadStage(stage);
-            setScreen(targetScreen);
-          }}
-          currentStage={stage}
-          totalStars={stars}
-          starBonusActive={starBonusActive}
-          playerId="84920"
-          soundEnabled={soundEnabled}
-          onToggleSound={toggleSound}
-          onOpenSettings={() => setIsSettingsOpen(true)}
-          onOpenLevels={() => setIsLevelsOpen(true)}
-          onOpenAchievements={() => setIsAchievementsOpen(true)}
-          onOpenHowToPlay={() => setIsHowToPlayOpen(true)}
-        />
-
-        {/* Content Area: Home Screen OR Gameplay Screen */}
-        <div className="relative flex-1 w-full h-full max-w-lg mx-auto flex flex-col items-center justify-between overflow-hidden">
-          {isHome ? (
-            <HomeScreen
-              onPlay={() => {
-                loadStage(stage);
-                setScreen('game');
-              }}
-              onOpenSettings={() => setIsSettingsOpen(true)}
-              onOpenShop={() => setIsShopOpen(true)}
-              onOpenLevels={() => setIsLevelsOpen(true)}
-              onOpenAchievements={() => setIsAchievementsOpen(true)}
-              currentStage={stage}
-              coins={coins}
-              stars={stars}
+      {/* 2. MAIN ACTIVE SCREEN (Home OR Gameplay) */}
+      <div className="relative z-10 w-full h-full flex flex-col items-center justify-between overflow-hidden">
+        {isHome ? (
+          /* SCREEN 1: HOME / FRONT PAGE (Matching Reference Image 1) */
+          <HomeScreen
+            onPlay={() => {
+              loadStage(stage);
+              setScreen('game');
+            }}
+            onOpenSettings={() => setIsSettingsOpen(true)}
+            onOpenShop={() => setIsShopOpen(true)}
+            onOpenLevels={() => setIsLevelsOpen(true)}
+            onOpenAchievements={() => setIsAchievementsOpen(true)}
+            currentStage={stage}
+            coins={coins}
+            stars={stars}
+            playerName={currentUser?.username || 'Mubashar'}
+            playerId={currentUser?.id ? String(currentUser.id).slice(0, 6) : '84920'}
+            soundEnabled={soundEnabled}
+            onToggleSound={toggleSound}
+          />
+        ) : (
+          /* SCREEN 2: GAMEPLAY SCREEN (Responsive & mobile-optimized) */
+          <div
+            className="relative mx-auto flex flex-col items-center justify-between z-20 overflow-hidden shadow-2xl w-full h-[100dvh]"
+            style={{
+              maxWidth: 'calc(100dvh * 2752 / 1536)',
+            }}
+          >
+            {/* HD Background Artwork: The Dungeon Table Scene */}
+            <img
+              src={gameplayBg}
+              alt="Gameplay Background Scene"
+              className="absolute inset-0 w-full h-full object-cover pointer-events-none z-0"
+              style={{ imageRendering: 'high-quality' }}
+              draggable={false}
             />
-          ) : (
-            <div className="w-full h-full flex flex-col items-center justify-between">
-              {/* In-Game HUD: Stage Info, Chances Indicator & Pause */}
-              <div className="w-full max-w-lg px-2 sm:px-6 pt-1 sm:pt-1.5 pb-0.5 z-20 flex flex-col gap-1 flex-shrink-0">
-                <div className="w-full flex items-center justify-between gap-1.5 sm:gap-2">
-                  {/* Level / Stage Badge */}
-                  <div className="flex items-center gap-1 sm:gap-1.5 px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-full bg-slate-950/90 backdrop-blur-md border border-slate-700/60 shadow-md">
-                    <Sparkles className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-amber-400" />
-                    <span className="text-[11px] sm:text-sm font-black text-slate-100 tracking-wide whitespace-nowrap">
-                      Stage {stage}
+
+            {/* Top Header Group: Navbar + In-Game Action Sub-Bar directly below it */}
+            <div className="w-full relative z-30 flex flex-col items-center flex-shrink-0">
+              <GameNavbar
+                isHome={false}
+                currentStage={stage}
+                chances={chances}
+                coins={coins}
+                stars={stars}
+                playerName={currentUser?.username || 'Mubashar'}
+                playerId={currentUser?.id ? String(currentUser.id).slice(0, 6) : '84920'}
+                soundEnabled={soundEnabled}
+                onToggleSound={toggleSound}
+                onRestart={handleRestart}
+                onHome={() => setScreen('home')}
+                onPause={() => setIsPaused(true)}
+                onOpenSettings={() => setIsSettingsOpen(true)}
+                onOpenShop={() => setIsShopOpen(true)}
+                onOpenLevels={() => setIsLevelsOpen(true)}
+              />
+
+              {/* In-Game Action Sub-Bar: Responsive spacing & mobile-adapted layout */}
+              <div
+                className="w-full max-w-4xl mx-auto px-2 xs:px-3 sm:px-6 pt-1 sm:pt-1.5 pb-1 flex items-center justify-between gap-1 sm:gap-2 md:gap-3 flex-shrink-0 flex-nowrap"
+              >
+                {/* Left: Undo Button */}
+                <button
+                  onClick={handleUndo}
+                  disabled={history.length === 0}
+                  className={`flex items-center gap-1 sm:gap-1.5 px-2 xs:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-1.5 sm:border-2 border-[#c49b65] shadow-[0_2px_0_#8c6435,0_3px_8px_rgba(0,0,0,0.6)] text-[#5c3a1d] font-black text-[11px] sm:text-sm group transition-all duration-150 flex-shrink-0 ${
+                    history.length > 0 ? 'active:scale-90 active:translate-y-0.5 cursor-pointer opacity-100 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(251,191,36,0.3)]' : 'cursor-not-allowed opacity-50'
+                  }`}
+                  title="Undo Move"
+                >
+                  <Undo2 className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.5] group-hover:-rotate-12 transition-transform duration-200" />
+                  <span>Undo</span>
+                  {history.length > 0 && (
+                    <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-rose-600 text-white text-[8px] sm:text-[9px] font-bold flex items-center justify-center shadow animate-pulse">
+                      {history.length}
                     </span>
+                  )}
+                </button>
+
+                {/* Center: Stage Indicator badge + Nut Colors Studio toggle */}
+                <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
+                  <div className="flex items-center gap-1 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#1c1108]/90 border border-[#c49b65]/60 text-amber-200 text-[10.5px] sm:text-xs font-black shadow transition-transform hover:scale-105">
+                    <span>Stage {stage}</span>
+                  </div>
+                  <button
+                    onClick={() => {
+                      gameAudio.playClick();
+                      setIsColorStudioOpen((v) => !v);
+                    }}
+                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border shadow transition-all duration-200 cursor-pointer ${
+                      isColorStudioOpen
+                        ? 'bg-gradient-to-r from-amber-500 to-orange-500 border-amber-300 text-slate-950 font-black scale-105 ring-2 ring-amber-400/50'
+                        : 'bg-[#1c1108]/90 border-[#c49b65]/60 text-amber-200 hover:text-white hover:border-amber-400 hover:scale-105 font-bold text-[10.5px] sm:text-xs'
+                    }`}
+                    title="Customize Nut Colors"
+                  >
+                    <Palette className="w-3 h-3 sm:w-3.5 sm:h-3.5 stroke-[2.5]" />
+                    <span className="hidden xs:inline">Nuts</span>
+                    <span
+                      className="w-2.5 h-2.5 rounded-full border border-white/60 shadow"
+                      style={{
+                        backgroundColor:
+                          CUSTOM_COLOR_PALETTE.find((c) => c.id === activePaintColor)?.hex || '#dc2626',
+                      }}
+                    />
+                  </button>
+                </div>
+
+                {/* Chances / Lives Indicator: Compact icon between Nuts and Storage/Slots */}
+                <div
+                  className="flex items-center gap-1 sm:gap-2 px-1.5 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2a170b]/95 via-[#1a0f07]/95 to-[#120803]/98 border-1.5 sm:border-2 border-[#c49b65] shadow-[0_2px_0_#8c6435,0_3px_8px_rgba(0,0,0,0.6)] text-[10.5px] sm:text-xs select-none transition-all duration-200 hover:scale-105 hover:border-amber-400/80 flex-shrink-0"
+                  title={`Chances Left: ${chances} | Used: ${Math.max(0, maxChances - chances)} (Total: ${maxChances})`}
+                >
+                  {/* Glowing Heart / Life Icon */}
+                  <div className="relative flex items-center justify-center">
+                    <Heart
+                      className={`w-3 h-3 sm:w-4 sm:h-4 text-rose-500 fill-rose-500 transition-transform ${
+                        chances <= 3 ? 'animate-bounce' : 'hover:scale-110'
+                      }`}
+                    />
                   </div>
 
-                  {/* Remaining Chances Display */}
-                  <div
-                    className={`flex items-center gap-1.5 sm:gap-2 px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full backdrop-blur-md border shadow-lg transition-all ${
-                      chances <= 2
-                        ? 'bg-rose-950/90 border-rose-500/60 text-rose-300 shadow-rose-950/50 animate-pulse'
-                        : 'bg-slate-950/90 border-slate-700/60 text-slate-100 shadow-slate-950/50'
-                    }`}
-                  >
-                    <div className="flex items-center gap-1 sm:gap-1.5">
-                      <Heart
-                        className={`w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current ${
-                          chances <= 2 ? 'text-rose-400' : 'text-rose-500'
-                        }`}
-                      />
-                      <span className="text-[9px] sm:text-xs font-black uppercase tracking-wider text-slate-400">
-                        Chances:
-                      </span>
-                    </div>
-
-                    <div className="flex items-baseline gap-0.5 sm:gap-1">
+                  {/* Remaining vs Used Breakdown */}
+                  <div className="flex items-center gap-1 font-black leading-none">
+                    {/* Remaining Chances */}
+                    <div className="flex items-baseline gap-0.5">
                       <span
-                        className={`text-xs sm:text-base font-black ${
-                          chances === 0
-                            ? 'text-rose-400'
-                            : chances <= 3
-                            ? 'text-amber-400'
-                            : 'text-emerald-400'
+                        className={`text-[11px] sm:text-sm font-black tracking-tight ${
+                          chances <= 3 ? 'text-rose-400 animate-pulse' : 'text-[#facc15]'
                         }`}
                       >
                         {chances}
                       </span>
-                      <span className="text-[9px] sm:text-[10px] font-bold text-slate-500">
-                        /{maxChances}
+                      <span className="text-[8px] sm:text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
+                        left
                       </span>
                     </div>
 
-                    {/* Mini Stamina Bar Gauge */}
-                    <div className="w-8 sm:w-14 h-1.5 sm:h-2 rounded-full bg-slate-900 border border-slate-700/50 overflow-hidden shadow-inner ml-0.5">
-                      <div
-                        className={`h-full rounded-full transition-all duration-300 ${
-                          chances / maxChances > 0.5
-                            ? 'bg-gradient-to-r from-emerald-500 to-green-500 shadow-[0_0_6px_#10b981]'
-                            : chances / maxChances > 0.25
-                            ? 'bg-gradient-to-r from-amber-500 to-yellow-500 shadow-[0_0_6px_#f59e0b]'
-                            : 'bg-gradient-to-r from-rose-500 to-red-600 shadow-[0_0_6px_#ef4444]'
-                        }`}
-                        style={{ width: `${Math.round((chances / maxChances) * 100)}%` }}
-                      />
+                    <span className="text-[#c49b65]/60 text-[10px] sm:text-xs">/</span>
+
+                    {/* Used / Lost Chances */}
+                    <div className="flex items-baseline gap-0.5 text-[#dfbf8d]">
+                      <span className="text-[9.5px] sm:text-xs font-bold text-rose-400/90">
+                        -{Math.max(0, maxChances - chances)}
+                      </span>
+                      <span className="hidden xs:inline text-[8px] sm:text-[9.5px] text-amber-200/60 font-medium">
+                        used
+                      </span>
                     </div>
                   </div>
 
-                  {/* Quick In-Game Pause Button */}
-                  <button
-                    onClick={() => {
-                      gameAudio.playClick();
-                      setIsPaused(true);
-                    }}
-                    className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-slate-950/90 hover:bg-slate-900 backdrop-blur-md border border-slate-700/60 shadow-md flex items-center justify-center text-slate-300 hover:text-white active:scale-90 transition-transform cursor-pointer flex-shrink-0"
-                    title="Pause Game"
-                  >
-                    <Pause className="w-3 h-3 sm:w-3.5 sm:h-3.5 fill-current" />
-                  </button>
-                </div>
-
-                {/* Sorted Bottles Progress Bar */}
-                <div className="w-full max-w-xs sm:max-w-sm mx-auto px-1 flex flex-col items-center">
-                  <div className="w-full flex items-center justify-between text-[9px] sm:text-[10px] font-black uppercase tracking-wider text-slate-400 mb-0.5">
-                    <span className="flex items-center gap-1">
-                      <span className="text-slate-400">Bottles Sorted:</span>
-                      <span className="text-cyan-400 font-bold">{completedCount} / {targetCompleted}</span>
-                    </span>
-                    <span className="text-amber-400 font-bold">{progressPercent}%</span>
-                  </div>
-                  <div className="w-full h-1.5 rounded-full bg-slate-950/90 border border-slate-800 overflow-hidden shadow-inner">
+                  {/* Visual Mini Life Gauge Bar */}
+                  <div className="hidden md:flex w-10 sm:w-12 h-1.5 sm:h-2 rounded-full bg-[#120803] border border-[#c49b65]/40 overflow-hidden p-[1px]">
                     <div
-                      className="h-full rounded-full bg-gradient-to-r from-cyan-500 via-blue-600 to-indigo-600 shadow-[0_0_8px_rgba(6,182,212,0.6)] transition-all duration-500"
-                      style={{ width: `${progressPercent}%` }}
+                      className={`h-full rounded-full transition-all duration-300 ${
+                        chances / maxChances > 0.5
+                           ? 'bg-gradient-to-r from-emerald-500 to-green-400'
+                          : chances / maxChances > 0.25
+                          ? 'bg-gradient-to-r from-amber-500 to-yellow-400'
+                          : 'bg-gradient-to-r from-rose-600 to-red-500 animate-pulse'
+                      }`}
+                      style={{ width: `${Math.min(100, Math.max(0, (chances / maxChances) * 100))}%` }}
                     />
                   </div>
                 </div>
-              </div>
 
-              {/* PixiJS Interactive Water Sort Board */}
-              <div className="flex-1 w-full h-full min-h-0 flex items-center justify-center overflow-hidden">
-                <PixiGameBoard
-                  bottles={bottles}
-                  onBottlesChange={handleBottlesChange}
-                  onWin={handleWin}
-                  isPaused={isPaused || isWinOpen || isOutOfChancesOpen}
-                  hint={hint}
-                  activeSkin={activeSkin}
-                />
-              </div>
-
-              {/* Bottom In-Game Controls & Power-Up Boosters */}
-              <div className="w-full flex flex-col items-center pb-2.5 sm:pb-3 pt-0.5 px-2 sm:px-4 z-20 flex-shrink-0">
-                <div className="flex items-center justify-center gap-1.5 sm:gap-3 bg-slate-950/90 backdrop-blur-xl px-2.5 sm:px-4 py-1 sm:py-1.5 rounded-full border border-slate-800 shadow-[0_8px_30px_rgba(0,0,0,0.8)] max-w-full overflow-x-auto scrollbar-none">
-                  {/* Hint Booster Button */}
-                  <button
-                    onClick={handleHint}
-                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-amber-500/15 to-yellow-600/20 hover:from-amber-500/25 hover:to-yellow-600/30 text-amber-300 border border-amber-500/40 shadow-md shadow-amber-950/20 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
-                    title="Highlight next valid move"
-                  >
-                    <Lightbulb className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-amber-400/30 text-amber-300" />
-                    <span>Hint</span>
-                  </button>
-
-                  {/* Add Extra Tube Booster Button */}
-                  <button
-                    onClick={handleAddBottle}
-                    disabled={extraBottleUsed}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border shadow-md transition-all text-[10px] sm:text-xs font-black uppercase whitespace-nowrap ${
-                      !extraBottleUsed
-                        ? 'bg-gradient-to-b from-emerald-500/15 to-green-600/20 hover:from-emerald-500/25 hover:to-green-600/30 text-emerald-300 border-emerald-500/40 shadow-emerald-950/20 hover:scale-105 active:scale-95 cursor-pointer'
-                        : 'bg-slate-900/40 text-slate-600 border-slate-800 cursor-not-allowed opacity-40'
-                    }`}
-                    title={extraBottleUsed ? 'Extra tube already used for this stage' : 'Add an extra empty tube booster (+1 chance)'}
-                  >
-                    <FlaskConical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-emerald-400" />
-                    <span>+1 Tube</span>
-                  </button>
-
-                  {/* Undo Button */}
-                  <button
-                    onClick={handleUndo}
-                    disabled={history.length === 0}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full border shadow-md transition-all text-[10px] sm:text-xs font-black uppercase whitespace-nowrap ${
-                      history.length > 0
-                        ? 'bg-gradient-to-b from-cyan-500/15 to-blue-600/20 hover:from-cyan-500/25 hover:to-blue-600/30 text-cyan-300 border-cyan-500/40 shadow-cyan-950/20 hover:scale-105 active:scale-95 cursor-pointer'
-                        : 'bg-slate-900/40 text-slate-600 border-slate-800 cursor-not-allowed opacity-40'
-                    }`}
-                  >
-                    <Undo2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span>Undo</span>
-                    {history.length > 0 && (
-                      <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-cyan-600 text-white text-[9px] sm:text-[10px] flex items-center justify-center font-bold">
-                        {history.length}
-                      </span>
-                    )}
-                  </button>
-
-                  {/* Restart Button */}
-                  <button
-                    onClick={handleRestart}
-                    className="flex items-center gap-1 sm:gap-1.5 px-2 sm:px-3 py-1 sm:py-1.5 rounded-full bg-gradient-to-b from-orange-500/15 to-amber-600/20 hover:from-orange-500/25 hover:to-amber-600/30 text-orange-300 border border-orange-500/40 shadow-md shadow-orange-950/20 transition-all hover:scale-105 active:scale-95 text-[10px] sm:text-xs font-black uppercase cursor-pointer whitespace-nowrap"
-                  >
-                    <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-                    <span>Restart</span>
-                  </button>
-                </div>
+                {/* Right: +1 Add Bolt Button */}
+                <button
+                  onClick={handleAddBottle}
+                  disabled={extraBottleUsed}
+                  className={`flex items-center gap-1 sm:gap-1.5 px-2 xs:px-2.5 sm:px-3 py-1 sm:py-1.5 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-1.5 sm:border-2 border-[#c49b65] shadow-[0_2px_0_#8c6435,0_3px_8px_rgba(0,0,0,0.6)] text-[#5c3a1d] font-black text-[11px] sm:text-sm group transition-all duration-150 flex-shrink-0 ${
+                    !extraBottleUsed ? 'active:scale-90 active:translate-y-0.5 cursor-pointer opacity-100 hover:scale-105 hover:-translate-y-0.5 hover:shadow-[0_4px_12px_rgba(251,191,36,0.3)]' : 'cursor-not-allowed opacity-40'
+                  }`}
+                  title="Add Extra Bolt"
+                >
+                  <span className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full bg-[#5c3a1d] text-[#ffeed2] text-[9px] sm:text-[10px] flex items-center justify-center font-black group-hover:scale-110 transition-transform">
+                    +
+                  </span>
+                  <span><span className="hidden sm:inline">Add </span>Bolt</span>
+                </button>
               </div>
             </div>
-          )}
-        </div>
 
-        {/* Modals */}
-        <PauseModal
-          isOpen={isPaused}
-          onClose={() => setIsPaused(false)}
-          onRestart={() => {
-            setIsPaused(false);
-            handleRestart();
-          }}
-          onHome={() => {
-            setIsPaused(false);
-            setScreen('home');
-          }}
-          soundEnabled={soundEnabled}
-          onToggleSound={toggleSound}
-        />
+            {/* COLOR SET COMPLETED WIN ANIMATION BANNER */}
+            {colorWinBanner && (
+              <div
+                key={colorWinBanner.id}
+                className="absolute top-16 sm:top-20 inset-x-0 mx-auto w-fit z-50 pointer-events-none flex flex-col items-center animate-in fade-in zoom-in-75 slide-in-from-top-4 duration-300"
+              >
+                <div className="relative px-5 sm:px-8 py-2 sm:py-2.5 rounded-2xl bg-gradient-to-b from-[#2a170b]/98 via-[#1a0f07]/98 to-[#120803]/98 border-2 sm:border-3 border-[#facc15] shadow-[0_12px_36px_rgba(0,0,0,0.9),0_0_30px_rgba(250,204,21,0.5)] backdrop-blur-md flex items-center gap-3">
+                  {/* Glowing animated sparkle jewel */}
+                  <div
+                    className="w-8 h-8 sm:w-10 sm:h-10 rounded-full flex items-center justify-center shadow-lg animate-bounce"
+                    style={{ backgroundColor: colorWinBanner.hex, boxShadow: `0 0 22px ${colorWinBanner.hex}` }}
+                  >
+                    <Sparkles className="w-5 h-5 sm:w-6 sm:h-6 text-white stroke-[2.5] animate-spin" style={{ animationDuration: '3s' }} />
+                  </div>
 
-        <WinModal
-          isOpen={isWinOpen}
-          stage={stage}
-          onNextStage={handleNextStage}
-          onReplay={handleRestart}
-        />
+                  <div className="flex flex-col items-start leading-tight">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[10px] sm:text-xs font-black tracking-widest uppercase text-[#facc15] drop-shadow">
+                        ✨ COLOR COMPLETED! ✨
+                      </span>
+                    </div>
+                    <span className="text-sm sm:text-base font-black text-white drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)]">
+                      {colorWinBanner.colorName} Set Solved!
+                    </span>
+                  </div>
 
-        <OutOfChancesModal
-          isOpen={isOutOfChancesOpen}
-          stage={stage}
-          canUndo={history.length > 0}
-          onRestart={handleRestart}
-          onUndo={handleUndo}
-          onHome={() => {
-            setIsOutOfChancesOpen(false);
-            setScreen('home');
-          }}
-        />
+                  {/* 4 Matching Nuts Completed Indicator */}
+                  <div className="flex items-center gap-1 ml-2">
+                    {[0, 1, 2, 3].map((n) => (
+                      <div
+                        key={n}
+                        className="w-3.5 h-3.5 sm:w-4 sm:h-4 rounded-full border-2 border-white/80 shadow-md animate-pulse"
+                        style={{
+                          backgroundColor: colorWinBanner.hex,
+                          animationDelay: `${n * 150}ms`,
+                        }}
+                      />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            )}
 
-        <LevelsModal
-          isOpen={isLevelsOpen}
-          onClose={() => setIsLevelsOpen(false)}
-          currentStage={stage}
-          highestUnlocked={highestUnlocked}
-          onSelectStage={(lvl) => {
-            loadStage(lvl);
-            setScreen('game');
-          }}
-        />
+            {/* Nut Color Studio Floating Customizer */}
+            <ColorStudioBar
+              isOpen={isColorStudioOpen}
+              onClose={() => setIsColorStudioOpen(false)}
+              activeColor={activePaintColor}
+              onSelectColor={setActivePaintColor}
+              onRandomizeNuts={handleRandomizeNuts}
+              onResetNuts={handleResetNuts}
+              studioMode={studioMode}
+              onToggleStudioMode={setStudioMode}
+            />
 
-        <AchievementsModal
-          isOpen={isAchievementsOpen}
-          onClose={() => setIsAchievementsOpen(false)}
-          totalStars={stars}
-          currentStage={stage}
-        />
+            {/* True 3D Photorealistic Nut & Bolt Sorting Board (Three.js PBR Engine) */}
+            {/* Directly mapped 1:1 to the 2752x1536 artwork container so table positioning is 100% exact */}
+            <div className="absolute inset-0 w-full h-full z-20 pointer-events-auto">
+              <ThreeGameBoard
+                bottles={bottles}
+                onBottlesChange={handleBottlesChange}
+                onWin={handleWin}
+                isPaused={isPaused || isWinOpen || isOutOfChancesOpen}
+                hint={hint}
+                activeSkin={activeSkin}
+                activeNutSkin={activeNutSkin}
+                currentStage={stage}
+                isPaintMode={isColorStudioOpen}
+                activePaintColor={activePaintColor}
+                studioMode={studioMode}
+                onNutPaint={handleNutPaint}
+                onNutSwap={handleNutSwap}
+                onColorCompleted={handleColorCompleted}
+              />
+            </div>
 
-        <HowToPlayModal
-          isOpen={isHowToPlayOpen}
-          onClose={() => setIsHowToPlayOpen(false)}
-        />
+            {/* Bottom In-Game Icons (Matching Reference Image 2) */}
+            <div
+              className="w-full flex items-center justify-between px-6 sm:px-12 pb-3 sm:pb-5 flex-shrink-0 z-30 relative pointer-events-none"
+            >
+              {/* Bottom Left: Trophies Button */}
+              <button
+                onClick={() => {
+                  gameAudio.playClick();
+                  setIsAchievementsOpen(true);
+                }}
+                className="flex flex-col items-center gap-1 group active:scale-95 transition-transform cursor-pointer pointer-events-auto"
+                title="Trophies"
+              >
+                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 sm:border-3 border-[#c49b65] shadow-[0_4px_0_#8c6435,0_8px_16px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5c3a1d] group-hover:scale-105 transition-all">
+                  <Trophy className="w-5 h-5 sm:w-7 sm:h-7 stroke-[2.5]" />
+                </div>
+                <span className="text-[10px] sm:text-xs font-black text-[#ffeed2] drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] uppercase tracking-wide">
+                  Trophies
+                </span>
+              </button>
 
-        <SettingsModal
-          isOpen={isSettingsOpen}
-          onClose={() => setIsSettingsOpen(false)}
-          soundEnabled={soundEnabled}
-          onToggleSound={toggleSound}
-          musicEnabled={musicEnabled}
-          onToggleMusic={() => setMusicEnabled(!musicEnabled)}
-          vibrationEnabled={vibrationEnabled}
-          onToggleVibration={() => setVibrationEnabled(!vibrationEnabled)}
-          onResetProgress={() => loadStage(1)}
-        />
+              {/* Bottom Right: Settings Button */}
+              <button
+                onClick={() => {
+                  gameAudio.playClick();
+                  setIsSettingsOpen(true);
+                }}
+                className="flex flex-col items-center gap-1 group active:scale-95 transition-transform cursor-pointer pointer-events-auto"
+                title="Settings"
+              >
+                <div className="w-11 h-11 sm:w-14 sm:h-14 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 sm:border-3 border-[#c49b65] shadow-[0_4px_0_#8c6435,0_8px_16px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5c3a1d] group-hover:scale-105 transition-all">
+                  <Settings className="w-5 h-5 sm:w-7 sm:h-7 stroke-[2.5]" />
+                </div>
+                <span className="text-[10px] sm:text-xs font-black text-[#ffeed2] drop-shadow-[0_2px_4px_rgba(0,0,0,0.9)] uppercase tracking-wide">
+                  Settings
+                </span>
+              </button>
+            </div>
 
-        <ShopModal
-          isOpen={isShopOpen}
-          onClose={() => setIsShopOpen(false)}
-          coins={coins}
-          activeTheme={activeTheme}
-          unlockedThemes={unlockedThemes}
-          onEquipTheme={handleEquipTheme}
-          onPurchaseTheme={handlePurchaseTheme}
-          activeSkin={activeSkin}
-          unlockedSkins={unlockedSkins}
-          onEquipSkin={handleEquipSkin}
-          onPurchaseSkin={handlePurchaseSkin}
-        />
+          </div>
+        )}
       </div>
+
+      {/* 3. MODALS & SCREENS */}
+
+      {/* SCREEN 3: STAGES & LEVELS SCREEN (Matching Reference Image 3) */}
+      <LevelsModal
+        isOpen={isLevelsOpen}
+        onClose={() => setIsLevelsOpen(false)}
+        currentStage={stage}
+        highestUnlocked={highestUnlocked}
+        onSelectStage={(lvl) => {
+          loadStage(lvl);
+          setScreen('game');
+        }}
+        coins={coins}
+        stars={stars}
+        gems={gems}
+        onHome={() => {
+          setIsLevelsOpen(false);
+          setScreen('home');
+        }}
+      />
+
+      {/* SCREEN 4: CUSTOMIZING SHOP SYSTEM (Matching Reference Image 4) */}
+      <ShopModal
+        isOpen={isShopOpen}
+        onClose={() => setIsShopOpen(false)}
+        coins={coins}
+        stars={stars}
+        gems={gems}
+        activeTheme={activeTheme}
+        unlockedThemes={unlockedThemes}
+        onEquipTheme={handleEquipTheme}
+        onPurchaseTheme={handlePurchaseTheme}
+        activeSkin={activeSkin}
+        unlockedSkins={unlockedSkins}
+        onEquipSkin={handleEquipSkin}
+        onPurchaseSkin={handlePurchaseSkin}
+        activeNutSkin={activeNutSkin}
+        unlockedNutSkins={unlockedNutSkins}
+        onEquipNutSkin={handleEquipNutSkin}
+        onPurchaseNutSkin={handlePurchaseNutSkin}
+        onHome={() => {
+          setIsShopOpen(false);
+          setScreen('home');
+        }}
+      />
+
+      {/* Settings Modal */}
+      <SettingsModal
+        isOpen={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        soundEnabled={soundEnabled}
+        onToggleSound={toggleSound}
+        musicEnabled={musicEnabled}
+        onToggleMusic={toggleMusic}
+        vibrationEnabled={vibrationEnabled}
+        onToggleVibration={toggleVibration}
+        onResetProgress={() => loadStage(1)}
+        onLogout={handleLogout}
+        playerName={currentUser?.username}
+      />
+
+      {/* Pause Modal */}
+      <PauseModal
+        isOpen={isPaused}
+        onClose={() => setIsPaused(false)}
+        onRestart={() => {
+          setIsPaused(false);
+          handleRestart();
+        }}
+        onHome={() => {
+          setIsPaused(false);
+          setScreen('home');
+        }}
+        soundEnabled={soundEnabled}
+        onToggleSound={toggleSound}
+      />
+
+      {/* Win Modal */}
+      <WinModal
+        isOpen={isWinOpen}
+        stage={stage}
+        onNextStage={handleNextStage}
+        onReplay={handleRestart}
+        onHome={() => {
+          setIsWinOpen(false);
+          setScreen('home');
+        }}
+      />
+
+      {/* Out of Chances Modal */}
+      <OutOfChancesModal
+        isOpen={isOutOfChancesOpen}
+        stage={stage}
+        canUndo={history.length > 0}
+        onRestart={handleRestart}
+        onUndo={handleUndo}
+        onHome={() => {
+          setIsOutOfChancesOpen(false);
+          setScreen('home');
+        }}
+      />
+
+      {/* Achievements / Trophies Modal */}
+      <AchievementsModal
+        isOpen={isAchievementsOpen}
+        onClose={() => setIsAchievementsOpen(false)}
+        totalStars={stars}
+        currentStage={stage}
+        onHome={() => {
+          setIsAchievementsOpen(false);
+          setScreen('home');
+        }}
+      />
+
     </div>
   );
 }

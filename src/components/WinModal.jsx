@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { ArrowRight, RotateCcw, Star, Trophy, Sparkles } from 'lucide-react';
+import { ArrowRight, RotateCcw, Star, Trophy, Sparkles, Home } from 'lucide-react';
 import confetti from 'canvas-confetti';
 import { gameAudio } from '../utils/gameAudio';
 
@@ -8,6 +8,7 @@ export default function WinModal({
   stage = 1,
   onNextStage,
   onReplay,
+  onHome,
 }) {
   const [starsShown, setStarsShown] = useState(0);
 
@@ -198,6 +199,19 @@ export default function WinModal({
           >
             <RotateCcw className="w-3.5 h-3.5 text-amber-400" />
             <span>Replay Stage</span>
+          </button>
+
+          {/* Home Button */}
+          <button
+            onClick={() => {
+              gameAudio.playClick();
+              if (onHome) onHome();
+            }}
+            className="w-full py-2.5 px-4 rounded-full bg-slate-800/80 hover:bg-slate-700/80 border border-white/20 text-slate-300 hover:text-white font-extrabold text-xs flex items-center justify-center gap-1.5 active:scale-95 transition-transform cursor-pointer"
+            title="Return to Home Screen"
+          >
+            <Home className="w-3.5 h-3.5 text-rose-400 stroke-[2.5]" />
+            <span>Return to Home</span>
           </button>
         </div>
       </div>

@@ -1,10 +1,11 @@
 import React from 'react';
-import { X, Trophy, Star, Flame, Award, CheckCircle2 } from 'lucide-react';
+import { X, Trophy, Star, Flame, Award, CheckCircle2, Home } from 'lucide-react';
 import { gameAudio } from '../utils/gameAudio';
 
 export default function AchievementsModal({
   isOpen,
   onClose,
+  onHome,
   totalStars = 125,
   currentStage = 1,
 }) {
@@ -53,7 +54,7 @@ export default function AchievementsModal({
     },
     {
       title: 'Century Master',
-      desc: 'Complete all 100 Stages of Color Sort!',
+      desc: 'Complete all 100 Stages of Nut Slotting!',
       progress: Math.min(100, currentStage),
       max: 100,
       reward: '2000 🪙',
@@ -70,15 +71,30 @@ export default function AchievementsModal({
             <Trophy className="w-5 h-5 text-amber-400" />
             <h2 className="text-xl font-black text-white">Achievements</h2>
           </div>
-          <button
-            onClick={() => {
-              gameAudio.playClick();
-              onClose();
-            }}
-            className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
-          >
-            <X className="w-5 h-5" />
-          </button>
+          <div className="flex items-center gap-1.5">
+            <button
+              onClick={() => {
+                gameAudio.playClick();
+                if (onHome) onHome();
+                else onClose();
+              }}
+              className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              title="Return to Home Screen"
+              aria-label="Home"
+            >
+              <Home className="w-5 h-5" />
+            </button>
+            <button
+              onClick={() => {
+                gameAudio.playClick();
+                onClose();
+              }}
+              className="p-1.5 rounded-full text-slate-400 hover:text-white hover:bg-white/10 transition-colors"
+              title="Close"
+            >
+              <X className="w-5 h-5" />
+            </button>
+          </div>
         </div>
 
         {/* List */}

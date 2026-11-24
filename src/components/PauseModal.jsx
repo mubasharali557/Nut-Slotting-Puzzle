@@ -18,7 +18,7 @@ export default function PauseModal({
         {/* Title */}
         <div>
           <span className="text-[10px] font-black uppercase tracking-widest text-cyan-400">
-            Water Sort
+            Nut Slotting
           </span>
           <h2 className="text-2xl font-black text-white mt-0.5">Game Paused</h2>
         </div>

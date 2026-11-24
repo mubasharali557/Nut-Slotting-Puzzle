@@ -17,6 +17,16 @@ html, body, #root {
   overscroll-behavior: none;
 }
 
+button, [role="button"] {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+}
+
+button:focus, button:focus-visible, button:active {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
 @keyframes titleRotateFloat {
   0% {
     transform: translateY(0px) rotate(-2.2deg) scale(1);
@@ -66,4 +76,89 @@ html, body, #root {
 
 .animate-fadeIn {
   animation: fadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Light Sheen Sweep Animation for 3D buttons & Logo */
+@keyframes sheenSweep {
+  0% {
+    transform: translateX(-160%) skewX(-25deg);
+    opacity: 0;
+  }
+  15% {
+    opacity: 0.6;
+  }
+  35% {
+    transform: translateX(260%) skewX(-25deg);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(260%) skewX(-25deg);
+    opacity: 0;
+  }
+}
+
+.animate-sheen {
+  animation: sheenSweep 3.2s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+}
+
+/* Play Button Breathing Aura */
+@keyframes playBreathing {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 20px rgba(34, 197, 94, 0.35), 0 0 45px rgba(74, 222, 128, 0.2);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 0 35px rgba(34, 197, 94, 0.65), 0 0 70px rgba(74, 222, 128, 0.4);
+  }
+}
+
+.animate-play-glow {
+  animation: playBreathing 2.4s ease-in-out infinite;
+}
+
+/* Character Mascots Gentle Floating Bob */
+@keyframes mascotFloat {
+  0%, 100% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+}
+
+.animate-mascot-float {
+  animation: mascotFloat 3s ease-in-out infinite;
+}
+
+/* Ambient Logo Warm Glow */
+@keyframes warmHalo {
+  0%, 100% {
+    opacity: 0.25;
+    transform: scale(0.97);
+  }
+  50% {
+    opacity: 0.55;
+    transform: scale(1.03);
+  }
+}
+
+.animate-warm-halo {
+  animation: warmHalo 3.6s ease-in-out infinite;
+}
+
+/* Subtle Idle Breathing for Primary Play CTA */
+@keyframes buttonBreathe {
+  0%, 100% {
+    transform: scale(1);
+    filter: drop-shadow(0 12px 24px rgba(0, 0, 0, 0.6)) drop-shadow(0 0 14px rgba(34, 197, 94, 0.25));
+  }
+  50% {
+    transform: scale(1.02);
+    filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.65)) drop-shadow(0 0 24px rgba(74, 222, 128, 0.45));
+  }
+}
+
+.animate-subtle-breathe {
+  animation: buttonBreathe 2.8s ease-in-out infinite;
 }

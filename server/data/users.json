@@ -1,0 +1,39 @@
+[
+  {
+    "id": "844c3cc5-de86-4eee-981a-ed37197786be",
+    "username": "Mubashar",
+    "salt": "db756a3e65b3451f62497761a80ffbbe",
+    "hash": "b22fe1d1778659a6c96d97ade1a3a621f182e044a6983a5dc0127d829e4ab08a0095f38890b6208f60b2eaf28946d262740a6a310eb4ece0862e603eaf7e7191",
+    "createdAt": "2026-11-23T10:14:57.620Z",
+    "progress": {
+      "stage": 10,
+      "highestUnlocked": 10,
+      "coins": 200,
+      "stars": 75,
+      "gems": 25,
+      "activeTheme": "playbg",
+      "unlockedThemes": [
+        "playbg3",
+        "playbg"
+      ],
+      "activeSkin": "classic",
+      "unlockedSkins": [
+        "classic",
+        "gold",
+        "wood",
+        "spiral",
+        "black",
+        "brass"
+      ],
+      "activeNutSkin": "steel_classic",
+      "unlockedNutSkins": [
+        "steel_classic",
+        "neon_purple"
+      ],
+      "soundEnabled": true,
+      "musicEnabled": false,
+      "vibrationEnabled": true,
+      "lastPlayedAt": "2026-11-24T00:23:50.159Z"
+    }
+  }
+]
