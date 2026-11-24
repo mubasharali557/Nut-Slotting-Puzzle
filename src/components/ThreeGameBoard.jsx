@@ -344,10 +344,10 @@ export default function ThreeGameBoard({
       const refAspect = 16 / 9;
       if (aspect < 1.0) {
         // Mobile portrait:
-        // Set camera at z = 7.8 with FOV 43 so all bolts + spacing fit with 6-8% margins
-        camera.fov = 43;
-        camera.position.set(0, 1.60, 7.8);
-        camera.lookAt(0, 0.40, 0);
+        // Set camera at z = 8.1 with FOV 44 so all bolts, rows, and lifted nuts fit with generous margins
+        camera.fov = 44;
+        camera.position.set(0, 1.55, 8.1);
+        camera.lookAt(0, 0.30, 0);
       } else if (aspect < refAspect) {
         // Intermediate screens / tablets
         const baseFovRad = (28 * Math.PI) / 180;

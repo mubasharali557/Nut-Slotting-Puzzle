@@ -288,18 +288,26 @@ export default function HomeScreen({
           </div>
 
           {/* Middle: Full, Uncropped, Undistorted Master Artwork (game.webp) */}
-          <div className="relative flex-1 w-full min-h-0 flex items-center justify-center px-3 py-2 pointer-events-auto">
+          <div className="relative flex-1 w-full min-h-0 flex items-center justify-center px-4 py-1 pointer-events-auto overflow-hidden">
             <div
               className="relative w-full max-w-md max-h-full flex items-center justify-center"
-              style={{ aspectRatio: '2752 / 1536' }}
+              style={{
+                aspectRatio: '2752 / 1536',
+                maxHeight: '100%',
+              }}
             >
               {/* Crisp Uncropped, Undistorted HD Master Artwork */}
               <img
                 src="/game.webp"
                 alt="Nut Sort Color Puzzle"
-                className="w-full h-full object-contain pointer-events-none select-none drop-shadow-[0_16px_36px_rgba(0,0,0,0.85)]"
+                className="w-full h-full max-h-full object-contain pointer-events-none select-none drop-shadow-[0_16px_36px_rgba(0,0,0,0.85)]"
                 style={{ imageRendering: 'high-quality' }}
                 draggable={false}
+                onError={(e) => {
+                  if (e.currentTarget.src.indexOf('mobile_hero_banner.webp') === -1) {
+                    e.currentTarget.src = '/mobile_hero_banner.webp';
+                  }
+                }}
               />
 
               {/* Canvas Particle System: Floating Golden Dust & Sparkles */}
