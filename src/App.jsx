@@ -637,7 +637,7 @@ export default function App() {
 
                 {/* Center: Stage Indicator badge + Nut Colors Studio toggle */}
                 <div className="flex items-center gap-1 sm:gap-1.5 flex-shrink-0">
-                  <div className="flex items-center gap-1 px-2 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#1c1108]/90 border border-[#c49b65]/60 text-amber-200 text-[10.5px] sm:text-xs font-black shadow transition-transform hover:scale-105">
+                  <div className="flex items-center gap-1 px-1.5 sm:px-3 py-0.5 sm:py-1 rounded-full bg-[#1c1108]/90 border border-[#c49b65]/60 text-amber-200 text-[10px] sm:text-xs font-black shadow transition-transform hover:scale-105">
                     <span>Stage {stage}</span>
                   </div>
                   <button
@@ -645,10 +645,10 @@ export default function App() {
                       gameAudio.playClick();
                       setIsColorStudioOpen((v) => !v);
                     }}
-                    className={`flex items-center gap-1 sm:gap-1.5 px-2 sm:px-2.5 py-0.5 sm:py-1 rounded-full border shadow transition-all duration-200 cursor-pointer ${
+                    className={`flex items-center gap-1 sm:gap-1.5 px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-full border shadow transition-all duration-200 cursor-pointer ${
                       isColorStudioOpen
                         ? 'bg-gradient-to-r from-amber-500 to-orange-500 border-amber-300 text-slate-950 font-black scale-105 ring-2 ring-amber-400/50'
-                        : 'bg-[#1c1108]/90 border-[#c49b65]/60 text-amber-200 hover:text-white hover:border-amber-400 hover:scale-105 font-bold text-[10.5px] sm:text-xs'
+                        : 'bg-[#1c1108]/90 border-[#c49b65]/60 text-amber-200 hover:text-white hover:border-amber-400 hover:scale-105 font-bold text-[10px] sm:text-xs'
                     }`}
                     title="Customize Nut Colors"
                   >
@@ -666,7 +666,7 @@ export default function App() {
 
                 {/* Chances / Lives Indicator: Compact icon between Nuts and Storage/Slots */}
                 <div
-                  className="flex items-center gap-1 sm:gap-2 px-1.5 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2a170b]/95 via-[#1a0f07]/95 to-[#120803]/98 border-1.5 sm:border-2 border-[#c49b65] shadow-[0_2px_0_#8c6435,0_3px_8px_rgba(0,0,0,0.6)] text-[10.5px] sm:text-xs select-none transition-all duration-200 hover:scale-105 hover:border-amber-400/80 flex-shrink-0"
+                  className="flex items-center gap-1 sm:gap-2 px-1.5 xs:px-2.5 sm:px-3 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#2a170b]/95 via-[#1a0f07]/95 to-[#120803]/98 border-1.5 sm:border-2 border-[#c49b65] shadow-[0_2px_0_#8c6435,0_3px_8px_rgba(0,0,0,0.6)] text-[10px] sm:text-xs select-none transition-all duration-200 hover:scale-105 hover:border-amber-400/80 flex-shrink-0"
                   title={`Chances Left: ${chances} | Used: ${Math.max(0, maxChances - chances)} (Total: ${maxChances})`}
                 >
                   {/* Glowing Heart / Life Icon */}
@@ -679,7 +679,7 @@ export default function App() {
                   </div>
 
                   {/* Remaining vs Used Breakdown */}
-                  <div className="flex items-center gap-1 font-black leading-none">
+                  <div className="flex items-center gap-0.5 sm:gap-1 font-black leading-none">
                     {/* Remaining Chances */}
                     <div className="flex items-baseline gap-0.5">
                       <span
@@ -689,19 +689,19 @@ export default function App() {
                       >
                         {chances}
                       </span>
-                      <span className="text-[8px] sm:text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
+                      <span className="hidden xs:inline text-[8px] sm:text-[10px] text-emerald-400 font-bold uppercase tracking-wider">
                         left
                       </span>
                     </div>
 
-                    <span className="text-[#c49b65]/60 text-[10px] sm:text-xs">/</span>
+                    <span className="hidden sm:inline text-[#c49b65]/60 text-[10px] sm:text-xs">/</span>
 
                     {/* Used / Lost Chances */}
-                    <div className="flex items-baseline gap-0.5 text-[#dfbf8d]">
+                    <div className="hidden sm:flex items-baseline gap-0.5 text-[#dfbf8d]">
                       <span className="text-[9.5px] sm:text-xs font-bold text-rose-400/90">
                         -{Math.max(0, maxChances - chances)}
                       </span>
-                      <span className="hidden xs:inline text-[8px] sm:text-[9.5px] text-amber-200/60 font-medium">
+                      <span className="text-[8px] sm:text-[9.5px] text-amber-200/60 font-medium">
                         used
                       </span>
                     </div>
@@ -817,7 +817,7 @@ export default function App() {
 
             {/* Bottom In-Game Icons (Matching Reference Image 2) */}
             <div
-              className="w-full flex items-center justify-between px-6 sm:px-12 pb-3 sm:pb-5 flex-shrink-0 z-30 relative pointer-events-none"
+              className="w-full flex items-center justify-between px-4 sm:px-12 pb-[max(env(safe-area-inset-bottom,0px),12px)] flex-shrink-0 z-30 relative pointer-events-none"
             >
               {/* Bottom Left: Trophies Button */}
               <button

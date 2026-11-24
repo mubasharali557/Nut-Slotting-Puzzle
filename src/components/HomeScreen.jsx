@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { gameAudio } from '../utils/gameAudio';
-import { CheckCircle2, ShieldCheck, X } from 'lucide-react';
+import { CheckCircle2, ShieldCheck, X, Settings, Trophy, ShoppingBag, ShieldAlert } from 'lucide-react';
 import GameNavbar from './GameNavbar';
 
 export default function HomeScreen({
@@ -21,8 +21,23 @@ export default function HomeScreen({
   const [mascotBounce, setMascotBounce] = useState(false);
   const [isPlayPressed, setIsPlayPressed] = useState(false);
   const [isLevelsPressed, setIsLevelsPressed] = useState(false);
+  const [isPortrait, setIsPortrait] = useState(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth / window.innerHeight < 1.0;
+    }
+    return false;
+  });
   const canvasRef = useRef(null);
   const containerRef = useRef(null);
+
+  useEffect(() => {
+    const checkOrientation = () => {
+      setIsPortrait(window.innerWidth / window.innerHeight < 1.0);
+    };
+    checkOrientation();
+    window.addEventListener('resize', checkOrientation);
+    return () => window.removeEventListener('resize', checkOrientation);
+  }, []);
 
   // Sound and action handlers with tactile press animation
   const handlePlayClick = () => {
@@ -239,247 +254,428 @@ export default function HomeScreen({
         style={{ imageRendering: 'high-quality' }}
       />
 
-      {/* 2. UNIFIED RESPONSIVE MASTER FRAME: Locks Navbar and Master Artwork to the exact same width */}
-      <div
-        className="relative w-full h-full flex flex-col items-center justify-between z-20"
-        style={{
-          maxWidth: 'calc((100dvh - 48px) * 2752 / 1536)',
-          maxHeight: '100dvh',
-        }}
-      >
-        {/* Top Navbar: Clean, Compact, and Aligned With Artwork */}
-        <GameNavbar
-          isHome={true}
-          currentStage={currentStage}
-          stars={stars}
-          coins={coins}
-          playerName={playerName}
-          playerId={playerId}
-          soundEnabled={soundEnabled}
-          onToggleSound={onToggleSound}
-          onOpenSettings={onOpenSettings}
-          onOpenShop={onOpenShop}
-          onOpenLevels={onOpenLevels}
-          onOpenAchievements={onOpenAchievements}
-        />
-
-        {/* 3. CENTERED HIGH-DEFINITION ARTWORK CONTAINER (Directly below Navbar, uncropped & undistorted) */}
-        <div
-          className="relative flex-1 w-full min-h-0 flex items-center justify-center pointer-events-none"
-          style={{
-            aspectRatio: '2752 / 1536',
-          }}
-        >
-          {/* Crisp Uncropped, Undistorted HD Master Artwork */}
+      {isPortrait ? (
+        /* ========================================================
+           MOBILE PORTRAIT UI (Edge-to-edge, zero black voids, bold touch buttons)
+           ======================================================== */
+        <div className="relative w-full h-full flex flex-col justify-between z-20 overflow-hidden">
+          {/* Edge-to-edge warm workshop ambient backdrop */}
           <img
-            src="/game.png"
-            alt="Nut Sort Color Puzzle Game"
-            className="w-full h-full object-contain pointer-events-none drop-shadow-[0_20px_60px_rgba(0,0,0,0.85)]"
+            src="/playbg3.png"
+            alt=""
+            aria-hidden="true"
+            className="absolute inset-0 w-full h-full object-cover blur-sm brightness-90 scale-105 pointer-events-none -z-10"
             style={{ imageRendering: 'high-quality' }}
             draggable={false}
           />
 
-          {/* CANVAS PARTICLE SYSTEM: Floating Golden Dust, Stars & Touch Sparkles */}
+          {/* Canvas Particle System: Floating Golden Dust & Sparkles */}
           <canvas
             ref={canvasRef}
             className="absolute inset-0 w-full h-full pointer-events-none z-10"
           />
 
-          {/* MASCOT CHARACTERS (Nut & Bolt Buddies) INTERACTIVE ZONE */}
+          {/* Top: Mobile-optimized Navbar */}
+          <div className="relative z-30 w-full">
+            <GameNavbar
+              isHome={true}
+              currentStage={currentStage}
+              stars={stars}
+              coins={coins}
+              playerName={playerName}
+              playerId={playerId}
+              soundEnabled={soundEnabled}
+              onToggleSound={onToggleSound}
+              onOpenSettings={onOpenSettings}
+              onOpenShop={onOpenShop}
+              onOpenLevels={onOpenLevels}
+              onOpenAchievements={onOpenAchievements}
+            />
+          </div>
+
+          {/* Middle: Prominent Hero Banner (Uncropped Title Logo + Nut & Bolt Mascot Buddies) */}
           <div
             onClick={handleMascotClick}
-            className={`absolute z-15 pointer-events-auto cursor-pointer transition-transform duration-300 ${
-              mascotBounce ? 'scale-110 -translate-y-2' : 'hover:scale-[1.03]'
+            className={`relative flex-1 w-full flex items-center justify-center px-2 py-1 pointer-events-auto cursor-pointer z-20 transition-transform duration-300 ${
+              mascotBounce ? 'scale-105' : 'hover:scale-[1.02]'
             }`}
-            style={{
-              left: '31%',
-              top: '31%',
-              width: '38%',
-              height: '31%',
-            }}
             title="Nut & Bolt Buddies! Click to wave!"
           >
-            {/* Subtle floating bob */}
-            <div className="w-full h-full animate-mascot-float relative">
-              {/* Sparkle glint on waving nut */}
-              <div className="absolute top-[18%] left-[10%] w-3 h-3 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
-              {/* Sparkle glint on bolt buddy */}
-              <div className="absolute top-[22%] right-[16%] w-2.5 h-2.5 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+            <div className="relative w-full max-w-md aspect-[1950/900] flex items-center justify-center">
+              <img
+                src="/mobile_hero_banner.png"
+                alt="Nut Sort Color Puzzle"
+                className="w-full h-full object-contain pointer-events-none drop-shadow-[0_12px_28px_rgba(0,0,0,0.85)]"
+                draggable={false}
+              />
+              {/* Sparkle glints */}
+              <div className="absolute top-[52%] left-[34%] w-2.5 h-2.5 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
+              <div className="absolute top-[48%] right-[38%] w-2 h-2 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
             </div>
           </div>
 
-          {/* INTERACTIVE ACTION BUTTONS OVERLAY */}
-          <div className="absolute inset-0 z-20 pointer-events-auto">
-
-            {/* === A. LEVELS BUTTON (Glossy Blue 3D Pill - 100% Fixed & Stationary) === */}
-            <button
-              onClick={handleLevelsClick}
-              type="button"
-              className="absolute cursor-pointer select-none focus:outline-none"
-              style={{
-                left: '24.5%',
-                top: '70.2%',
-                width: '19.5%',
-                aspectRatio: '542 / 199',
-                filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 12px rgba(59,130,246,0.3))',
-                transform: 'none',
-              }}
-              title="Levels & Stage Map"
-              aria-label="Levels and Stage Map"
-            >
-              <img
-                src="/levels_button.png"
-                alt="Levels"
-                className="w-full h-full object-contain pointer-events-none select-none block"
-                draggable={false}
-                style={{ transform: 'none' }}
-              />
-            </button>
-
-            {/* === B. PLAY ▶ BUTTON (100% Stationary Frame with Strictly Internal Icon Animation) === */}
-            <button
-              onClick={handlePlayClick}
-              onPointerDown={() => setIsPlayPressed(true)}
-              onPointerUp={() => {
-                // Keep smooth return
-              }}
-              onPointerLeave={() => setIsPlayPressed(false)}
-              type="button"
-              className="group absolute cursor-pointer select-none focus:outline-none"
-              style={{
-                left: '47.5%',
-                top: '66.8%',
-                width: '28.0%',
-                aspectRatio: '757 / 286',
-                filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(34,197,94,0.35))',
-                transform: 'none',
-              }}
-              title={`Play Level ${currentStage}!`}
-              aria-label={`Play Level ${currentStage}`}
-            >
-              {/* 1. Stationary Button Base Frame (pill body, metallic border & PLAY text) */}
-              <img
-                src="/play_button_base.png"
-                alt="Play"
-                className="w-full h-full object-contain pointer-events-none select-none block"
-                draggable={false}
-                style={{ transform: 'none' }}
-              />
-
-              {/* 2. Arrow Icon Assembly: Anchored in place, ZERO container movement */}
-              <div
-                className="absolute pointer-events-none select-none flex items-center justify-center"
-                style={{
-                  left: '81.24%',
-                  top: '30.42%',
-                  width: '10.70%',
-                  height: '36.01%',
-                  transform: 'none',
-                }}
+          {/* Lower Section: Workbench Table with Action Buttons & Bottom Navigation */}
+          <div className="relative z-30 w-full flex flex-col items-center pointer-events-auto bg-gradient-to-t from-[#140c06] via-[#24150b]/95 to-transparent pt-3 pb-[max(env(safe-area-inset-bottom,0px),12px)] px-4">
+            
+            {/* Action Buttons: LEVELS & PLAY ▶ */}
+            <div className="w-full flex items-center justify-center gap-3 max-w-sm mb-4">
+              {/* LEVELS BUTTON */}
+              <button
+                onClick={handleLevelsClick}
+                type="button"
+                className="w-[38vw] max-w-[145px] aspect-[542/199] cursor-pointer select-none focus:outline-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] hover:brightness-105 active:scale-95 transition-all"
+                title="Levels & Stage Map"
+                aria-label="Levels and Stage Map"
               >
-                {/* Animated Arrow Icon: Strictly internal inward press animation */}
+                <img
+                  src="/levels_button.png"
+                  alt="Levels"
+                  className="w-full h-full object-contain pointer-events-none select-none block"
+                  draggable={false}
+                />
+              </button>
+
+              {/* PLAY BUTTON */}
+              <button
+                onClick={handlePlayClick}
+                onPointerDown={() => setIsPlayPressed(true)}
+                onPointerLeave={() => setIsPlayPressed(false)}
+                type="button"
+                className="group relative w-[56vw] max-w-[218px] aspect-[757/286] cursor-pointer select-none focus:outline-none drop-shadow-[0_10px_22px_rgba(0,0,0,0.6)] hover:brightness-105 active:scale-95 transition-all"
+                title={`Play Level ${currentStage}!`}
+                aria-label={`Play Level ${currentStage}`}
+              >
+                <img
+                  src="/play_button_base.png"
+                  alt="Play"
+                  className="w-full h-full object-contain pointer-events-none select-none block"
+                  draggable={false}
+                />
                 <div
-                  className={`relative w-full h-full transition-all duration-150 ease-out origin-center ${
-                    isPlayPressed
-                      ? 'scale-[0.82] brightness-90'
-                      : 'group-hover:brightness-105 group-active:scale-[0.82] group-active:brightness-90'
-                  }`}
+                  className="absolute pointer-events-none select-none flex items-center justify-center"
                   style={{
-                    transformOrigin: '50% 50%',
+                    left: '81.24%',
+                    top: '30.42%',
+                    width: '10.70%',
+                    height: '36.01%',
                   }}
                 >
-                  {/* High-res crisp arrow image */}
-                  <img
-                    src="/play_arrow_icon.png"
-                    alt=""
-                    className="w-full h-full object-contain pointer-events-none select-none block"
-                    draggable={false}
-                  />
-
-                  {/* Internal Light Gleam / Shimmer (Strictly clipped within triangle shape) */}
                   <div
-                    className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
-                    style={{
-                      clipPath: 'polygon(0% 4%, 18% 0%, 98% 50%, 18% 100%, 0% 96%)',
-                    }}
+                    className={`relative w-full h-full transition-all duration-150 ease-out origin-center ${
+                      isPlayPressed ? 'scale-[0.82] brightness-90' : 'group-hover:brightness-105'
+                    }`}
                   >
-                    <div
-                      className={`absolute -inset-full w-[250%] h-[250%] bg-gradient-to-r from-transparent via-white/50 to-transparent -rotate-45 pointer-events-none transition-transform duration-500 ease-out ${
-                        isPlayPressed
-                          ? 'translate-x-full translate-y-full opacity-100'
-                          : 'group-hover:translate-x-full group-hover:translate-y-full -translate-x-full -translate-y-full opacity-0 group-hover:opacity-100'
-                      }`}
+                    <img
+                      src="/play_arrow_icon.png"
+                      alt=""
+                      className="w-full h-full object-contain pointer-events-none select-none block"
+                      draggable={false}
                     />
                   </div>
                 </div>
+              </button>
+            </div>
+
+            {/* Bottom 4 Navigation Buttons: Settings, Trophies, Shop, VIP No Ads */}
+            <div className="w-full flex items-center justify-between px-2 max-w-sm">
+              {/* Left group: Settings & Trophy */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleSettingsClick}
+                  className="flex flex-col items-center gap-0.5 active:scale-90 transition-transform cursor-pointer"
+                  title="Settings"
+                >
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 border-[#c49b65] shadow-[0_3px_0_#8c6435,0_6px_14px_rgba(0,0,0,0.7)] flex items-center justify-center text-[#5c3a1d]">
+                    <Settings className="w-5 h-5 stroke-[2.5]" />
+                  </div>
+                  <span className="text-[9px] font-black text-[#ffeed2] drop-shadow">Settings</span>
+                </button>
+
+                <button
+                  onClick={handleTrophyClick}
+                  className="flex flex-col items-center gap-0.5 active:scale-90 transition-transform cursor-pointer"
+                  title="Trophies"
+                >
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 border-[#c49b65] shadow-[0_3px_0_#8c6435,0_6px_14px_rgba(0,0,0,0.7)] flex items-center justify-center text-[#5c3a1d]">
+                    <Trophy className="w-5 h-5 stroke-[2.5]" />
+                  </div>
+                  <span className="text-[9px] font-black text-[#ffeed2] drop-shadow">Trophy</span>
+                </button>
               </div>
-            </button>
 
-            {/* === D. BOTTOM CIRCULAR BUTTONS (Settings, Trophy, Shop, No Ads) === */}
+              {/* Right group: Shop & No Ads */}
+              <div className="flex items-center gap-3">
+                <button
+                  onClick={handleShopClick}
+                  className="flex flex-col items-center gap-0.5 active:scale-90 transition-transform cursor-pointer"
+                  title="Shop"
+                >
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 border-[#c49b65] shadow-[0_3px_0_#8c6435,0_6px_14px_rgba(0,0,0,0.7)] flex items-center justify-center text-[#5c3a1d]">
+                    <ShoppingBag className="w-5 h-5 stroke-[2.5]" />
+                  </div>
+                  <span className="text-[9px] font-black text-[#ffeed2] drop-shadow">Shop</span>
+                </button>
 
-            {/* 1. Settings (Bottom Left) */}
-            <button
-              onClick={handleSettingsClick}
-              type="button"
-              className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-              style={{
-                left: '1.5%',
-                top: '85.0%',
-                width: '7.2%',
-                height: '14.0%',
-              }}
-              title="Game Settings"
-              aria-label="Settings"
-            />
-
-            {/* 2. Trophy (Bottom Left) */}
-            <button
-              onClick={handleTrophyClick}
-              type="button"
-              className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-              style={{
-                left: '10.8%',
-                top: '85.0%',
-                width: '7.2%',
-                height: '14.0%',
-              }}
-              title="Trophies & Achievements"
-              aria-label="Trophies and Achievements"
-            />
-
-            {/* 3. Shop (Bottom Right) */}
-            <button
-              onClick={handleShopClick}
-              type="button"
-              className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-              style={{
-                left: '81.5%',
-                top: '84.0%',
-                width: '8.2%',
-                height: '14.5%',
-              }}
-              title="Customizing Shop"
-              aria-label="Shop"
-            />
-
-            {/* 4. No Ads (Bottom Right) */}
-            <button
-              onClick={handleNoAdsClick}
-              type="button"
-              className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-              style={{
-                left: '91.5%',
-                top: '85.0%',
-                width: '7.2%',
-                height: '14.0%',
-              }}
-              title="VIP No Ads Active"
-              aria-label="No Ads VIP"
-            />
+                <button
+                  onClick={handleNoAdsClick}
+                  className="flex flex-col items-center gap-0.5 active:scale-90 transition-transform cursor-pointer"
+                  title="VIP No Ads"
+                >
+                  <div className="w-11 h-11 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 border-[#c49b65] shadow-[0_3px_0_#8c6435,0_6px_14px_rgba(0,0,0,0.7)] flex items-center justify-center text-[#5c3a1d]">
+                    <ShieldCheck className="w-5 h-5 stroke-[2.5] text-amber-700" />
+                  </div>
+                  <span className="text-[9px] font-black text-[#ffeed2] drop-shadow">No Ads</span>
+                </button>
+              </div>
+            </div>
 
           </div>
         </div>
-      </div>
+      ) : (
+        /* ========================================================
+           DESKTOP / WIDESCREEN LANDSCAPE UI (Exact original pixel-perfect master frame)
+           ======================================================== */
+        <div
+          className="relative w-full h-full flex flex-col items-center justify-between z-20"
+          style={{
+            maxWidth: 'calc((100dvh - 48px) * 2752 / 1536)',
+            maxHeight: '100dvh',
+          }}
+        >
+          {/* Top Navbar: Clean, Compact, and Aligned With Artwork */}
+          <GameNavbar
+            isHome={true}
+            currentStage={currentStage}
+            stars={stars}
+            coins={coins}
+            playerName={playerName}
+            playerId={playerId}
+            soundEnabled={soundEnabled}
+            onToggleSound={onToggleSound}
+            onOpenSettings={onOpenSettings}
+            onOpenShop={onOpenShop}
+            onOpenLevels={onOpenLevels}
+            onOpenAchievements={onOpenAchievements}
+          />
+
+          {/* 3. CENTERED HIGH-DEFINITION ARTWORK CONTAINER (Directly below Navbar, uncropped & undistorted) */}
+          <div
+            className="relative flex-1 w-full min-h-0 flex items-center justify-center pointer-events-none"
+            style={{
+              aspectRatio: '2752 / 1536',
+            }}
+          >
+            {/* Crisp Uncropped, Undistorted HD Master Artwork */}
+            <img
+              src="/game.png"
+              alt="Nut Sort Color Puzzle Game"
+              className="w-full h-full object-contain pointer-events-none drop-shadow-[0_20px_60px_rgba(0,0,0,0.85)]"
+              style={{ imageRendering: 'high-quality' }}
+              draggable={false}
+            />
+
+            {/* CANVAS PARTICLE SYSTEM: Floating Golden Dust, Stars & Touch Sparkles */}
+            <canvas
+              ref={canvasRef}
+              className="absolute inset-0 w-full h-full pointer-events-none z-10"
+            />
+
+            {/* MASCOT CHARACTERS (Nut & Bolt Buddies) INTERACTIVE ZONE */}
+            <div
+              onClick={handleMascotClick}
+              className={`absolute z-15 pointer-events-auto cursor-pointer transition-transform duration-300 ${
+                mascotBounce ? 'scale-110 -translate-y-2' : 'hover:scale-[1.03]'
+              }`}
+              style={{
+                left: '31%',
+                top: '31%',
+                width: '38%',
+                height: '31%',
+              }}
+              title="Nut & Bolt Buddies! Click to wave!"
+            >
+              {/* Subtle floating bob */}
+              <div className="w-full h-full animate-mascot-float relative">
+                {/* Sparkle glint on waving nut */}
+                <div className="absolute top-[18%] left-[10%] w-3 h-3 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
+                {/* Sparkle glint on bolt buddy */}
+                <div className="absolute top-[22%] right-[16%] w-2.5 h-2.5 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+              </div>
+            </div>
+
+            {/* INTERACTIVE ACTION BUTTONS OVERLAY */}
+            <div className="absolute inset-0 z-20 pointer-events-auto">
+
+              {/* === A. LEVELS BUTTON (Glossy Blue 3D Pill - 100% Fixed & Stationary) === */}
+              <button
+                onClick={handleLevelsClick}
+                type="button"
+                className="absolute cursor-pointer select-none focus:outline-none"
+                style={{
+                  left: '24.5%',
+                  top: '70.2%',
+                  width: '19.5%',
+                  aspectRatio: '542 / 199',
+                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 12px rgba(59,130,246,0.3))',
+                  transform: 'none',
+                }}
+                title="Levels & Stage Map"
+                aria-label="Levels and Stage Map"
+              >
+                <img
+                  src="/levels_button.png"
+                  alt="Levels"
+                  className="w-full h-full object-contain pointer-events-none select-none block"
+                  draggable={false}
+                  style={{ transform: 'none' }}
+                />
+              </button>
+
+              {/* === B. PLAY ▶ BUTTON (100% Stationary Frame with Strictly Internal Icon Animation) === */}
+              <button
+                onClick={handlePlayClick}
+                onPointerDown={() => setIsPlayPressed(true)}
+                onPointerUp={() => {
+                  // Keep smooth return
+                }}
+                onPointerLeave={() => setIsPlayPressed(false)}
+                type="button"
+                className="group absolute cursor-pointer select-none focus:outline-none"
+                style={{
+                  left: '47.5%',
+                  top: '66.8%',
+                  width: '28.0%',
+                  aspectRatio: '757 / 286',
+                  filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(34,197,94,0.35))',
+                  transform: 'none',
+                }}
+                title={`Play Level ${currentStage}!`}
+                aria-label={`Play Level ${currentStage}`}
+              >
+                {/* 1. Stationary Button Base Frame (pill body, metallic border & PLAY text) */}
+                <img
+                  src="/play_button_base.png"
+                  alt="Play"
+                  className="w-full h-full object-contain pointer-events-none select-none block"
+                  draggable={false}
+                  style={{ transform: 'none' }}
+                />
+
+                {/* 2. Arrow Icon Assembly: Anchored in place, ZERO container movement */}
+                <div
+                  className="absolute pointer-events-none select-none flex items-center justify-center"
+                  style={{
+                    left: '81.24%',
+                    top: '30.42%',
+                    width: '10.70%',
+                    height: '36.01%',
+                    transform: 'none',
+                  }}
+                >
+                  {/* Animated Arrow Icon: Strictly internal inward press animation */}
+                  <div
+                    className={`relative w-full h-full transition-all duration-150 ease-out origin-center ${
+                      isPlayPressed
+                        ? 'scale-[0.82] brightness-90'
+                        : 'group-hover:brightness-105 group-active:scale-[0.82] group-active:brightness-90'
+                    }`}
+                    style={{
+                      transformOrigin: '50% 50%',
+                    }}
+                  >
+                    {/* High-res crisp arrow image */}
+                    <img
+                      src="/play_arrow_icon.png"
+                      alt=""
+                      className="w-full h-full object-contain pointer-events-none select-none block"
+                      draggable={false}
+                    />
+
+                    {/* Internal Light Gleam / Shimmer (Strictly clipped within triangle shape) */}
+                    <div
+                      className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+                      style={{
+                        clipPath: 'polygon(0% 4%, 18% 0%, 98% 50%, 18% 100%, 0% 96%)',
+                      }}
+                    >
+                      <div
+                        className={`absolute -inset-full w-[250%] h-[250%] bg-gradient-to-r from-transparent via-white/50 to-transparent -rotate-45 pointer-events-none transition-transform duration-500 ease-out ${
+                          isPlayPressed
+                            ? 'translate-x-full translate-y-full opacity-100'
+                            : 'group-hover:translate-x-full group-hover:translate-y-full -translate-x-full -translate-y-full opacity-0 group-hover:opacity-100'
+                        }`}
+                      />
+                    </div>
+                  </div>
+                </div>
+              </button>
+
+              {/* === D. BOTTOM CIRCULAR BUTTONS (Settings, Trophy, Shop, No Ads) === */}
+
+              {/* 1. Settings (Bottom Left) */}
+              <button
+                onClick={handleSettingsClick}
+                type="button"
+                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
+                style={{
+                  left: '1.5%',
+                  top: '85.0%',
+                  width: '7.2%',
+                  height: '14.0%',
+                }}
+                title="Game Settings"
+                aria-label="Settings"
+              />
+
+              {/* 2. Trophy (Bottom Left) */}
+              <button
+                onClick={handleTrophyClick}
+                type="button"
+                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
+                style={{
+                  left: '10.8%',
+                  top: '85.0%',
+                  width: '7.2%',
+                  height: '14.0%',
+                }}
+                title="Trophies & Achievements"
+                aria-label="Trophies and Achievements"
+              />
+
+              {/* 3. Shop (Bottom Right) */}
+              <button
+                onClick={handleShopClick}
+                type="button"
+                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
+                style={{
+                  left: '81.5%',
+                  top: '84.0%',
+                  width: '8.2%',
+                  height: '14.5%',
+                }}
+                title="Customizing Shop"
+                aria-label="Shop"
+              />
+
+              {/* 4. No Ads (Bottom Right) */}
+              <button
+                onClick={handleNoAdsClick}
+                type="button"
+                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
+                style={{
+                  left: '91.5%',
+                  top: '85.0%',
+                  width: '7.2%',
+                  height: '14.0%',
+                }}
+                title="VIP No Ads Active"
+                aria-label="No Ads VIP"
+              />
+
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* 4. VIP NO-ADS CELEBRATION MODAL */}
       {showVipModal && (

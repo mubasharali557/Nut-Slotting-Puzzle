@@ -146,9 +146,9 @@ export default function GameNavbar({
             </div>
           </div>
 
-          {/* Moves Plaque (In gameplay only) */}
+          {/* Moves Plaque (In gameplay only - hidden on mobile to prevent crowding with sub-bar) */}
           {!isHome && (
-            <div className="relative px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#7a481c] via-[#5c3411] to-[#3d2008] border-2 border-[#b88c52] shadow-[0_2px_4px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(0,0,0,0.8)] flex flex-col items-center justify-center leading-none flex-shrink-0">
+            <div className="hidden sm:flex relative px-1.5 sm:px-2.5 py-0.5 sm:py-1 rounded-lg sm:rounded-xl bg-gradient-to-b from-[#7a481c] via-[#5c3411] to-[#3d2008] border-2 border-[#b88c52] shadow-[0_2px_4px_rgba(0,0,0,0.7),inset_0_1px_2px_rgba(0,0,0,0.8)] flex-col items-center justify-center leading-none flex-shrink-0">
               {/* 4 Corner Screws */}
               <div className="absolute top-0.5 left-0.5 w-0.5 sm:w-1 h-0.5 sm:h-1 rounded-full bg-[#dfbf8d] shadow-[0_1px_1px_rgba(0,0,0,0.6)]" />
               <div className="absolute top-0.5 right-0.5 w-0.5 sm:w-1 h-0.5 sm:h-1 rounded-full bg-[#dfbf8d] shadow-[0_1px_1px_rgba(0,0,0,0.6)]" />

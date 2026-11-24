@@ -65,5 +65,35 @@
       "vibrationEnabled": true,
       "lastPlayedAt": "2026-11-24T00:36:51.212Z"
     }
+  },
+  {
+    "id": "0a50e698-e82d-4b8c-820e-39d873304212",
+    "username": "Mubashar ali",
+    "salt": "a5c64df71c23f37a62796121ce0962c0",
+    "hash": "13af3519496bede4717583877d380d04915c22c010258aefe676d6eb927a58c01015b2e1531c087f594264832535b2dc9bc86af99188ed0a57fbc20f9bed96d0",
+    "createdAt": "2026-11-24T12:35:12.563Z",
+    "progress": {
+      "stage": 6,
+      "highestUnlocked": 6,
+      "coins": 250,
+      "stars": 15,
+      "gems": 5,
+      "activeTheme": "playbg3",
+      "unlockedThemes": [
+        "playbg3"
+      ],
+      "activeSkin": "classic",
+      "unlockedSkins": [
+        "classic"
+      ],
+      "activeNutSkin": "steel_classic",
+      "unlockedNutSkins": [
+        "steel_classic"
+      ],
+      "soundEnabled": true,
+      "musicEnabled": false,
+      "vibrationEnabled": true,
+      "lastPlayedAt": "2026-11-24T15:46:44.438Z"
+    }
   }
 ]

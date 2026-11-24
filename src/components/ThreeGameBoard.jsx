@@ -342,18 +342,23 @@ export default function ThreeGameBoard({
 
       // Reference aspect ratio is 16:9 (~1.777)
       const refAspect = 16 / 9;
-      if (aspect < refAspect) {
-        // Narrow screen (mobile portrait, tablets):
-        // Dynamically widen vertical FOV so the full horizontal span of all bolts stays 100% visible
+      if (aspect < 1.0) {
+        // Mobile portrait:
+        // Bring camera closer (z = 7.2) and gaze slightly up so bolts sit squarely on the wooden table
+        camera.fov = 44;
+        camera.position.set(0, 1.55, 7.2);
+        camera.lookAt(0, 0.45, 0);
+      } else if (aspect < refAspect) {
+        // Intermediate screens / tablets
         const baseFovRad = (28 * Math.PI) / 180;
         const targetHalfWidth = Math.tan(baseFovRad / 2) * refAspect;
         const requiredFovRad = 2 * Math.atan(targetHalfWidth / aspect);
-        camera.fov = Math.min(54, (requiredFovRad * 180) / Math.PI);
-        // Elevate camera slightly on portrait for optimal top-down angle
+        camera.fov = Math.min(36, (requiredFovRad * 180) / Math.PI);
         const ratioDiff = refAspect - aspect;
-        camera.position.set(0, 2.3 + ratioDiff * 0.35, 11.0 + ratioDiff * 1.2);
-        camera.lookAt(0, 0.25 - ratioDiff * 0.12, 0);
+        camera.position.set(0, 2.3 + ratioDiff * 0.15, 11.0 + ratioDiff * 0.4);
+        camera.lookAt(0, 0.25, 0);
       } else {
+        // Desktop widescreen
         camera.fov = 28;
         camera.position.set(0, 2.3, 11.0);
         camera.lookAt(0, 0.25, 0);
@@ -568,20 +573,38 @@ export default function ThreeGameBoard({
 
     // Layout configuration: Strictly constrained within the wooden table boundary
     function calculateLayout(numTubes) {
-      const isTwoRows = numTubes > 4;
+      const currentAspect = (renderer?.domElement?.clientWidth || 800) / (renderer?.domElement?.clientHeight || 600);
+      const isPortrait = currentAspect < 1.0;
+
+      // In portrait, split into 2 rows when tubes >= 5 so nuts remain large & uncrowded
+      const isTwoRows = isPortrait ? numTubes >= 5 : numTubes > 4;
       const row1Count = isTwoRows ? Math.ceil(numTubes / 2) : numTubes;
       const row2Count = isTwoRows ? numTubes - row1Count : 0;
       const maxCols = Math.max(row1Count, row2Count, 3);
 
-      // Usable width strictly within table surface boundaries (X: 25% to 75%)
-      const totalWidth = 4.4;
-      const colSpacing = Math.min(1.15, totalWidth / Math.max(1, maxCols - 0.2));
+      let colSpacing, r1Z, r1Y, r2Z, r2Y;
+
+      if (isPortrait) {
+        // Mobile portrait: spans ~88% of mobile screen width, centered on table
+        const totalWidth = 2.9;
+        colSpacing = Math.min(1.05, totalWidth / Math.max(1, maxCols - 1));
+
+        r1Z = isTwoRows ? -0.65 : 0.0;
+        r1Y = isTwoRows ? -1.15 : -1.30;
+        r2Z = 0.75;
+        r2Y = -1.42;
+      } else {
+        // Desktop / widescreen
+        const totalWidth = 4.4;
+        colSpacing = Math.min(1.15, totalWidth / Math.max(1, maxCols - 0.2));
+
+        r1Z = isTwoRows ? -0.65 : 0.05;
+        r1Y = isTwoRows ? -1.15 : -1.25;
+        r2Z = 0.75;
+        r2Y = -1.40;
+      }
 
       const positions = [];
-
-      // Row 1 (Back edge of wooden table surface: 70.8% screen height)
-      const r1Z = isTwoRows ? -0.65 : 0.05;
-      const r1Y = isTwoRows ? -1.15 : -1.25;
       const r1StartX = -((row1Count - 1) * colSpacing) / 2;
 
       for (let i = 0; i < row1Count; i++) {
@@ -593,12 +616,8 @@ export default function ThreeGameBoard({
         });
       }
 
-      // Row 2 (Front edge of wooden table surface: 82.5% screen height)
       if (isTwoRows) {
-        const r2Z = 0.75;
-        const r2Y = -1.40;
         const r2StartX = -((row2Count - 1) * colSpacing) / 2;
-
         for (let j = 0; j < row2Count; j++) {
           positions.push({
             x: r2StartX + j * colSpacing,
