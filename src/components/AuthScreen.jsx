@@ -93,8 +93,14 @@ export default function AuthScreen({ onAuthSuccess }) {
       onAuthSuccess?.(result.user, result.progress);
     } catch (err) {
       let msg = err.message || 'Authentication failed. Please try again.';
-      if (msg.includes('is not valid JSON') || msg.includes('Unexpected token')) {
-        msg = 'Connection error. Switched to offline mode — please tap again or play as Guest.';
+      if (
+        msg.includes('is not valid JSON') ||
+        msg.includes('Unexpected token') ||
+        msg.includes('JSON.parse') ||
+        msg.includes('SyntaxError') ||
+        msg.includes('Failed to fetch')
+      ) {
+        msg = 'Connection error. Please try again or tap Guest to play immediately.';
       }
       setError(msg);
     } finally {

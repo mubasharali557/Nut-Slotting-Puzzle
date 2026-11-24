@@ -276,6 +276,11 @@ export default function HomeScreen({
             className="absolute inset-0 w-full h-full object-cover pointer-events-none select-none -z-10"
             style={{ imageRendering: 'high-quality' }}
             draggable={false}
+            onError={(e) => {
+              if (e.currentTarget.src.indexOf('game.webp') === -1) {
+                e.currentTarget.src = '/game.webp';
+              }
+            }}
           />
 
           {/* Top: Mobile-optimized Navbar */}

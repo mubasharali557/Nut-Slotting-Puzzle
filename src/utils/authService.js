@@ -78,17 +78,25 @@ class AuthService {
 
       const contentType = res.headers.get('content-type') || '';
       if (contentType.includes('application/json')) {
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.error || 'Failed to create account.');
+        let data = null;
+        try {
+          data = await res.json();
+        } catch (jsonErr) {
+          data = null;
         }
-        this.setToken(data.token);
-        this.currentUser = data.user;
-        return data;
+
+        if (data) {
+          if (!res.ok) {
+            throw new Error(data.error || 'Failed to create account.');
+          }
+          this.setToken(data.token);
+          this.currentUser = data.user;
+          return data;
+        }
       }
     } catch (err) {
       // If it's an explicit validation error from server (e.g. duplicate username), throw it
-      if (err.message && (err.message.includes('already exists') || err.message.includes('characters'))) {
+      if (err.message && (err.message.includes('already exists') || err.message.includes('characters') || err.message.includes('contain') || err.message.includes('Password'))) {
         throw err;
       }
       // Otherwise, server is not running or static host returned 404 HTML -> fallback to local storage
@@ -147,16 +155,24 @@ class AuthService {
 
       const contentType = res.headers.get('content-type') || '';
       if (contentType.includes('application/json')) {
-        const data = await res.json();
-        if (!res.ok) {
-          throw new Error(data.error || 'Failed to log in.');
+        let data = null;
+        try {
+          data = await res.json();
+        } catch (jsonErr) {
+          data = null;
         }
-        this.setToken(data.token);
-        this.currentUser = data.user;
-        return data;
+
+        if (data) {
+          if (!res.ok) {
+            throw new Error(data.error || 'Failed to log in.');
+          }
+          this.setToken(data.token);
+          this.currentUser = data.user;
+          return data;
+        }
       }
     } catch (err) {
-      if (err.message && (err.message.includes('Invalid') || err.message.includes('Password') || err.message.includes('not found'))) {
+      if (err.message && (err.message.includes('Invalid') || err.message.includes('Password') || err.message.includes('not found') || err.message.includes('incorrect'))) {
         throw err;
       }
       console.info('[Auth] Server API unavailable, verifying local browser account storage.');
@@ -219,14 +235,22 @@ class AuthService {
 
       const contentType = res.headers.get('content-type') || '';
       if (contentType.includes('application/json')) {
-        if (!res.ok) {
-          this.setToken(null);
-          this.currentUser = null;
-          return null;
+        let data = null;
+        try {
+          data = await res.json();
+        } catch (e) {
+          data = null;
         }
-        const data = await res.json();
-        this.currentUser = data.user;
-        return data;
+
+        if (data) {
+          if (!res.ok) {
+            this.setToken(null);
+            this.currentUser = null;
+            return null;
+          }
+          this.currentUser = data.user;
+          return data;
+        }
       }
     } catch (err) {
       console.warn('[Auth] Network error checking current user:', err);
