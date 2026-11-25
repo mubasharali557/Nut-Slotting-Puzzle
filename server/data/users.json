@@ -93,7 +93,37 @@
       "soundEnabled": true,
       "musicEnabled": false,
       "vibrationEnabled": true,
-      "lastPlayedAt": "2026-11-24T20:20:18.037Z"
+      "lastPlayedAt": "2026-11-25T14:22:22.407Z"
+    }
+  },
+  {
+    "id": "7e8d1a2f-8e83-4f88-b20d-e0e77085570d",
+    "username": "Ali",
+    "salt": "2d06a363e574d4656389dc91a32e9489",
+    "hash": "d5fd8687b0d9d1cc516428681ec0e686f0a81a139f230e6c807a634df57ab0a2ee678acce2fe38e96d640b98a70b706cb2e07f09631e2c2e7db9269c27ed46c7",
+    "createdAt": "2026-11-25T14:28:32.550Z",
+    "progress": {
+      "stage": 2,
+      "highestUnlocked": 2,
+      "coins": 50,
+      "stars": 3,
+      "gems": 1,
+      "activeTheme": "playbg3",
+      "unlockedThemes": [
+        "playbg3"
+      ],
+      "activeSkin": "classic",
+      "unlockedSkins": [
+        "classic"
+      ],
+      "activeNutSkin": "steel_classic",
+      "unlockedNutSkins": [
+        "steel_classic"
+      ],
+      "soundEnabled": true,
+      "musicEnabled": false,
+      "vibrationEnabled": true,
+      "lastPlayedAt": "2026-11-25T15:03:02.341Z"
     }
   }
 ]

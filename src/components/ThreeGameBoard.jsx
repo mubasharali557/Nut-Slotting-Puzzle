@@ -5,25 +5,24 @@ import { gameAudio } from '../utils/gameAudio';
 import { BOLT_SKINS } from '../data/themes';
 import { CUSTOM_COLOR_PALETTE } from './ColorStudioBar';
 
-// Premium High-End Gemstone Hardware Pigments for 3D Nuts
-// Saturated, rich jewel tones with maximized Delta-E contrast and distinct identities
+// Rich Anodized & Lacquered Metallic Hardware Pigments for 3D Hex Nuts
 export const THREE_NUT_COLORS = {
-  red: 0xdc2626,     // Ruby Red (deep, lustrous crimson ruby)
-  blue: 0x1d4ed8,    // Sapphire Blue (deep royal sapphire velvet blue)
-  green: 0x15803d,   // Emerald Green (rich deep emerald, the only green in the game)
-  yellow: 0xeab308,  // Imperial Gold (warm luminous solar gold)
-  purple: 0x9333ea,  // Amethyst Purple (deep royal amethyst violet)
-  orange: 0xea580c,  // Sunset Orange (vivid fiery tangerine orange)
-  pink: 0xec4899,    // Hot Magenta (luxury orchid magenta rose)
-  cyan: 0x06b6d4,    // Ice Cyan (crisp electric sea turquoise)
-  lime: 0x111827,    // Obsidian Black (jet black gloss hardware lacquer - replaces redundant lime)
-  teal: 0xffffff,    // Pearl White (pristine brilliant pearl white - replaces redundant teal)
-  gold: 0xd97706,    // Imperial Topaz Gold
-  silver: 0xe2e8f0,  // Mirror Platinum
-  copper: 0xc2410c,  // Rose Copper
-  white: 0xffffff,   // Pristine Pearl White
-  black: 0x111827,   // Volcanic Obsidian
-  wood: 0x854d0e,    // Burnished Bronze
+  red: 0xc81e1e,     // Anodized Crimson Steel
+  blue: 0x1e40af,    // Cobalt Anodized Aluminum
+  green: 0x15803d,   // Racing Emerald Alloy
+  yellow: 0xd99b06,  // Machined Brass Gold
+  purple: 0x7e22ce,  // Deep Anodized Violet
+  orange: 0xd9480f,  // Copper-Orange Anodized Alloy
+  pink: 0xdb2777,    // Anodized Rose Magenta
+  cyan: 0x0891b2,    // Titanium Ice Cyan
+  lime: 0x1f2937,    // Gunmetal Obsidian
+  teal: 0xe2e8f0,    // Machined Brushed Silver
+  gold: 0xc2850c,    // Brushed Brass
+  silver: 0xd1d5db,  // Stainless Steel
+  copper: 0xb45309,  // Machined Copper
+  white: 0xe5e7eb,   // Brushed Satin Aluminum
+  black: 0x18181b,   // Black Oxide Steel
+  wood: 0x78350f,    // Burnished Bronze
 };
 
 /**
@@ -192,7 +191,8 @@ function createThreadNormalTexture() {
 }
 
 /**
- * Creates equirectangular studio environment map for photorealistic metallic PBR reflections
+ * Creates high-contrast industrial studio reflection panorama for authentic brushed steel & anodized metal PBR sheen.
+ * Sharp dark-to-bright bands create crisp machined metallic highlights instead of flat plastic shading.
  */
 function createStudioEnvironment() {
   const canvas = document.createElement('canvas');
@@ -200,30 +200,111 @@ function createStudioEnvironment() {
   canvas.height = 512;
   const ctx = canvas.getContext('2d');
 
-  // Gradient studio backdrop: bright overhead lights, soft side reflections, warm table bounce
+  // Deep industrial backdrop gradient with warm workbench lower bounce
   const bgGrad = ctx.createLinearGradient(0, 0, 0, 512);
-  bgGrad.addColorStop(0, '#ffffff'); // bright ceiling light panel
-  bgGrad.addColorStop(0.25, '#e2e8f0'); // soft diffuse studio ceiling
-  bgGrad.addColorStop(0.50, '#94a3b8'); // horizon diffuse
-  bgGrad.addColorStop(0.75, '#475569'); // lower rim
-  bgGrad.addColorStop(1, '#24140a'); // warm wooden workbench bounce
+  bgGrad.addColorStop(0.0, '#1e293b');
+  bgGrad.addColorStop(0.22, '#475569');
+  bgGrad.addColorStop(0.42, '#0f172a'); // Dark horizon band for crisp specular contrast
+  bgGrad.addColorStop(0.56, '#cbd5e1'); // Bright steel horizon reflection band
+  bgGrad.addColorStop(0.68, '#1e1b18');
+  bgGrad.addColorStop(1.0, '#2a160b');  // Warm wooden workbench bounce
   ctx.fillStyle = bgGrad;
   ctx.fillRect(0, 0, 1024, 512);
 
-  // Softbox studio light reflection panels
-  ctx.fillStyle = 'rgba(255, 255, 255, 0.95)';
-  ctx.fillRect(200, 60, 260, 140); // Key light softbox
-  ctx.fillRect(700, 80, 200, 120); // Rim light softbox
+  // Crisp studio softbox light panels (horizontal & vertical specular reflections on hex faces and threads)
+  ctx.fillStyle = 'rgba(255, 255, 255, 0.98)';
+  ctx.fillRect(110, 38, 220, 95);
+  ctx.fillRect(540, 28, 280, 110);
+  ctx.fillStyle = 'rgba(226, 232, 240, 0.9)';
+  ctx.fillRect(880, 90, 95, 160);
+  ctx.fillRect(28, 120, 70, 150);
+
+  // Subtle warm workshop lamp accent bounce
+  const warmGlow = ctx.createRadialGradient(512, 160, 20, 512, 160, 240);
+  warmGlow.addColorStop(0, 'rgba(254, 240, 199, 0.72)');
+  warmGlow.addColorStop(1, 'rgba(254, 240, 199, 0)');
+  ctx.fillStyle = warmGlow;
+  ctx.fillRect(260, 0, 504, 340);
 
   const texture = new THREE.CanvasTexture(canvas);
   texture.mapping = THREE.EquirectangularReflectionMapping;
+  texture.colorSpace = THREE.SRGBColorSpace;
   return texture;
 }
 
 /**
- * Creates true 3D extruded hexagonal nut geometry with clean cylindrical center bore hole
+ * Creates a true 3D sculpted helical threaded steel shaft geometry
+ * so silhouettes show real machined screw teeth catching light.
  */
-function createNutGeometry(outerRadius = 0.44, innerRadius = 0.23, thickness = 0.20) {
+function createThreadedShaftGeometry(baseRadius = 0.122, height = 0.56, turns = 16) {
+  const geom = new THREE.CylinderGeometry(baseRadius, baseRadius, height, 44, 76, false);
+  geom.translate(0, height / 2, 0);
+
+  const pos = geom.attributes.position;
+  for (let i = 0; i < pos.count; i++) {
+    const x = pos.getX(i);
+    const y = pos.getY(i);
+    const z = pos.getZ(i);
+    const r = Math.hypot(x, z);
+    if (r < baseRadius * 0.5) continue; // Keep end cap centers intact
+
+    const yNorm = y / height;
+    // Taper thread relief near base collar and bolt head
+    const endFade = Math.min(1, yNorm / 0.045, (1 - yNorm) / 0.045);
+    const theta = Math.atan2(x, z);
+    const phase = (yNorm * turns + theta / (Math.PI * 2)) * Math.PI * 2;
+    const ridge = Math.pow(0.5 + 0.5 * Math.cos(phase), 1.35) - 0.45;
+    const scale = (r + 0.011 * ridge * endFade) / r;
+
+    pos.setX(i, x * scale);
+    pos.setZ(i, z * scale);
+  }
+  pos.needsUpdate = true;
+  geom.computeVertexNormals();
+  return geom;
+}
+
+/**
+ * Creates a CNC-machined cylindrical socket-cap bolt head (authentic hardware silhouette)
+ */
+function createMachinedHeadGeometry(radius = 0.168, height = 0.088) {
+  const pts = [
+    new THREE.Vector2(0.0, 0.0),
+    new THREE.Vector2(radius * 0.76, 0.0),
+    new THREE.Vector2(radius, 0.012),
+    new THREE.Vector2(radius, height - 0.016),
+    new THREE.Vector2(radius * 0.88, height),
+    new THREE.Vector2(radius * 0.62, height),
+    new THREE.Vector2(radius * 0.56, height - 0.012),
+    new THREE.Vector2(0.0, height - 0.012),
+  ];
+  const geom = new THREE.LatheGeometry(pts, 40);
+  geom.computeVertexNormals();
+  return geom;
+}
+
+/**
+ * Creates a stepped CNC-machined steel washer mounting flange base
+ */
+function createMachinedFlangeGeometry(outerRadius = 0.325, height = 0.042) {
+  const pts = [
+    new THREE.Vector2(0.0, 0.0),
+    new THREE.Vector2(outerRadius, 0.0),
+    new THREE.Vector2(outerRadius, height * 0.48),
+    new THREE.Vector2(outerRadius * 0.93, height * 0.64),
+    new THREE.Vector2(outerRadius * 0.62, height * 0.72),
+    new THREE.Vector2(outerRadius * 0.56, height),
+    new THREE.Vector2(0.0, height),
+  ];
+  const geom = new THREE.LatheGeometry(pts, 40);
+  geom.computeVertexNormals();
+  return geom;
+}
+
+/**
+ * Creates crisp DIN-style 3D extruded hexagonal nut geometry with tight CNC chamfers and center bore
+ */
+function createNutGeometry(outerRadius = 0.275, innerRadius = 0.140, thickness = 0.092) {
   const shape = new THREE.Shape();
   for (let i = 0; i < 6; i++) {
     const angle = (i * Math.PI) / 3;
@@ -234,7 +315,7 @@ function createNutGeometry(outerRadius = 0.44, innerRadius = 0.23, thickness = 0
   }
   shape.closePath();
 
-  // Clean circular center bore hole
+  // Snug circular center bore hole gripping the threaded bolt shaft
   const holePath = new THREE.Path();
   holePath.absarc(0, 0, innerRadius, 0, Math.PI * 2, true);
   shape.holes.push(holePath);
@@ -242,10 +323,10 @@ function createNutGeometry(outerRadius = 0.44, innerRadius = 0.23, thickness = 0
   const extrudeSettings = {
     depth: thickness,
     bevelEnabled: true,
-    bevelSegments: 3,
+    bevelSegments: 2,
     steps: 1,
-    bevelSize: 0.032,
-    bevelThickness: 0.032,
+    bevelSize: 0.011,
+    bevelThickness: 0.011,
   };
 
   const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
@@ -407,75 +488,115 @@ export default function ThreeGameBoard({
     fillLight.position.set(0, 4, 10);
     scene.add(fillLight);
 
-    // 3. Shared Geometries & Textures
+    // 3. Shared Geometries & PBR Hardware Textures
+    const textureLoader = new THREE.TextureLoader();
+    const loadBrushedMap = (url, repeatVal = 3.2) => {
+      const tex = textureLoader.load(url);
+      tex.wrapS = THREE.RepeatWrapping;
+      tex.wrapT = THREE.RepeatWrapping;
+      tex.repeat.set(repeatVal, repeatVal);
+      return tex;
+    };
+
+    const brushedAlbedoMap = loadBrushedMap('/hardware/steel_brushed_albedo.webp', 3.4);
+    brushedAlbedoMap.colorSpace = THREE.SRGBColorSpace;
+    const brushedRoughnessMap = loadBrushedMap('/hardware/steel_brushed_roughness.webp', 3.4);
+    const brushedBumpMap = loadBrushedMap('/hardware/steel_brushed_bump.webp', 3.4);
+
     const threadColorMap = createThreadColorTexture();
     const threadNormalMap = createThreadNormalTexture();
-    const nutGeometry = createNutGeometry(0.28, 0.15, 0.10);
+    const nutGeometry = createNutGeometry(0.275, 0.140, 0.092);
+    const boreGeometry = new THREE.CylinderGeometry(0.141, 0.141, 0.106, 28, 1, true);
 
-    // Bolt shaft geometry: cylinder of radius 0.13, height 0.56
-    const shaftRadius = 0.13;
+    // Real 3D sculpted helical threaded bolt shaft
     const shaftHeight = 0.56;
-    const shaftGeometry = new THREE.CylinderGeometry(shaftRadius, shaftRadius, shaftHeight, 36);
-    shaftGeometry.translate(0, shaftHeight / 2, 0); // Origin at base of shaft
+    const shaftGeometry = createThreadedShaftGeometry(0.122, shaftHeight, 16);
 
-    // Solid Machined Bolt Head (Filled, heavy-duty cap with smooth rounded dome and recessed slot)
-    const headRadius = 0.19;
-    const collarHeight = 0.06;
-    const collarGeometry = new THREE.CylinderGeometry(headRadius, headRadius * 0.94, collarHeight, 36);
-    collarGeometry.translate(0, collarHeight / 2, 0);
+    // Precision CNC-machined socket-cap bolt head + Phillips cross drive recess
+    const headHeight = 0.088;
+    const headGeometry = createMachinedHeadGeometry(0.168, headHeight);
+    const slotGeometry = new THREE.BoxGeometry(0.155, 0.018, 0.030);
+    const slotCrossGeometry = new THREE.BoxGeometry(0.030, 0.018, 0.155);
 
-    const domeRadius = headRadius;
-    const domeGeometry = new THREE.SphereGeometry(domeRadius, 36, 16, 0, Math.PI * 2, 0, Math.PI * 0.5);
-    domeGeometry.scale(1, 0.40, 1); // Flatten into a smooth solid cap dome
+    // Stepped CNC steel washer mounting flange + soft workbench contact shadow
+    const baseHeight = 0.042;
+    const baseGeometry = createMachinedFlangeGeometry(0.325, baseHeight);
+    const contactShadowGeometry = new THREE.RingGeometry(0.18, 0.365, 36);
+    contactShadowGeometry.rotateX(-Math.PI / 2);
 
-    // Screwdriver Slot (Recessed dark steel groove in bolt head top)
-    const slotGeometry = new THREE.BoxGeometry(0.24, 0.03, 0.05);
-
-    // Washer Flange Base (Solid circular base resting on table)
-    const baseRadius = 0.35;
-    const baseHeight = 0.04;
-    const baseGeometry = new THREE.CylinderGeometry(baseRadius * 0.94, baseRadius, baseHeight, 36);
-    baseGeometry.translate(0, baseHeight / 2, 0);
-
-    // Materials Cache - Recessed slot stays deep contrast steel
+    // Materials Cache
     const slotMaterial = new THREE.MeshStandardMaterial({
-      color: 0x090d16,
-      metalness: 0.7,
-      roughness: 0.4,
+      color: 0x0b0f17,
+      metalness: 0.78,
+      roughness: 0.36,
     });
 
-    // Uniform, consistent realistic steel hardware materials for ALL bolts
+    const contactShadowMaterial = new THREE.MeshBasicMaterial({
+      color: 0x050302,
+      transparent: true,
+      opacity: 0.42,
+      depthWrite: false,
+    });
+
     const boltShaftMaterial = new THREE.MeshStandardMaterial({
-      color: 0x788596,
-      metalness: 0.90,
-      roughness: 0.25,
+      color: 0x94a3b8,
+      metalness: 0.94,
+      roughness: 0.22,
+      roughnessMap: brushedRoughnessMap,
       map: threadColorMap,
       normalMap: threadNormalMap,
-      normalScale: new THREE.Vector2(2.6, 2.6),
+      normalScale: new THREE.Vector2(2.2, 2.2),
+      envMapIntensity: 1.5,
     });
 
     const boltHeadMaterial = new THREE.MeshStandardMaterial({
-      color: 0x94a3b8,
-      metalness: 0.92,
-      roughness: 0.22,
+      color: 0xcbd5e1,
+      metalness: 0.95,
+      roughness: 0.20,
+      map: brushedAlbedoMap,
+      roughnessMap: brushedRoughnessMap,
+      bumpMap: brushedBumpMap,
+      bumpScale: 0.004,
+      envMapIntensity: 1.55,
     });
 
     const boltBaseMaterial = new THREE.MeshStandardMaterial({
-      color: 0x64748b,
-      metalness: 0.88,
-      roughness: 0.30,
+      color: 0x94a3b8,
+      metalness: 0.92,
+      roughness: 0.26,
+      map: brushedAlbedoMap,
+      roughnessMap: brushedRoughnessMap,
+      bumpMap: brushedBumpMap,
+      bumpScale: 0.004,
+      envMapIntensity: 1.4,
     });
 
-    // Premium Automotive & Jewelry Lacquer Nut Materials (Clearcoat Specular Reflection)
+    const boreMaterial = new THREE.MeshStandardMaterial({
+      color: 0x475569,
+      metalness: 0.92,
+      roughness: 0.28,
+      map: threadColorMap,
+      normalMap: threadNormalMap,
+      normalScale: new THREE.Vector2(1.8, 1.8),
+      side: THREE.BackSide,
+      envMapIntensity: 1.2,
+    });
+
+    // Anodized CNC Brushed Metal Hex Nut Materials
     const nutMaterials = {};
     for (const [key, hex] of Object.entries(THREE_NUT_COLORS)) {
       nutMaterials[key] = new THREE.MeshPhysicalMaterial({
         color: hex,
-        metalness: 0.45,
-        roughness: 0.16,
-        clearcoat: 0.95,
-        clearcoatRoughness: 0.08,
-        reflectivity: 0.90,
+        map: brushedAlbedoMap,
+        roughnessMap: brushedRoughnessMap,
+        bumpMap: brushedBumpMap,
+        bumpScale: 0.0045,
+        metalness: 0.68,
+        roughness: 0.26,
+        clearcoat: 0.48,
+        clearcoatRoughness: 0.16,
+        reflectivity: 0.92,
+        envMapIntensity: 1.38,
       });
     }
 
@@ -486,12 +607,12 @@ export default function ThreeGameBoard({
       opacity: 0.85,
       side: THREE.DoubleSide,
     });
-    const haloGeometry = new THREE.RingGeometry(0.38, 0.44, 32);
+    const haloGeometry = new THREE.RingGeometry(0.35, 0.41, 32);
     haloGeometry.rotateX(-Math.PI / 2);
 
-    // Victory Checkmark Emblem Material & Geometry (Strictly inside bolt cap boundary: radius 0.13 < 0.19)
+    // Victory Checkmark Emblem Material & Geometry (Fits flush inside flat top head land)
     const victoryBadgeTexture = createVictoryCheckTexture();
-    const victoryBadgeGeometry = new THREE.CircleGeometry(0.135, 32);
+    const victoryBadgeGeometry = new THREE.CircleGeometry(0.115, 32);
     const victoryBadgeMaterial = new THREE.MeshBasicMaterial({
       map: victoryBadgeTexture,
       transparent: true,
@@ -500,9 +621,11 @@ export default function ThreeGameBoard({
     });
 
     // 4. Object Pools
-    const boltMeshes = []; // { group, shaft, headGroup, collar, dome, slot, base, halo, badge, badgeScale }
-    const restingNutMeshes = []; // Array of THREE.Mesh
+    const boltMeshes = []; // { group, shaft, headGroup, collar, base, halo, badge, badgeScale }
+    const restingNutMeshes = []; // Array of THREE.Mesh (with internal steel thread bore child)
     const movingNutMesh = new THREE.Mesh(nutGeometry, nutMaterials.red);
+    const movingBoreMesh = new THREE.Mesh(boreGeometry, boreMaterial);
+    movingNutMesh.add(movingBoreMesh);
     movingNutMesh.visible = false;
     scene.add(movingNutMesh);
 
@@ -657,7 +780,7 @@ export default function ThreeGameBoard({
       const interactables = [];
       boltMeshes.forEach((bm) => {
         if (bm.group.visible) {
-          interactables.push(bm.shaft, bm.collar, bm.dome, bm.base);
+          interactables.push(bm.shaft, bm.collar, bm.base);
         }
       });
       restingNutMeshes.forEach((nm) => {
@@ -732,7 +855,7 @@ export default function ThreeGameBoard({
       const interactables = [];
       boltMeshes.forEach((bm) => {
         if (bm.group.visible) {
-          interactables.push(bm.shaft, bm.collar, bm.dome, bm.base);
+          interactables.push(bm.shaft, bm.collar, bm.base);
         }
       });
       restingNutMeshes.forEach((nm) => {
@@ -851,8 +974,8 @@ export default function ThreeGameBoard({
     let clock = new THREE.Clock();
     let animId = null;
 
-    const nutThickness = 0.10;
-    const nutSpacing = 0.11; // snug stacking distance
+    const nutThickness = 0.092;
+    const nutSpacing = 0.114; // Exact DIN machined nut thickness + chamfers for flush stacking
     const threadPitch = shaftHeight / 16;
 
     function renderLoop() {
@@ -862,52 +985,58 @@ export default function ThreeGameBoard({
       const bottlesData = state.bottles;
       const layout = calculateLayout(bottlesData.length);
 
-      // 1. Synchronize Bolt Meshes Pool (ALL bolts have identical, realistic brushed steel hardware finish)
+      // 1. Synchronize Bolt Meshes Pool (Photorealistic CNC Steel Hardware)
       while (boltMeshes.length < layout.positions.length) {
         const group = new THREE.Group();
         const boltIdx = boltMeshes.length;
 
-        // Uniform brushed steel shaft with continuous spiral helical thread grooves
+        // Soft contact shadow directly under washer flange
+        const contactShadow = new THREE.Mesh(contactShadowGeometry, contactShadowMaterial);
+        contactShadow.position.y = 0.002;
+        group.add(contactShadow);
+
+        // Uniform brushed steel shaft with sculpted 3D helical threads
         const shaft = new THREE.Mesh(shaftGeometry, boltShaftMaterial);
         shaft.castShadow = true;
         shaft.receiveShadow = true;
         shaft.userData = { type: 'bolt', tubeIndex: boltIdx };
 
-        // Uniform heavy-duty machined steel bolt head (collar + rounded top dome + screwdriver slot)
+        // Machined socket-cap bolt head + Phillips cross recess
         const headGroup = new THREE.Group();
 
-        const collar = new THREE.Mesh(collarGeometry, boltHeadMaterial);
+        const collar = new THREE.Mesh(headGeometry, boltHeadMaterial);
         collar.castShadow = true;
+        collar.receiveShadow = true;
         collar.userData = { type: 'bolt', tubeIndex: boltIdx };
         headGroup.add(collar);
 
-        const dome = new THREE.Mesh(domeGeometry, boltHeadMaterial);
-        dome.position.y = collarHeight;
-        dome.castShadow = true;
-        dome.userData = { type: 'bolt', tubeIndex: boltIdx };
-        headGroup.add(dome);
+        const slotA = new THREE.Mesh(slotGeometry, slotMaterial);
+        slotA.position.y = headHeight - 0.011;
+        slotA.userData = { type: 'bolt', tubeIndex: boltIdx };
+        headGroup.add(slotA);
 
-        const slot = new THREE.Mesh(slotGeometry, slotMaterial);
-        slot.position.y = collarHeight + 0.04;
-        slot.userData = { type: 'bolt', tubeIndex: boltIdx };
-        headGroup.add(slot);
+        const slotB = new THREE.Mesh(slotCrossGeometry, slotMaterial);
+        slotB.position.y = headHeight - 0.011;
+        slotB.userData = { type: 'bolt', tubeIndex: boltIdx };
+        headGroup.add(slotB);
 
         // Small Victory Checkmark Emblem inside completed bolt cap head
         const badge = new THREE.Mesh(victoryBadgeGeometry, victoryBadgeMaterial);
-        badge.position.y = collarHeight + 0.046;
-        badge.rotation.x = -Math.PI / 2 + 0.30;
+        badge.position.y = headHeight + 0.003;
+        badge.rotation.x = -Math.PI / 2 + 0.18;
         badge.visible = false;
         headGroup.add(badge);
 
         headGroup.position.y = shaftHeight;
 
-        // Flange Washer Base with uniform steel finish
+        // Stepped CNC Steel Washer Flange Base
         const base = new THREE.Mesh(baseGeometry, boltBaseMaterial);
+        base.castShadow = true;
         base.receiveShadow = true;
         base.userData = { type: 'bolt', tubeIndex: boltIdx };
 
         const halo = new THREE.Mesh(haloGeometry, haloMaterial);
-        halo.position.y = 0.01;
+        halo.position.y = 0.008;
         halo.visible = false;
 
         group.add(base);
@@ -916,7 +1045,7 @@ export default function ThreeGameBoard({
         group.add(halo);
 
         scene.add(group);
-        boltMeshes.push({ group, shaft, headGroup, collar, dome, slot, base, halo, badge, badgeScale: 0 });
+        boltMeshes.push({ group, shaft, headGroup, collar, base, halo, badge, badgeScale: 0 });
       }
 
       // Position bolts on wooden tabletop and update selection halo
@@ -971,6 +1100,8 @@ export default function ThreeGameBoard({
 
       while (restingNutMeshes.length < totalRestingNuts) {
         const nutMesh = new THREE.Mesh(nutGeometry, nutMaterials.red);
+        const boreMesh = new THREE.Mesh(boreGeometry, boreMaterial);
+        nutMesh.add(boreMesh);
         nutMesh.castShadow = true;
         nutMesh.receiveShadow = true;
         scene.add(nutMesh);
@@ -1021,8 +1152,8 @@ export default function ThreeGameBoard({
             : 0;
           const celSpin = cel ? cel.time * 7 : 0;
 
-          // Nut sits flush on base collar: baseHeight + nutThickness / 2
-          const restY = pos.y + baseHeight + nutThickness * 0.5 + l * nutSpacing + nutLift + celBounce;
+          // Nut sits flush on stepped washer flange: baseHeight + totalNutHeight / 2
+          const restY = pos.y + baseHeight + nutSpacing * 0.5 + l * nutSpacing + nutLift + celBounce;
 
           mesh.position.set(pos.x, restY, pos.z);
 
@@ -1046,9 +1177,9 @@ export default function ThreeGameBoard({
         const fromStack = bottlesData[fromIdx];
         const toStack = bottlesData[toIdx];
 
-        const fromRestY = fromPos.y + baseHeight + nutThickness * 0.5 + (fromStack.length - 1) * nutSpacing;
-        const toRestY = toPos.y + baseHeight + nutThickness * 0.5 + toStack.length * nutSpacing;
-        const apexY = Math.max(fromPos.y, toPos.y) + shaftHeight + collarHeight + 0.14;
+        const fromRestY = fromPos.y + baseHeight + nutSpacing * 0.5 + (fromStack.length - 1) * nutSpacing;
+        const toRestY = toPos.y + baseHeight + nutSpacing * 0.5 + toStack.length * nutSpacing;
+        const apexY = Math.max(fromPos.y, toPos.y) + shaftHeight + headHeight + 0.14;
 
         movingNutMesh.visible = true;
         movingNutMesh.material = nutMaterials[color] || nutMaterials.red;
@@ -1218,18 +1349,27 @@ export default function ThreeGameBoard({
       }
       renderer.dispose();
       nutGeometry.dispose();
+      boreGeometry.dispose();
       shaftGeometry.dispose();
-      collarGeometry.dispose();
-      domeGeometry.dispose();
+      headGeometry.dispose();
       slotGeometry.dispose();
+      slotCrossGeometry.dispose();
       baseGeometry.dispose();
-      boltMeshes.forEach((bm) => {
-        if (bm.shaft?.material) bm.shaft.material.dispose();
-        if (bm.collar?.material) bm.collar.material.dispose();
-        if (bm.dome?.material) bm.dome.material.dispose();
-        if (bm.base?.material) bm.base.material.dispose();
-      });
+      contactShadowGeometry.dispose();
+      haloGeometry.dispose();
+      victoryBadgeGeometry.dispose();
+      boltShaftMaterial.dispose();
+      boltHeadMaterial.dispose();
+      boltBaseMaterial.dispose();
+      boreMaterial.dispose();
       slotMaterial.dispose();
+      contactShadowMaterial.dispose();
+      haloMaterial.dispose();
+      victoryBadgeMaterial.dispose();
+      victoryBadgeTexture.dispose();
+      brushedAlbedoMap.dispose();
+      brushedRoughnessMap.dispose();
+      brushedBumpMap.dispose();
       threadColorMap.dispose();
       threadNormalMap.dispose();
       envTexture.dispose();
