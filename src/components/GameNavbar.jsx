@@ -1,9 +1,10 @@
 import React from 'react';
-import { RotateCcw, Pause, User } from 'lucide-react';
+import { RotateCcw, Pause, User, Trophy, Settings, ShieldCheck } from 'lucide-react';
 import { gameAudio } from '../utils/gameAudio';
 
 export default function GameNavbar({
   isHome = false,
+  showDesktopQuickActions = false,
   currentStage = 1,
   chances = 20,
   stars = 125,
@@ -16,6 +17,7 @@ export default function GameNavbar({
   onOpenShop,
   onOpenLevels,
   onOpenAchievements,
+  onOpenVip,
   onRestart,
   onHome,
   onPause,
@@ -161,6 +163,47 @@ export default function GameNavbar({
               <span className="text-[11px] sm:text-sm font-black text-[#facc15] tracking-tight drop-shadow-[0_2px_3px_rgba(0,0,0,0.95)]">
                 {chances}
               </span>
+            </div>
+          )}
+
+          {/* Desktop Home Quick Actions: Trophies, VIP No Ads, Settings */}
+          {isHome && showDesktopQuickActions && (
+            <div className="hidden sm:flex items-center gap-1.5 flex-shrink-0">
+              <button
+                onClick={() => {
+                  gameAudio.playClick();
+                  onOpenAchievements?.();
+                }}
+                type="button"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border border-[#c49b65] shadow-[0_2px_0_#8c6435,0_2px_6px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5c3a1d] cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                title="Trophies & Achievements"
+                aria-label="Trophies and Achievements"
+              >
+                <Trophy className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5]" />
+              </button>
+              <button
+                onClick={() => {
+                  onOpenVip?.();
+                }}
+                type="button"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border border-[#c49b65] shadow-[0_2px_0_#8c6435,0_2px_6px_rgba(0,0,0,0.6)] flex items-center justify-center text-amber-700 cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                title="VIP No Ads Active"
+                aria-label="No Ads VIP"
+              >
+                <ShieldCheck className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5]" />
+              </button>
+              <button
+                onClick={() => {
+                  gameAudio.playClick();
+                  onOpenSettings?.();
+                }}
+                type="button"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border border-[#c49b65] shadow-[0_2px_0_#8c6435,0_2px_6px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5c3a1d] cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                title="Game Settings"
+                aria-label="Settings"
+              >
+                <Settings className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5]" />
+              </button>
             </div>
           )}
 

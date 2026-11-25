@@ -250,25 +250,87 @@ export default function HomeScreen({
     };
   }, []);
 
+  const heroMaskStyle = {
+    imageRendering: 'high-quality',
+    WebkitMaskImage:
+      'linear-gradient(to bottom, transparent 0%, black 5.5%, black 91.8%, transparent 100%)',
+    maskImage:
+      'linear-gradient(to bottom, transparent 0%, black 5.5%, black 91.8%, transparent 100%)',
+  };
+
+  const renderSeamlessExtensions = () => (
+    <>
+      <img
+        src="/home_ext_top.webp"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="absolute left-0 w-full max-w-none pointer-events-none select-none z-0"
+        style={{
+          height: '221.354%',
+          bottom: '95.833%',
+          WebkitMaskImage: 'linear-gradient(to top, black 0%, black 78%, transparent 100%)',
+          maskImage: 'linear-gradient(to top, black 0%, black 78%, transparent 100%)',
+        }}
+      />
+      <img
+        src="/home_ext_bottom.webp"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="absolute left-0 w-full max-w-none pointer-events-none select-none z-0"
+        style={{
+          height: '273.438%',
+          top: '92.448%',
+          WebkitMaskImage: 'linear-gradient(to bottom, black 0%, black 78%, transparent 100%)',
+          maskImage: 'linear-gradient(to bottom, black 0%, black 78%, transparent 100%)',
+        }}
+      />
+      <img
+        src="/home_ext_left.webp"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="absolute top-0 h-full max-w-none pointer-events-none select-none z-0"
+        style={{ width: '43.605%', right: '99.7%' }}
+      />
+      <img
+        src="/home_ext_right.webp"
+        alt=""
+        aria-hidden="true"
+        draggable={false}
+        className="absolute top-0 h-full max-w-none pointer-events-none select-none z-0"
+        style={{ width: '43.605%', left: '99.7%' }}
+      />
+    </>
+  );
+
   return (
     <div
       ref={containerRef}
-      className="relative w-full h-[100dvh] overflow-hidden bg-[#0c0907] flex items-center justify-center select-none"
+      className="relative w-full h-[100dvh] overflow-hidden flex items-center justify-center select-none"
     >
-      {/* 1. EDGE-TO-EDGE AMBIENT BLURRED BACKDROP */}
+      {/* 1. FULL-VIEWPORT SEAMLESS WORKSHOP BACKDROP */}
       <img
-        src="/game.webp"
+        src="/home_bg_seamless.webp"
         alt=""
         aria-hidden="true"
-        className="fixed inset-0 w-full h-full object-cover blur-3xl scale-110 opacity-55 brightness-75 pointer-events-none -z-10"
+        draggable={false}
+        className="fixed inset-0 w-full h-full object-cover pointer-events-none z-0"
         style={{ imageRendering: 'high-quality' }}
+      />
+
+      {/* CANVAS PARTICLE SYSTEM: Continuous Ambient Golden Dust & Touch Sparkles Across Whole Room */}
+      <canvas
+        ref={canvasRef}
+        className="fixed inset-0 w-full h-full pointer-events-none z-[15]"
       />
 
       {isPortrait ? (
         /* ========================================================
-           MOBILE PORTRAIT UI (Unified, 100% Uncropped HD Master Artwork game.webp)
+           MOBILE PORTRAIT UI (Unified, Continuous Seamless Scene)
            ======================================================== */
-        <div className="relative w-full h-full flex flex-col justify-between z-20 overflow-hidden">
+        <div className="relative w-full h-full flex flex-col justify-between z-10 overflow-hidden">
           {/* Top: Mobile-optimized Navbar */}
           <div className="relative z-30 w-full flex-shrink-0">
             <GameNavbar
@@ -287,33 +349,32 @@ export default function HomeScreen({
             />
           </div>
 
-          {/* Middle: Full, Uncropped, Undistorted Master Artwork (game.webp) */}
-          <div className="relative flex-1 w-full min-h-0 flex items-center justify-center px-4 py-1 pointer-events-auto overflow-hidden">
+          {/* Middle: Seamless Workshop Scene Anchored to Master Artwork */}
+          <div
+            className="relative z-10 flex-1 w-full min-h-0 flex items-center justify-center pointer-events-auto"
+            style={{ containerType: 'size' }}
+          >
             <div
-              className="relative w-full max-w-md max-h-full flex items-center justify-center"
+              className="relative flex items-center justify-center"
               style={{
-                aspectRatio: '2752 / 1536',
-                maxHeight: '100%',
+                width: 'min(100cqw, calc(100cqh * 2752 / 1536))',
+                height: 'min(100cqh, calc(100cqw * 1536 / 2752))',
               }}
             >
-              {/* Crisp Uncropped, Undistorted HD Master Artwork */}
+              {renderSeamlessExtensions()}
+
+              {/* Crisp Preserved Master Artwork Blended Seamlessly */}
               <img
                 src="/game.webp"
                 alt="Nut Sort Color Puzzle"
-                className="w-full h-full max-h-full object-contain pointer-events-none select-none drop-shadow-[0_16px_36px_rgba(0,0,0,0.85)]"
-                style={{ imageRendering: 'high-quality' }}
+                className="relative z-10 w-full h-full object-contain pointer-events-none select-none"
+                style={heroMaskStyle}
                 draggable={false}
                 onError={(e) => {
                   if (e.currentTarget.src.indexOf('mobile_hero_banner.webp') === -1) {
                     e.currentTarget.src = '/mobile_hero_banner.webp';
                   }
                 }}
-              />
-
-              {/* Canvas Particle System: Floating Golden Dust & Sparkles */}
-              <canvas
-                ref={canvasRef}
-                className="absolute inset-0 w-full h-full pointer-events-none z-10"
               />
 
               {/* Interactive Mascot Click/Wave Zone */}
@@ -458,245 +519,183 @@ export default function HomeScreen({
         </div>
       ) : (
         /* ========================================================
-           DESKTOP / WIDESCREEN LANDSCAPE UI (Exact original pixel-perfect master frame)
+           DESKTOP / WIDESCREEN LANDSCAPE UI (Seamless Unified Master Scene)
            ======================================================== */
-        <div
-          className="relative w-full h-full flex flex-col items-center justify-between z-20"
-          style={{
-            maxWidth: 'calc((100dvh - 48px) * 2752 / 1536)',
-            maxHeight: '100dvh',
-          }}
-        >
-          {/* Top Navbar: Clean, Compact, and Aligned With Artwork */}
-          <GameNavbar
-            isHome={true}
-            currentStage={currentStage}
-            stars={stars}
-            coins={coins}
-            playerName={playerName}
-            playerId={playerId}
-            soundEnabled={soundEnabled}
-            onToggleSound={onToggleSound}
-            onOpenSettings={onOpenSettings}
-            onOpenShop={onOpenShop}
-            onOpenLevels={onOpenLevels}
-            onOpenAchievements={onOpenAchievements}
-          />
+        <div className="relative w-full h-full flex flex-col items-center justify-between z-10 overflow-hidden">
+          {/* Top Navbar: Clean, Compact, and Aligned */}
+          <div className="relative z-30 w-full flex-shrink-0">
+            <GameNavbar
+              isHome={true}
+              showDesktopQuickActions={true}
+              currentStage={currentStage}
+              stars={stars}
+              coins={coins}
+              playerName={playerName}
+              playerId={playerId}
+              soundEnabled={soundEnabled}
+              onToggleSound={onToggleSound}
+              onOpenSettings={handleSettingsClick}
+              onOpenShop={handleShopClick}
+              onOpenLevels={onOpenLevels}
+              onOpenAchievements={handleTrophyClick}
+              onOpenVip={handleNoAdsClick}
+            />
+          </div>
 
-          {/* 3. CENTERED HIGH-DEFINITION ARTWORK CONTAINER (Directly below Navbar, uncropped & undistorted) */}
+          {/* 3. SEAMLESS CENTERED ARTWORK FRAME (Continues seamlessly into background on all sides) */}
           <div
-            className="relative flex-1 w-full min-h-0 flex items-center justify-center pointer-events-none"
-            style={{
-              aspectRatio: '2752 / 1536',
-            }}
+            className="relative z-10 flex-1 w-full min-h-0 flex items-center justify-center"
+            style={{ containerType: 'size' }}
           >
-            {/* Crisp Uncropped, Undistorted HD Master Artwork */}
-            <img
-              src="/game.webp"
-              alt="Nut Sort Color Puzzle Game"
-              className="w-full h-full object-contain pointer-events-none drop-shadow-[0_20px_60px_rgba(0,0,0,0.85)]"
-              style={{ imageRendering: 'high-quality' }}
-              draggable={false}
-            />
-
-            {/* CANVAS PARTICLE SYSTEM: Floating Golden Dust, Stars & Touch Sparkles */}
-            <canvas
-              ref={canvasRef}
-              className="absolute inset-0 w-full h-full pointer-events-none z-10"
-            />
-
-            {/* MASCOT CHARACTERS (Nut & Bolt Buddies) INTERACTIVE ZONE */}
             <div
-              onClick={handleMascotClick}
-              className={`absolute z-15 pointer-events-auto cursor-pointer transition-transform duration-300 ${
-                mascotBounce ? 'scale-110 -translate-y-2' : 'hover:scale-[1.03]'
-              }`}
+              className="relative flex items-center justify-center pointer-events-none"
               style={{
-                left: '31%',
-                top: '31%',
-                width: '38%',
-                height: '31%',
+                width: 'min(100cqw, calc(100cqh * 2752 / 1536))',
+                height: 'min(100cqh, calc(100cqw * 1536 / 2752))',
               }}
-              title="Nut & Bolt Buddies! Click to wave!"
             >
-              {/* Subtle floating bob */}
-              <div className="w-full h-full animate-mascot-float relative">
-                {/* Sparkle glint on waving nut */}
-                <div className="absolute top-[18%] left-[10%] w-3 h-3 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
-                {/* Sparkle glint on bolt buddy */}
-                <div className="absolute top-[22%] right-[16%] w-2.5 h-2.5 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+              {renderSeamlessExtensions()}
+
+              {/* Crisp Uncropped, Undistorted HD Master Artwork (blended cleanly into workshop background) */}
+              <img
+                src="/game.webp"
+                alt="Nut Sort Color Puzzle Game"
+                className="relative z-10 w-full h-full object-contain pointer-events-none select-none"
+                style={heroMaskStyle}
+                draggable={false}
+              />
+
+              {/* MASCOT CHARACTERS (Nut & Bolt Buddies) INTERACTIVE ZONE */}
+              <div
+                onClick={handleMascotClick}
+                className={`absolute z-20 pointer-events-auto cursor-pointer transition-transform duration-300 ${
+                  mascotBounce ? 'scale-110 -translate-y-2' : 'hover:scale-[1.03]'
+                }`}
+                style={{
+                  left: '31%',
+                  top: '31%',
+                  width: '38%',
+                  height: '31%',
+                }}
+                title="Nut & Bolt Buddies! Click to wave!"
+              >
+                {/* Subtle floating bob */}
+                <div className="w-full h-full animate-mascot-float relative">
+                  {/* Sparkle glint on waving nut */}
+                  <div className="absolute top-[18%] left-[10%] w-3 h-3 bg-white rounded-full filter blur-[1px] animate-ping opacity-60 pointer-events-none" />
+                  {/* Sparkle glint on bolt buddy */}
+                  <div className="absolute top-[22%] right-[16%] w-2.5 h-2.5 bg-amber-200 rounded-full filter blur-[1px] animate-ping opacity-50 pointer-events-none" />
+                </div>
               </div>
-            </div>
 
-            {/* INTERACTIVE ACTION BUTTONS OVERLAY */}
-            <div className="absolute inset-0 z-20 pointer-events-auto">
+              {/* INTERACTIVE ACTION BUTTONS OVERLAY (Clean workbench without baked corner icons) */}
+              <div className="absolute inset-0 z-20 pointer-events-auto">
 
-              {/* === A. LEVELS BUTTON (Glossy Blue 3D Pill - 100% Fixed & Stationary) === */}
-              <button
-                onClick={handleLevelsClick}
-                type="button"
-                className="absolute cursor-pointer select-none focus:outline-none"
-                style={{
-                  left: '24.5%',
-                  top: '70.2%',
-                  width: '19.5%',
-                  aspectRatio: '542 / 199',
-                  filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 12px rgba(59,130,246,0.3))',
-                  transform: 'none',
-                }}
-                title="Levels & Stage Map"
-                aria-label="Levels and Stage Map"
-              >
-                <img
-                  src="/levels_button.webp"
-                  alt="Levels"
-                  className="w-full h-full object-contain pointer-events-none select-none block"
-                  draggable={false}
-                  style={{ transform: 'none' }}
-                />
-              </button>
-
-              {/* === B. PLAY ▶ BUTTON (100% Stationary Frame with Strictly Internal Icon Animation) === */}
-              <button
-                onClick={handlePlayClick}
-                onPointerDown={() => setIsPlayPressed(true)}
-                onPointerUp={() => {
-                  // Keep smooth return
-                }}
-                onPointerLeave={() => setIsPlayPressed(false)}
-                type="button"
-                className="group absolute cursor-pointer select-none focus:outline-none"
-                style={{
-                  left: '47.5%',
-                  top: '66.8%',
-                  width: '28.0%',
-                  aspectRatio: '757 / 286',
-                  filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(34,197,94,0.35))',
-                  transform: 'none',
-                }}
-                title={`Play Level ${currentStage}!`}
-                aria-label={`Play Level ${currentStage}`}
-              >
-                {/* 1. Stationary Button Base Frame (pill body, metallic border & PLAY text) */}
-                <img
-                  src="/play_button_base.webp"
-                  alt="Play"
-                  className="w-full h-full object-contain pointer-events-none select-none block"
-                  draggable={false}
-                  style={{ transform: 'none' }}
-                />
-
-                {/* 2. Arrow Icon Assembly: Anchored in place, ZERO container movement */}
-                <div
-                  className="absolute pointer-events-none select-none flex items-center justify-center"
+                {/* === A. LEVELS BUTTON (Glossy Blue 3D Pill - 100% Fixed & Stationary) === */}
+                <button
+                  onClick={handleLevelsClick}
+                  type="button"
+                  className="absolute cursor-pointer select-none focus:outline-none"
                   style={{
-                    left: '81.24%',
-                    top: '30.42%',
-                    width: '10.70%',
-                    height: '36.01%',
+                    left: '24.5%',
+                    top: '70.2%',
+                    width: '19.5%',
+                    aspectRatio: '542 / 199',
+                    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 12px rgba(59,130,246,0.3))',
                     transform: 'none',
                   }}
+                  title="Levels & Stage Map"
+                  aria-label="Levels and Stage Map"
                 >
-                  {/* Animated Arrow Icon: Strictly internal inward press animation */}
+                  <img
+                    src="/levels_button.webp"
+                    alt="Levels"
+                    className="w-full h-full object-contain pointer-events-none select-none block"
+                    draggable={false}
+                    style={{ transform: 'none' }}
+                  />
+                </button>
+
+                {/* === B. PLAY ▶ BUTTON (100% Stationary Frame with Strictly Internal Icon Animation) === */}
+                <button
+                  onClick={handlePlayClick}
+                  onPointerDown={() => setIsPlayPressed(true)}
+                  onPointerUp={() => {
+                    // Keep smooth return
+                  }}
+                  onPointerLeave={() => setIsPlayPressed(false)}
+                  type="button"
+                  className="group absolute cursor-pointer select-none focus:outline-none"
+                  style={{
+                    left: '47.5%',
+                    top: '66.8%',
+                    width: '28.0%',
+                    aspectRatio: '757 / 286',
+                    filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(34,197,94,0.35))',
+                    transform: 'none',
+                  }}
+                  title={`Play Level ${currentStage}!`}
+                  aria-label={`Play Level ${currentStage}`}
+                >
+                  {/* 1. Stationary Button Base Frame (pill body, metallic border & PLAY text) */}
+                  <img
+                    src="/play_button_base.webp"
+                    alt="Play"
+                    className="w-full h-full object-contain pointer-events-none select-none block"
+                    draggable={false}
+                    style={{ transform: 'none' }}
+                  />
+
+                  {/* 2. Arrow Icon Assembly: Anchored in place, ZERO container movement */}
                   <div
-                    className={`relative w-full h-full transition-all duration-150 ease-out origin-center ${
-                      isPlayPressed
-                        ? 'scale-[0.82] brightness-90'
-                        : 'group-hover:brightness-105 group-active:scale-[0.82] group-active:brightness-90'
-                    }`}
+                    className="absolute pointer-events-none select-none flex items-center justify-center"
                     style={{
-                      transformOrigin: '50% 50%',
+                      left: '81.24%',
+                      top: '30.42%',
+                      width: '10.70%',
+                      height: '36.01%',
+                      transform: 'none',
                     }}
                   >
-                    {/* High-res crisp arrow image */}
-                    <img
-                      src="/play_arrow_icon.webp"
-                      alt=""
-                      className="w-full h-full object-contain pointer-events-none select-none block"
-                      draggable={false}
-                    />
-
-                    {/* Internal Light Gleam / Shimmer (Strictly clipped within triangle shape) */}
+                    {/* Animated Arrow Icon: Strictly internal inward press animation */}
                     <div
-                      className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+                      className={`relative w-full h-full transition-all duration-150 ease-out origin-center ${
+                        isPlayPressed
+                          ? 'scale-[0.82] brightness-90'
+                          : 'group-hover:brightness-105 group-active:scale-[0.82] group-active:brightness-90'
+                      }`}
                       style={{
-                        clipPath: 'polygon(0% 4%, 18% 0%, 98% 50%, 18% 100%, 0% 96%)',
+                        transformOrigin: '50% 50%',
                       }}
                     >
-                      <div
-                        className={`absolute -inset-full w-[250%] h-[250%] bg-gradient-to-r from-transparent via-white/50 to-transparent -rotate-45 pointer-events-none transition-transform duration-500 ease-out ${
-                          isPlayPressed
-                            ? 'translate-x-full translate-y-full opacity-100'
-                            : 'group-hover:translate-x-full group-hover:translate-y-full -translate-x-full -translate-y-full opacity-0 group-hover:opacity-100'
-                        }`}
+                      {/* High-res crisp arrow image */}
+                      <img
+                        src="/play_arrow_icon.webp"
+                        alt=""
+                        className="w-full h-full object-contain pointer-events-none select-none block"
+                        draggable={false}
                       />
+
+                      {/* Internal Light Gleam / Shimmer (Strictly clipped within triangle shape) */}
+                      <div
+                        className="absolute inset-0 w-full h-full pointer-events-none overflow-hidden"
+                        style={{
+                          clipPath: 'polygon(0% 4%, 18% 0%, 98% 50%, 18% 100%, 0% 96%)',
+                        }}
+                      >
+                        <div
+                          className={`absolute -inset-full w-[250%] h-[250%] bg-gradient-to-r from-transparent via-white/50 to-transparent -rotate-45 pointer-events-none transition-transform duration-500 ease-out ${
+                            isPlayPressed
+                              ? 'translate-x-full translate-y-full opacity-100'
+                              : 'group-hover:translate-x-full group-hover:translate-y-full -translate-x-full -translate-y-full opacity-0 group-hover:opacity-100'
+                          }`}
+                        />
+                      </div>
                     </div>
                   </div>
-                </div>
-              </button>
+                </button>
 
-              {/* === D. BOTTOM CIRCULAR BUTTONS (Settings, Trophy, Shop, No Ads) === */}
-
-              {/* 1. Settings (Bottom Left) */}
-              <button
-                onClick={handleSettingsClick}
-                type="button"
-                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-                style={{
-                  left: '1.5%',
-                  top: '85.0%',
-                  width: '7.2%',
-                  height: '14.0%',
-                }}
-                title="Game Settings"
-                aria-label="Settings"
-              />
-
-              {/* 2. Trophy (Bottom Left) */}
-              <button
-                onClick={handleTrophyClick}
-                type="button"
-                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-                style={{
-                  left: '10.8%',
-                  top: '85.0%',
-                  width: '7.2%',
-                  height: '14.0%',
-                }}
-                title="Trophies & Achievements"
-                aria-label="Trophies and Achievements"
-              />
-
-              {/* 3. Shop (Bottom Right) */}
-              <button
-                onClick={handleShopClick}
-                type="button"
-                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-                style={{
-                  left: '81.5%',
-                  top: '84.0%',
-                  width: '8.2%',
-                  height: '14.5%',
-                }}
-                title="Customizing Shop"
-                aria-label="Shop"
-              />
-
-              {/* 4. No Ads (Bottom Right) */}
-              <button
-                onClick={handleNoAdsClick}
-                type="button"
-                className="absolute cursor-pointer rounded-full transition-transform duration-100 active:scale-90 active:translate-y-0.5 focus:outline-none before:absolute before:-inset-2 sm:before:-inset-3 before:content-['']"
-                style={{
-                  left: '91.5%',
-                  top: '85.0%',
-                  width: '7.2%',
-                  height: '14.0%',
-                }}
-                title="VIP No Ads Active"
-                aria-label="No Ads VIP"
-              />
-
+              </div>
             </div>
           </div>
         </div>
