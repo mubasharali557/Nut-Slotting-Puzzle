@@ -47,6 +47,7 @@ export default function App() {
     const saved = localStorage.getItem('watersort_sound');
     return saved !== null ? saved === 'true' : true;
   });
+  const [soundVolume, setSoundVolume] = useState(() => gameAudio.getVolume());
   const [musicEnabled, setMusicEnabled] = useState(() => {
     const saved = localStorage.getItem('watersort_music');
     return saved !== null ? saved === 'true' : false;
@@ -354,7 +355,7 @@ export default function App() {
     setHistory((prev) => prev.slice(0, prev.length - 1));
     setChances((c) => c + 1);
     setHint(null);
-    gameAudio.playClick();
+    gameAudio.playUndo();
   };
 
   // Restart current stage
@@ -500,8 +501,24 @@ export default function App() {
     const next = !soundEnabled;
     setSoundEnabled(next);
     localStorage.setItem('watersort_sound', next.toString());
-    gameAudio.soundEnabled = next;
+    gameAudio.setSoundEnabled(next);
   };
+
+  const handleChangeSoundVolume = (vol) => {
+    const clamped = Math.max(0, Math.min(1, vol));
+    setSoundVolume(clamped);
+    gameAudio.setVolume(clamped);
+    if (clamped > 0 && !soundEnabled) {
+      setSoundEnabled(true);
+      localStorage.setItem('watersort_sound', 'true');
+      gameAudio.setSoundEnabled(true);
+    }
+  };
+
+  useEffect(() => {
+    gameAudio.setSoundEnabled(soundEnabled);
+    gameAudio.musicEnabled = musicEnabled;
+  }, [soundEnabled, musicEnabled]);
 
   const toggleMusic = () => {
     const next = !musicEnabled;
@@ -915,6 +932,8 @@ export default function App() {
             onClose={() => setIsSettingsOpen(false)}
             soundEnabled={soundEnabled}
             onToggleSound={toggleSound}
+            soundVolume={soundVolume}
+            onChangeSoundVolume={handleChangeSoundVolume}
             musicEnabled={musicEnabled}
             onToggleMusic={toggleMusic}
             vibrationEnabled={vibrationEnabled}

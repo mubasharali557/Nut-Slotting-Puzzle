@@ -7,6 +7,8 @@ export default function SettingsModal({
   onClose,
   soundEnabled,
   onToggleSound,
+  soundVolume = 0.85,
+  onChangeSoundVolume,
   musicEnabled,
   onToggleMusic,
   vibrationEnabled,
@@ -44,22 +46,47 @@ export default function SettingsModal({
         {/* Toggles */}
         <div className="flex flex-col gap-3">
           {/* Sound */}
-          <div className="flex items-center justify-between p-3 rounded-2xl bg-slate-800/60 border border-white/5">
-            <div className="flex items-center gap-3">
-              <Volume2 className="w-5 h-5 text-cyan-400" />
-              <div>
-                <h4 className="text-sm font-extrabold text-white">Sound Effects</h4>
-                <p className="text-[11px] text-slate-400">Pouring, bubbles, chimes</p>
+          <div className="flex flex-col gap-2.5 p-3 rounded-2xl bg-slate-800/60 border border-white/5">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                {soundEnabled && soundVolume > 0 ? (
+                  <Volume2 className="w-5 h-5 text-cyan-400" />
+                ) : (
+                  <VolumeX className="w-5 h-5 text-slate-400" />
+                )}
+                <div>
+                  <h4 className="text-sm font-extrabold text-white">Sound Effects</h4>
+                  <p className="text-[11px] text-slate-400">Metallic unscrewing, clicks, chimes</p>
+                </div>
               </div>
+              <button
+                onClick={onToggleSound}
+                className={`w-12 h-6 rounded-full p-0.5 transition-colors duration-200 flex items-center cursor-pointer ${
+                  soundEnabled ? 'bg-emerald-500 justify-end' : 'bg-slate-700 justify-start'
+                }`}
+              >
+                <div className="w-5 h-5 rounded-full bg-white shadow-md" />
+              </button>
             </div>
-            <button
-              onClick={onToggleSound}
-              className={`w-12 h-6 rounded-full p-0.5 transition-colors duration-200 flex items-center ${
-                soundEnabled ? 'bg-emerald-500 justify-end' : 'bg-slate-700 justify-start'
-              }`}
-            >
-              <div className="w-5 h-5 rounded-full bg-white shadow-md" />
-            </button>
+
+            {onChangeSoundVolume && (
+              <div className="flex items-center gap-3 pt-1 border-t border-white/5">
+                <span className="text-[11px] font-bold text-slate-300 w-12">Volume</span>
+                <input
+                  type="range"
+                  min={0}
+                  max={100}
+                  step={5}
+                  value={Math.round((soundEnabled ? soundVolume : 0) * 100)}
+                  onChange={(e) => onChangeSoundVolume(Number(e.target.value) / 100)}
+                  className="flex-1 h-1.5 accent-cyan-400 cursor-pointer"
+                  aria-label="Sound effects volume"
+                />
+                <span className="text-[11px] font-bold text-cyan-300 w-9 text-right">
+                  {Math.round((soundEnabled ? soundVolume : 0) * 100)}%
+                </span>
+              </div>
+            )}
           </div>
 
           {/* Music */}

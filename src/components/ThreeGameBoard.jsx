@@ -780,7 +780,7 @@ export default function ThreeGameBoard({
       if (state.selected === index) {
         state.selected = null;
         state.lastRejectedIdx = null;
-        gameAudio.playClick();
+        gameAudio.playDeselect();
         return;
       }
 
@@ -798,9 +798,8 @@ export default function ThreeGameBoard({
           state.selected = toIdx;
           state.lastRejectedIdx = null;
           gameAudio.playSelect();
-        } else {
-          gameAudio.playError?.();
         }
+        // Invalid/empty tap while a nut is selected: do NOT play opening/unscrewing sound
         return;
       }
 
@@ -817,9 +816,11 @@ export default function ThreeGameBoard({
         toIdx,
         color: topColor,
         amount,
+        phase1Started: false,
+        phase1Released: false,
+        phase3Started: false,
+        lastSoundTurnStep: 0,
       };
-
-      gameAudio.playPour();
     }
 
     // Universal Placement Validation: Color never blocks placement
@@ -1064,9 +1065,23 @@ export default function ThreeGameBoard({
 
           movingNutMesh.position.set(fromPos.x, currY, fromPos.z);
           movingNutMesh.rotation.set(0, -eased * totalUnscrewTurns * Math.PI * 2, 0);
+
+          if (!state.moveData.phase1Started) {
+            state.moveData.phase1Started = true;
+            gameAudio.playUnscrewStart(duration * 0.30);
+          }
+          const turnStep = Math.floor(eased * totalUnscrewTurns * 5.5);
+          if (turnStep > state.moveData.lastSoundTurnStep) {
+            state.moveData.lastSoundTurnStep = turnStep;
+            gameAudio.playThreadClick(sub, 'up');
+          }
         }
         // Phase 2: Parabolic 3D Transfer Arc (0.30 to 0.70)
         else if (rawProgress < 0.70) {
+          if (!state.moveData.phase1Released) {
+            state.moveData.phase1Released = true;
+            gameAudio.playUnscrewRelease();
+          }
           const sub = (rawProgress - 0.30) / 0.40;
           const eased = easeInOut(sub);
 
@@ -1092,6 +1107,17 @@ export default function ThreeGameBoard({
           movingNutMesh.position.set(toPos.x, currY, toPos.z);
           // Clockwise tightening rotation ending at thread alignment
           movingNutMesh.rotation.set(0, (1.0 - eased) * totalScrewTurns * Math.PI * 2, 0);
+
+          if (!state.moveData.phase3Started) {
+            state.moveData.phase3Started = true;
+            state.moveData.lastSoundTurnStep = 0;
+            gameAudio.playScrewDownStart(duration * 0.30);
+          }
+          const downStep = Math.floor(eased * totalScrewTurns * 5.0);
+          if (downStep > state.moveData.lastSoundTurnStep) {
+            state.moveData.lastSoundTurnStep = downStep;
+            gameAudio.playThreadClick(sub, 'down');
+          }
         }
         // Phase 4: Completion & Landing Settle
         else {
@@ -1108,7 +1134,7 @@ export default function ThreeGameBoard({
           state.selected = null;
           state.moveData = null;
 
-          gameAudio.playClick();
+          gameAudio.playLand();
 
           // Check if color set was completed on toIdx (all 4 nuts match)
           if (isComplete(newBottles[toIdx])) {
