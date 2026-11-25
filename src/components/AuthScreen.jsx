@@ -113,7 +113,7 @@ export default function AuthScreen({ onAuthSuccess }) {
       
       {/* 1. Ambient Blurred Backdrop */}
       <img
-        src="/game.webp"
+        src="/game.webp?v=2"
         alt=""
         aria-hidden="true"
         className="fixed inset-0 w-full h-full object-cover blur-2xl scale-110 opacity-40 brightness-50 pointer-events-none"

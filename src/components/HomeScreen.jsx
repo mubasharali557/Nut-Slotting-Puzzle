@@ -261,7 +261,7 @@ export default function HomeScreen({
   const renderSeamlessExtensions = () => (
     <>
       <img
-        src="/home_ext_top.webp"
+        src="/home_ext_top.webp?v=2"
         alt=""
         aria-hidden="true"
         draggable={false}
@@ -274,7 +274,7 @@ export default function HomeScreen({
         }}
       />
       <img
-        src="/home_ext_bottom.webp"
+        src="/home_ext_bottom.webp?v=2"
         alt=""
         aria-hidden="true"
         draggable={false}
@@ -287,7 +287,7 @@ export default function HomeScreen({
         }}
       />
       <img
-        src="/home_ext_left.webp"
+        src="/home_ext_left.webp?v=2"
         alt=""
         aria-hidden="true"
         draggable={false}
@@ -295,7 +295,7 @@ export default function HomeScreen({
         style={{ width: '43.605%', right: '99.7%' }}
       />
       <img
-        src="/home_ext_right.webp"
+        src="/home_ext_right.webp?v=2"
         alt=""
         aria-hidden="true"
         draggable={false}
@@ -312,7 +312,7 @@ export default function HomeScreen({
     >
       {/* 1. FULL-VIEWPORT SEAMLESS WORKSHOP BACKDROP */}
       <img
-        src="/home_bg_seamless.webp"
+        src="/home_bg_seamless.webp?v=2"
         alt=""
         aria-hidden="true"
         draggable={false}
@@ -365,14 +365,14 @@ export default function HomeScreen({
 
               {/* Crisp Preserved Master Artwork Blended Seamlessly */}
               <img
-                src="/game.webp"
+                src="/game.webp?v=2"
                 alt="Nut Sort Color Puzzle"
                 className="relative z-10 w-full h-full object-contain pointer-events-none select-none"
                 style={heroMaskStyle}
                 draggable={false}
                 onError={(e) => {
                   if (e.currentTarget.src.indexOf('mobile_hero_banner.webp') === -1) {
-                    e.currentTarget.src = '/mobile_hero_banner.webp';
+                    e.currentTarget.src = '/mobile_hero_banner.webp?v=2';
                   }
                 }}
               />
@@ -558,7 +558,7 @@ export default function HomeScreen({
 
               {/* Crisp Uncropped, Undistorted HD Master Artwork (blended cleanly into workshop background) */}
               <img
-                src="/game.webp"
+                src="/game.webp?v=2"
                 alt="Nut Sort Color Puzzle Game"
                 className="relative z-10 w-full h-full object-contain pointer-events-none select-none"
                 style={heroMaskStyle}
