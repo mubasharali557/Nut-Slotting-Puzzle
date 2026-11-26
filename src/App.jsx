@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import HomeScreen from './components/HomeScreen';
 import ThreeGameBoard from './components/ThreeGameBoard';
 const PauseModal = React.lazy(() => import('./components/PauseModal'));
@@ -112,37 +112,9 @@ export default function App() {
     }
   });
 
-  // Flush full progress snapshot immediately (prevents losing purchases on quick refresh)
-  const flushProgressSnapshot = useCallback((overrides = {}) => {
-    const snapshot = {
-      stage,
-      highestUnlocked,
-      coins,
-      stars,
-      gems,
-      activeTheme,
-      unlockedThemes,
-      activeSkin,
-      unlockedSkins,
-      activeNutSkin,
-      unlockedNutSkins,
-      soundEnabled,
-      musicEnabled,
-      vibrationEnabled,
-      ...overrides,
-    };
-    localStorage.setItem('watersort_coins', String(snapshot.coins));
-    localStorage.setItem('watersort_active_theme', snapshot.activeTheme);
-    localStorage.setItem('watersort_unlocked_themes', JSON.stringify(snapshot.unlockedThemes));
-    localStorage.setItem('watersort_active_skin', snapshot.activeSkin);
-    localStorage.setItem('watersort_unlocked_skins', JSON.stringify(snapshot.unlockedSkins));
-    localStorage.setItem('watersort_active_nut_skin', snapshot.activeNutSkin);
-    localStorage.setItem('watersort_unlocked_nut_skins', JSON.stringify(snapshot.unlockedNutSkins));
-    if (currentUser) {
-      authService.saveProgressNow(currentUser.username, snapshot);
-    }
-  }, [
-    currentUser,
+  // Live ref prevents stale closure bugs when purchasing/equipping multiple items rapidly
+  const latestProgressRef = useRef(null);
+  latestProgressRef.current = {
     stage,
     highestUnlocked,
     coins,
@@ -157,13 +129,33 @@ export default function App() {
     soundEnabled,
     musicEnabled,
     vibrationEnabled,
-  ]);
+  };
+
+  // Flush full progress snapshot immediately (prevents losing purchases on quick refresh)
+  const flushProgressSnapshot = useCallback((overrides = {}) => {
+    const snapshot = {
+      ...(latestProgressRef.current || {}),
+      ...overrides,
+    };
+    latestProgressRef.current = snapshot;
+    localStorage.setItem('watersort_coins', String(snapshot.coins));
+    localStorage.setItem('watersort_active_theme', snapshot.activeTheme);
+    localStorage.setItem('watersort_unlocked_themes', JSON.stringify(snapshot.unlockedThemes));
+    localStorage.setItem('watersort_active_skin', snapshot.activeSkin);
+    localStorage.setItem('watersort_unlocked_skins', JSON.stringify(snapshot.unlockedSkins));
+    localStorage.setItem('watersort_active_nut_skin', snapshot.activeNutSkin);
+    localStorage.setItem('watersort_unlocked_nut_skins', JSON.stringify(snapshot.unlockedNutSkins));
+    if (currentUser) {
+      authService.saveProgressNow(currentUser.username, snapshot);
+    }
+  }, [currentUser]);
 
   const handlePurchaseTheme = (themeId, price) => {
+    const cur = latestProgressRef.current;
     const cost = Math.max(0, Number(price) || 0);
-    if (unlockedThemes.includes(themeId) || coins < cost) return false;
-    const nextCoins = coins - cost;
-    const nextUnlocked = normalizeUnlockedList([...unlockedThemes, themeId], 'playbg3');
+    if (cur.unlockedThemes.includes(themeId) || cur.coins < cost) return false;
+    const nextCoins = cur.coins - cost;
+    const nextUnlocked = normalizeUnlockedList([...cur.unlockedThemes, themeId], 'playbg3');
     setCoins(nextCoins);
     setUnlockedThemes(nextUnlocked);
     setActiveTheme(themeId);
@@ -173,8 +165,9 @@ export default function App() {
   };
 
   const handleEquipTheme = (themeId) => {
+    const cur = latestProgressRef.current;
     const themeDef = GAME_THEMES.find((t) => t.id === themeId);
-    if (!themeDef || (!unlockedThemes.includes(themeId) && themeDef.price > 0)) return false;
+    if (!themeDef || (!cur.unlockedThemes.includes(themeId) && themeDef.price > 0)) return false;
     setActiveTheme(themeId);
     flushProgressSnapshot({ activeTheme: themeId });
     gameAudio.playClick();
@@ -182,10 +175,11 @@ export default function App() {
   };
 
   const handlePurchaseSkin = (skinId, price) => {
+    const cur = latestProgressRef.current;
     const cost = Math.max(0, Number(price) || 0);
-    if (unlockedSkins.includes(skinId) || coins < cost) return false;
-    const nextCoins = coins - cost;
-    const nextUnlocked = normalizeUnlockedList([...unlockedSkins, skinId], 'classic');
+    if (cur.unlockedSkins.includes(skinId) || cur.coins < cost) return false;
+    const nextCoins = cur.coins - cost;
+    const nextUnlocked = normalizeUnlockedList([...cur.unlockedSkins, skinId], 'classic');
     setCoins(nextCoins);
     setUnlockedSkins(nextUnlocked);
     setActiveSkin(skinId);
@@ -195,8 +189,9 @@ export default function App() {
   };
 
   const handleEquipSkin = (skinId) => {
+    const cur = latestProgressRef.current;
     const skinDef = BOLT_SKINS.find((s) => s.id === skinId);
-    if (!skinDef || (!unlockedSkins.includes(skinId) && skinDef.price > 0)) return false;
+    if (!skinDef || (!cur.unlockedSkins.includes(skinId) && skinDef.price > 0)) return false;
     setActiveSkin(skinId);
     flushProgressSnapshot({ activeSkin: skinId });
     gameAudio.playClick();
@@ -204,10 +199,11 @@ export default function App() {
   };
 
   const handlePurchaseNutSkin = (nutSkinId, price) => {
+    const cur = latestProgressRef.current;
     const cost = Math.max(0, Number(price) || 0);
-    if (unlockedNutSkins.includes(nutSkinId) || coins < cost) return false;
-    const nextCoins = coins - cost;
-    const nextUnlocked = normalizeUnlockedList([...unlockedNutSkins, nutSkinId], 'steel_classic');
+    if (cur.unlockedNutSkins.includes(nutSkinId) || cur.coins < cost) return false;
+    const nextCoins = cur.coins - cost;
+    const nextUnlocked = normalizeUnlockedList([...cur.unlockedNutSkins, nutSkinId], 'steel_classic');
     setCoins(nextCoins);
     setUnlockedNutSkins(nextUnlocked);
     setActiveNutSkin(nutSkinId);
@@ -217,8 +213,9 @@ export default function App() {
   };
 
   const handleEquipNutSkin = (nutSkinId) => {
+    const cur = latestProgressRef.current;
     const nutDef = NUT_SKINS.find((n) => n.id === nutSkinId);
-    if (!nutDef || (!unlockedNutSkins.includes(nutSkinId) && nutDef.price > 0)) return false;
+    if (!nutDef || (!cur.unlockedNutSkins.includes(nutSkinId) && nutDef.price > 0)) return false;
     setActiveNutSkin(nutSkinId);
     flushProgressSnapshot({ activeNutSkin: nutSkinId });
     gameAudio.playClick();

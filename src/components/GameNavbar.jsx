@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, Pause, User, Trophy, Settings, ShieldCheck, ArrowLeft } from 'lucide-react';
+import { RotateCcw, Pause, User, Trophy, Settings, ShieldCheck, ArrowLeft, ShoppingBag } from 'lucide-react';
 import { gameAudio } from '../utils/gameAudio';
 
 export default function GameNavbar({
@@ -189,9 +189,21 @@ export default function GameNavbar({
             </div>
           )}
 
-          {/* Desktop Home Quick Actions: Trophies, VIP No Ads, Settings */}
+          {/* Desktop Home Quick Actions: Shop, Trophies, VIP No Ads, Settings */}
           {isHome && showDesktopQuickActions && (
             <div className="hidden sm:flex items-center gap-1.5 flex-shrink-0">
+              <button
+                onClick={() => {
+                  gameAudio.playClick();
+                  onOpenShop?.();
+                }}
+                type="button"
+                className="w-7 h-7 md:w-8 md:h-8 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border border-[#c49b65] shadow-[0_2px_0_#8c6435,0_2px_6px_rgba(0,0,0,0.6)] flex items-center justify-center text-[#5c3a1d] cursor-pointer hover:scale-105 active:scale-95 transition-transform"
+                title="Shop & Inventory"
+                aria-label="Shop"
+              >
+                <ShoppingBag className="w-3.5 h-3.5 md:w-4 md:h-4 stroke-[2.5]" />
+              </button>
               <button
                 onClick={() => {
                   gameAudio.playClick();

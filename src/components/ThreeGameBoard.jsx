@@ -742,7 +742,7 @@ export default function ThreeGameBoard({
     renderer.setSize(width, height);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio || 1, 2));
     renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    renderer.shadowMap.type = THREE.PCFShadowMap;
     renderer.toneMapping = THREE.ACESFilmicToneMapping;
     renderer.toneMappingExposure = 0.98;
     container.appendChild(renderer.domElement);
@@ -1400,8 +1400,9 @@ export default function ThreeGameBoard({
       return hasSorted;
     }
 
-    // Animation Ticker
-    let clock = new THREE.Clock();
+    // Animation Ticker (performance.now avoids deprecated THREE.Clock warnings)
+    const startTimeMs = performance.now();
+    let lastTimeMs = startTimeMs;
     let animId = null;
 
     const nutThickness = 0.120;
@@ -1410,7 +1411,10 @@ export default function ThreeGameBoard({
 
     function renderLoop() {
       animId = requestAnimationFrame(renderLoop);
-      const deltaSec = Math.min(0.05, clock.getDelta());
+      const nowMs = performance.now();
+      const deltaSec = Math.min(0.05, Math.max(0.001, (nowMs - lastTimeMs) / 1000));
+      const elapsedSec = (nowMs - startTimeMs) / 1000;
+      lastTimeMs = nowMs;
 
       // Live-sync Bolt Skin, Nut Finish Skin & Theme Lighting if changed in Shop
       const { activeSkin: curBoltSkin, activeNutSkin: curNutSkin, activeTheme: curThemeId } = propsRef.current;
@@ -1504,10 +1508,10 @@ export default function ThreeGameBoard({
           bm.halo.visible = isSelected || isHovered || Boolean(cel);
           if (isSelected) {
             bm.halo.material.color.setHex(0xfacc15);
-            bm.halo.material.opacity = 0.70 + Math.sin(clock.getElapsedTime() * 8) * 0.25;
+            bm.halo.material.opacity = 0.70 + Math.sin(elapsedSec * 8) * 0.25;
           } else if (isHovered) {
             bm.halo.material.color.setHex(0x38bdf8); // Gentle cyan interactive hover aura
-            bm.halo.material.opacity = 0.40 + Math.sin(clock.getElapsedTime() * 6) * 0.15;
+            bm.halo.material.opacity = 0.40 + Math.sin(elapsedSec * 6) * 0.15;
           } else if (cel) {
             bm.halo.material.color.setHex(0xfacc15);
             bm.halo.material.opacity = 0.5 + Math.sin(cel.time * 20) * 0.45;
