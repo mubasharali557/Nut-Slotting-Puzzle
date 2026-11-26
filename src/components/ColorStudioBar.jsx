@@ -3,17 +3,17 @@ import { Palette, Shuffle, RotateCcw, Check, ArrowLeftRight, Sparkles } from 'lu
 import { gameAudio } from '../utils/gameAudio';
 
 export const CUSTOM_COLOR_PALETTE = [
-  { id: 'red', name: 'Ruby Red', hex: '#dc2626' },
-  { id: 'blue', name: 'Sapphire Blue', hex: '#1d4ed8' },
-  { id: 'green', name: 'Emerald Green', hex: '#15803d' },
-  { id: 'yellow', name: 'Imperial Gold', hex: '#eab308' },
+  { id: 'red', name: 'Ruby Red', hex: '#dc143c' },
+  { id: 'blue', name: 'Sapphire Blue', hex: '#2563eb' },
+  { id: 'green', name: 'Emerald Green', hex: '#10b981' },
+  { id: 'yellow', name: 'Champagne Gold', hex: '#f4c84a' },
   { id: 'purple', name: 'Amethyst Purple', hex: '#9333ea' },
-  { id: 'orange', name: 'Sunset Orange', hex: '#ea580c' },
-  { id: 'pink', name: 'Hot Magenta', hex: '#ec4899' },
-  { id: 'cyan', name: 'Ice Cyan', hex: '#06b6d4' },
-  { id: 'lime', name: 'Obsidian Black', hex: '#111827' },
-  { id: 'teal', name: 'Pearl White', hex: '#ffffff' },
-  { id: 'gold', name: 'Bronze Gold', hex: '#d97706' },
+  { id: 'orange', name: 'Metallic Rose Gold', hex: '#e06d53' },
+  { id: 'pink', name: 'Orchid Magenta', hex: '#d946ef' },
+  { id: 'cyan', name: 'Turquoise', hex: '#22d3ee' },
+  { id: 'lime', name: 'Obsidian Slate', hex: '#1e293b' },
+  { id: 'teal', name: 'Premium Teal', hex: '#0f766e' },
+  { id: 'gold', name: 'Bronze Gold', hex: '#b45309' },
   { id: 'silver', name: 'Mirror Platinum', hex: '#e2e8f0' },
   { id: 'copper', name: 'Rose Copper', hex: '#c2410c' },
 ];
