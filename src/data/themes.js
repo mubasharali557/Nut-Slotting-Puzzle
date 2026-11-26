@@ -85,7 +85,7 @@ export const BOLT_SKINS = [
     price: 50,
     displayPrice: 50,
     icon: '👑',
-    previewImg: '/shop/bolts/bolt_gold.webp',
+    previewImg: '/shop/bolts/bolt_gold.webp?v=2',
     tint: 0xffd700,
   },
   {
@@ -161,7 +161,7 @@ export const NUT_SKINS = [
     price: 80,
     displayPrice: 80,
     icon: '🪵',
-    previewImg: '/shop/nuts/nut_wood.webp',
+    previewImg: '/shop/nuts/nut_wood.webp?v=2',
     textureKey: 'yellow',
   },
 ];

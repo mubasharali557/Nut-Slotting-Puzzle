@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { X, Star, Lock, Sparkles, ChevronRight, Plus, Home, Check } from 'lucide-react';
+import { X, Star, Lock, Sparkles, ChevronRight, Plus, Home, Check, ArrowLeft } from 'lucide-react';
 import { STAGES, TOTAL_STAGES } from '../data/levelStages';
 import { gameAudio } from '../utils/gameAudio';
 
@@ -64,75 +64,85 @@ export default function LevelsModal({
     <div className="fixed inset-0 z-50 flex items-center justify-center p-2 sm:p-4 bg-black/85 backdrop-blur-md select-none animate-fadeIn">
       
       {/* Outer Phone / Tablet Parchment Frame */}
-      <div className="relative w-full max-w-2xl max-h-[92vh] h-[650px] bg-[#fbf2df] rounded-3xl sm:rounded-[36px] border-4 sm:border-6 border-[#8c6239] shadow-[0_20px_50px_rgba(0,0,0,0.9),inset_0_0_40px_rgba(180,130,70,0.3)] flex flex-col overflow-hidden">
-        
-        {/* 1. TOP CURRENCY & TITLE HEADER (Matching Reference Image 3) */}
-        <div className="w-full bg-[#f4e5cb] px-3 sm:px-6 pt-2.5 pb-2 border-b-2 sm:border-b-3 border-[#c49b65] flex items-center justify-between gap-1 sm:gap-3 flex-shrink-0 z-20 shadow-md">
-          
-          {/* Left: Gems & Stars */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            {/* Purple Gems Pill */}
-            <div className="flex items-center gap-1 bg-[#ecd9b8] px-2 sm:px-3 py-1 rounded-full border border-[#b88c52] shadow-inner">
-              <span className="text-xs sm:text-sm">💎</span>
-              <span className="text-[11px] sm:text-xs font-black text-[#5c3a1d]">{gems}</span>
-              <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow cursor-pointer ml-0.5">
-                +
-              </div>
-            </div>
+      <div className="relative w-full max-w-2xl max-h-[94dvh] sm:h-[650px] bg-[#fbf2df] rounded-2xl sm:rounded-[36px] border-3 sm:border-6 border-[#8c6239] shadow-[0_20px_50px_rgba(0,0,0,0.9),inset_0_0_40px_rgba(180,130,70,0.3)] flex flex-col overflow-hidden">
 
-            {/* Stars Pill */}
-            <div className="flex items-center gap-1 bg-[#ecd9b8] px-2 sm:px-3 py-1 rounded-full border border-[#b88c52] shadow-inner">
-              <span className="text-xs sm:text-sm">⭐</span>
-              <span className="text-[11px] sm:text-xs font-black text-[#5c3a1d]">{stars}</span>
-            </div>
-          </div>
+        {/* 1. RESPONSIVE TOP CURRENCY & TITLE HEADER */}
+        <div className="w-full bg-[#f4e5cb] px-3 sm:px-6 pt-2.5 pb-2 border-b-2 sm:border-b-3 border-[#c49b65] flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 flex-shrink-0 z-20 shadow-md">
 
-          {/* Center: Red Wooden Carved Ribbon "Progress & Map" */}
-          <div className="relative flex items-center justify-center">
-            <div className="relative px-4 sm:px-7 py-1 sm:py-1.5 rounded-lg bg-gradient-to-r from-red-700 via-rose-600 to-red-700 border-2 border-amber-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
-              <div className="absolute top-0.5 inset-x-2 h-0.5 bg-white/40 rounded-full" />
-              <span className="text-xs sm:text-base font-black text-amber-100 tracking-wider uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap">
-                Progress & Map
-              </span>
-            </div>
-          </div>
-
-          {/* Right: Gold Coins & Close Button */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
-            {/* Gold Coins Pill */}
-            <div className="flex items-center gap-1 bg-[#ecd9b8] px-2 sm:px-3 py-1 rounded-full border border-[#b88c52] shadow-inner">
-              <span className="text-xs sm:text-sm">🪙</span>
-              <span className="text-[11px] sm:text-xs font-black text-[#5c3a1d]">{coins}</span>
-              <div className="w-3.5 h-3.5 rounded-full bg-emerald-500 text-white flex items-center justify-center text-[10px] font-bold shadow cursor-pointer ml-0.5">
-                +
-              </div>
-            </div>
-
-            {/* Home Button */}
+          {/* Mobile Row 1 / Center + Right Actions */}
+          <div className="w-full sm:w-auto flex items-center justify-between gap-2 sm:order-2 sm:flex-1">
             <button
+              type="button"
               onClick={() => {
                 gameAudio.playClick();
                 if (onHome) onHome();
                 else onClose();
               }}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] hover:bg-[#cfa86e] border border-[#8c6239] text-[#5c3a1d] flex items-center justify-center font-black transition-transform hover:scale-105 active:scale-95 cursor-pointer shadow"
-              title="Return to Home Screen"
-              aria-label="Home"
+              className="sm:hidden h-8 px-2.5 rounded-xl bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border border-[#8c6239] text-[#5c3a1d] flex items-center gap-1 font-black text-xs shadow cursor-pointer"
+              aria-label="Back"
             >
-              <Home className="w-4 h-4 stroke-[2.5]" />
+              <ArrowLeft className="w-3.5 h-3.5 stroke-[2.8]" />
+              <span>Back</span>
             </button>
 
-            {/* Close Button */}
-            <button
-              onClick={() => {
-                gameAudio.playClick();
-                onClose();
-              }}
-              className="w-7 h-7 sm:w-8 sm:h-8 rounded-full bg-[#dfbf8d] hover:bg-[#cfa86e] border border-[#8c6239] text-[#5c3a1d] flex items-center justify-center font-black transition-colors cursor-pointer shadow"
-              title="Close Map"
-            >
-              <X className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
-            </button>
+            <div className="relative flex items-center justify-center sm:mx-auto">
+              <div className="relative px-4 sm:px-7 py-1 sm:py-1.5 rounded-lg bg-gradient-to-r from-red-700 via-rose-600 to-red-700 border-2 border-amber-300 shadow-[0_4px_12px_rgba(0,0,0,0.5)]">
+                <div className="absolute top-0.5 inset-x-2 h-0.5 bg-white/40 rounded-full" />
+                <span className="text-xs sm:text-base font-black text-amber-100 tracking-wider uppercase drop-shadow-[0_2px_4px_rgba(0,0,0,0.8)] whitespace-nowrap">
+                  Progress & Map
+                </span>
+              </div>
+            </div>
+
+            <div className="flex items-center gap-1.5 flex-shrink-0">
+              <div className="hidden sm:flex items-center gap-1 bg-[#ecd9b8] px-3 py-1 rounded-full border border-[#b88c52] shadow-inner">
+                <span className="text-sm">🪙</span>
+                <span className="text-xs font-black text-[#5c3a1d]">{coins}</span>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => {
+                  gameAudio.playClick();
+                  if (onHome) onHome();
+                  else onClose();
+                }}
+                className="hidden sm:flex w-8 h-8 rounded-full bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] hover:bg-[#cfa86e] border border-[#8c6239] text-[#5c3a1d] items-center justify-center font-black transition-transform hover:scale-105 active:scale-95 cursor-pointer shadow"
+                title="Return to Home Screen"
+                aria-label="Home"
+              >
+                <Home className="w-4 h-4 stroke-[2.5]" />
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  gameAudio.playClick();
+                  onClose();
+                }}
+                className="w-8 h-8 rounded-full bg-[#dfbf8d] hover:bg-[#cfa86e] border border-[#8c6239] text-[#5c3a1d] flex items-center justify-center font-black transition-colors cursor-pointer shadow"
+                title="Close Map"
+                aria-label="Close"
+              >
+                <X className="w-4 h-4 sm:w-5 sm:h-5 stroke-[2.5]" />
+              </button>
+            </div>
+          </div>
+
+          {/* Left / Mobile Row 2: Compact Currencies */}
+          <div className="w-full sm:w-auto sm:order-1 flex items-center justify-center sm:justify-start gap-2">
+            <div className="flex items-center gap-1 bg-[#ecd9b8] px-2.5 py-0.5 sm:py-1 rounded-full border border-[#b88c52] shadow-inner">
+              <span className="text-xs sm:text-sm">💎</span>
+              <span className="text-[11px] sm:text-xs font-black text-[#5c3a1d]">{gems}</span>
+            </div>
+            <div className="flex items-center gap-1 bg-[#ecd9b8] px-2.5 py-0.5 sm:py-1 rounded-full border border-[#b88c52] shadow-inner">
+              <span className="text-xs sm:text-sm">⭐</span>
+              <span className="text-[11px] sm:text-xs font-black text-[#5c3a1d]">{stars}</span>
+            </div>
+            <div className="flex sm:hidden items-center gap-1 bg-[#ecd9b8] px-2.5 py-0.5 rounded-full border border-[#b88c52] shadow-inner">
+              <span className="text-xs">🪙</span>
+              <span className="text-[11px] font-black text-[#5c3a1d]">{coins}</span>
+            </div>
           </div>
         </div>
 

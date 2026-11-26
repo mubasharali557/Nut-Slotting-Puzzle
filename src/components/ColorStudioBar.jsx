@@ -37,7 +37,7 @@ export default function ColorStudioBar({
     <div className="absolute top-14 sm:top-16 left-2 right-2 sm:left-6 sm:right-6 mx-auto z-40 max-w-xl bg-gradient-to-b from-[#2a170b]/95 via-[#1a0f07]/95 to-[#120803]/98 border-2 border-[#d97706] rounded-2xl p-2.5 sm:p-3 shadow-[0_12px_32px_rgba(0,0,0,0.85),0_0_20px_rgba(217,119,6,0.25)] backdrop-blur-md flex flex-col gap-2 animate-in fade-in zoom-in-95 duration-200">
       
       {/* Header: Title and Action Buttons */}
-      <div className="flex items-center justify-between border-b border-[#c49b65]/30 pb-1.5 px-1">
+      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#c49b65]/30 pb-1.5 px-1">
         <div className="flex items-center gap-2">
           <div className="w-6 h-6 rounded-lg bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-slate-950 shadow">
             <Palette className="w-3.5 h-3.5 stroke-[2.5]" />
@@ -95,7 +95,7 @@ export default function ColorStudioBar({
       </div>
 
       {/* Mode Selector & Active Brush Preview */}
-      <div className="flex items-center justify-between px-1 text-[11px] font-bold">
+      <div className="flex flex-wrap items-center justify-between gap-1.5 px-1 text-[11px] font-bold">
         {/* Toggle between Paint Nut & Swap/Rearrange Nuts */}
         <div className="flex items-center gap-1 bg-[#100803] p-0.5 rounded-lg border border-[#c49b65]/30">
           <button
@@ -139,9 +139,9 @@ export default function ColorStudioBar({
         )}
       </div>
 
-      {/* Color Swatches Grid (15 vibrant jewel pigments) */}
+      {/* Color Swatches Grid (13 vibrant jewel pigments) */}
       {studioMode === 'paint' && (
-        <div className="grid grid-cols-8 sm:grid-cols-15 gap-1.5 sm:gap-1 p-1 bg-[#0d0602]/80 rounded-xl border border-[#c49b65]/20 justify-items-center">
+        <div className="flex flex-wrap items-center justify-center gap-1.5 sm:gap-2 p-1.5 bg-[#0d0602]/80 rounded-xl border border-[#c49b65]/20">
           {CUSTOM_COLOR_PALETTE.map((col) => {
             const isSelected = col.id === activeColor;
             return (

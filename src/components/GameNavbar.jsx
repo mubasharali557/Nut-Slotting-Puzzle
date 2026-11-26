@@ -1,5 +1,5 @@
 import React from 'react';
-import { RotateCcw, Pause, User, Trophy, Settings, ShieldCheck } from 'lucide-react';
+import { RotateCcw, Pause, User, Trophy, Settings, ShieldCheck, ArrowLeft } from 'lucide-react';
 import { gameAudio } from '../utils/gameAudio';
 
 export default function GameNavbar({
@@ -38,24 +38,43 @@ export default function GameNavbar({
         {/* Subtle top golden sheen line */}
         <div className="absolute top-0 inset-x-0 h-[1.5px] bg-gradient-to-r from-transparent via-[#ffdca8]/50 to-transparent pointer-events-none" />
 
-        {/* LEFT SECTION: Nut Sort Puzzle Wooden Sign Badge (Moved to left where Level was) */}
-        <div className="flex items-center gap-1 sm:gap-2 flex-shrink-0">
+        {/* LEFT SECTION: Back Button (in gameplay), Pause (in gameplay), & Nut Sort Badge */}
+        <div className="flex items-center gap-1.5 sm:gap-2 flex-shrink-0">
+          {/* Clearly Visible Back Button to return to Home / Front Page from Gameplay */}
+          {!isHome && (
+            <button
+              type="button"
+              onClick={() => {
+                gameAudio.playClick();
+                onHome?.();
+              }}
+              className="h-8 sm:h-9 px-2.5 sm:px-3 rounded-xl bg-gradient-to-b from-[#ffeed2] via-[#f7dfb9] to-[#dfbf8d] border-2 border-[#c49b65] shadow-[0_2px_0_#8c6435,0_3px_8px_rgba(0,0,0,0.6)] flex items-center gap-1 text-[#5c3a1d] font-black text-xs sm:text-sm cursor-pointer transition-transform hover:scale-105 active:scale-95 flex-shrink-0"
+              title="Back to Home"
+              aria-label="Back to Home"
+            >
+              <ArrowLeft className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.8]" />
+              <span>Back</span>
+            </button>
+          )}
+
           {/* Pause Button (In gameplay only) */}
           {!isHome && (
             <button
+              type="button"
               onClick={() => {
                 gameAudio.playClick();
                 if (onPause) onPause();
                 else if (onOpenSettings) onOpenSettings();
               }}
-              className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-gradient-to-b from-sky-400 via-blue-500 to-blue-700 border-2 sm:border-2.5 border-sky-200 shadow-[0_2px_0_#1e3a8a,0_3px_8px_rgba(0,0,0,0.6)] flex items-center justify-center text-white cursor-pointer transition-transform hover:scale-105 active:scale-95 flex-shrink-0"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-b from-sky-400 via-blue-500 to-blue-700 border-2 border-sky-200 shadow-[0_2px_0_#1e3a8a,0_3px_8px_rgba(0,0,0,0.6)] flex items-center justify-center text-white cursor-pointer transition-transform hover:scale-105 active:scale-95 flex-shrink-0"
               title="Pause Game / Settings"
+              aria-label="Pause"
             >
               <Pause className="w-3.5 h-3.5 sm:w-4 sm:h-4 fill-current" />
             </button>
           )}
 
-          {/* Nut Sort Puzzle Wooden Sign Badge */}
+          {/* Nut Sort Puzzle Wooden Sign Badge (Always on Home; hidden on narrow <sm gameplay so Back + Pause stay spacious) */}
           <div
             onClick={() => {
               if (onHome) {
@@ -63,7 +82,9 @@ export default function GameNavbar({
                 onHome();
               }
             }}
-            className="relative flex items-center cursor-pointer group transition-transform hover:scale-[1.03]"
+            className={`relative items-center cursor-pointer group transition-transform hover:scale-[1.03] ${
+              isHome ? 'flex' : 'hidden sm:flex'
+            }`}
             title="Nut Sort Color Puzzle"
           >
             <img
@@ -122,13 +143,15 @@ export default function GameNavbar({
             </div>
           </div>
 
-          {/* Player Profile / Player ID Pill */}
+          {/* Player Profile / Player ID Pill (Shown on Home & Desktop; hidden on narrow mobile gameplay to prevent crowding) */}
           <div
             onClick={() => {
               gameAudio.playClick();
               if (onOpenSettings) onOpenSettings();
             }}
-            className="flex items-center gap-1 sm:gap-1.5 bg-[#1c1108]/90 pl-1 pr-1.5 sm:pr-2.5 py-0.5 sm:py-1 rounded-full border border-[#c49b65]/70 shadow-inner cursor-pointer hover:border-amber-400 transition-colors flex-shrink-0 group"
+            className={`${
+              isHome ? 'flex' : 'hidden sm:flex'
+            } items-center gap-1 sm:gap-1.5 bg-[#1c1108]/90 pl-1 pr-1.5 sm:pr-2.5 py-0.5 sm:py-1 rounded-full border border-[#c49b65]/70 shadow-inner cursor-pointer hover:border-amber-400 transition-colors flex-shrink-0 group`}
             title={`Player: ${playerName || 'Mubashar'} (#${playerId || '84920'}) - Click for Settings`}
           >
             {/* Circular User Avatar Medallion */}
@@ -210,12 +233,14 @@ export default function GameNavbar({
           {/* Green Restart Button 🔄 (In gameplay only) */}
           {!isHome && (
             <button
+              type="button"
               onClick={() => {
                 gameAudio.playClick();
                 if (onRestart) onRestart();
               }}
-              className="w-7 h-7 sm:w-8.5 sm:h-8.5 rounded-full bg-gradient-to-b from-lime-300 via-emerald-500 to-green-700 border-2 sm:border-2.5 border-lime-200 shadow-[0_2px_0_#064e3b,0_3px_8px_rgba(0,0,0,0.6)] flex items-center justify-center text-white cursor-pointer transition-transform hover:scale-105 active:scale-95 flex-shrink-0"
+              className="w-8 h-8 sm:w-9 sm:h-9 rounded-full bg-gradient-to-b from-lime-300 via-emerald-500 to-green-700 border-2 border-lime-200 shadow-[0_2px_0_#064e3b,0_3px_8px_rgba(0,0,0,0.6)] flex items-center justify-center text-white cursor-pointer transition-transform hover:scale-105 active:scale-95 flex-shrink-0"
               title="Restart Level"
+              aria-label="Restart Level"
             >
               <RotateCcw className="w-3.5 h-3.5 sm:w-4 sm:h-4 stroke-[2.8]" />
             </button>
