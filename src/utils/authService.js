@@ -291,14 +291,9 @@ class AuthService {
   }
 
   /**
-   * Save player progress to server database and/or local database
+   * Persist progress locally for active user and optionally send immediately to backend
    */
-  saveProgress(arg1, arg2) {
-    const progress = arg2 !== undefined ? arg2 : arg1;
-    const token = this.getToken();
-    if (!progress || typeof progress !== 'object') return;
-
-    // 1. Immediately update local storage account
+  _persistLocalProgress(progress) {
     if (this.currentUser?.username) {
       try {
         const users = getLocalUsers();
@@ -316,32 +311,62 @@ class AuthService {
         );
       } catch (e) {}
     }
+  }
 
-    // 2. If connected to a server backend, sync remotely
+  async _pushServerProgress(progress) {
+    const token = this.getToken();
+    if (!token || token.startsWith('local_token_')) return;
+    try {
+      const res = await fetch('/api/player/progress', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(progress),
+      });
+
+      const contentType = res.headers.get('content-type') || '';
+      if (contentType.includes('application/json') && !res.ok) {
+        const errData = await res.json();
+        console.warn('[Auth] Server progress save warning:', errData.error);
+      }
+    } catch (err) {
+      console.warn('[Auth] Network error while saving progress:', err);
+    }
+  }
+
+  /**
+   * Immediately persist player progress (used for shop purchases, equipping items, and wins)
+   */
+  saveProgressNow(arg1, arg2) {
+    const progress = arg2 !== undefined ? arg2 : arg1;
+    if (!progress || typeof progress !== 'object') return;
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout);
+      this.saveTimeout = null;
+    }
+    this._persistLocalProgress(progress);
+    this._pushServerProgress(progress);
+  }
+
+  /**
+   * Save player progress to server database and/or local database (debounced server write)
+   */
+  saveProgress(arg1, arg2) {
+    const progress = arg2 !== undefined ? arg2 : arg1;
+    const token = this.getToken();
+    if (!progress || typeof progress !== 'object') return;
+
+    this._persistLocalProgress(progress);
+
     if (token && !token.startsWith('local_token_')) {
       if (this.saveTimeout) {
         clearTimeout(this.saveTimeout);
       }
 
-      this.saveTimeout = setTimeout(async () => {
-        try {
-          const res = await fetch('/api/player/progress', {
-            method: 'PUT',
-            headers: {
-              'Content-Type': 'application/json',
-              Authorization: `Bearer ${token}`,
-            },
-            body: JSON.stringify(progress),
-          });
-
-          const contentType = res.headers.get('content-type') || '';
-          if (contentType.includes('application/json') && !res.ok) {
-            const errData = await res.json();
-            console.warn('[Auth] Server progress save warning:', errData.error);
-          }
-        } catch (err) {
-          console.warn('[Auth] Network error while saving progress:', err);
-        }
+      this.saveTimeout = setTimeout(() => {
+        this._pushServerProgress(progress);
       }, 400);
     }
   }

@@ -82,7 +82,7 @@ export function getDefaultProgress() {
   return {
     stage: 1,
     highestUnlocked: 1,
-    coins: 0,
+    coins: 250,
     stars: 0,
     gems: 0,
     activeTheme: 'playbg3',

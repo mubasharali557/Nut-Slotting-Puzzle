@@ -17,6 +17,11 @@ import { gameAudio } from './utils/gameAudio';
 import { Undo2, RotateCcw, Trophy, Settings, Palette, Heart, Sparkles, ShoppingBag } from 'lucide-react';
 import ColorStudioBar, { CUSTOM_COLOR_PALETTE } from './components/ColorStudioBar';
 
+const normalizeUnlockedList = (list, defaultId) => {
+  const arr = Array.isArray(list) ? list.filter(Boolean) : [];
+  return arr.includes(defaultId) ? Array.from(new Set(arr)) : [defaultId, ...Array.from(new Set(arr))];
+};
+
 export default function App() {
   const [currentUser, setCurrentUser] = useState(null);
   const [isAuthLoading, setIsAuthLoading] = useState(true);
@@ -67,97 +72,157 @@ export default function App() {
   // Themes & Bolt Skins State
   const [activeTheme, setActiveTheme] = useState(() => {
     const saved = localStorage.getItem('watersort_active_theme');
-    const valid = ['playbg3', 'playbg', 'playbg1', 'playbg2'];
+    const valid = GAME_THEMES.map((t) => t.id);
     return saved && valid.includes(saved) ? saved : 'playbg3';
   });
   const [unlockedThemes, setUnlockedThemes] = useState(() => {
-    const saved = localStorage.getItem('watersort_unlocked_themes');
     try {
-      const parsed = saved ? JSON.parse(saved) : ['playbg3'];
-      if (!parsed.includes('playbg3')) parsed.push('playbg3');
-      return parsed;
+      const saved = localStorage.getItem('watersort_unlocked_themes');
+      return normalizeUnlockedList(saved ? JSON.parse(saved) : [], 'playbg3');
     } catch {
       return ['playbg3'];
     }
   });
 
   const [activeSkin, setActiveSkin] = useState(() => {
-    return localStorage.getItem('watersort_active_skin') || 'classic';
+    const saved = localStorage.getItem('watersort_active_skin');
+    const valid = BOLT_SKINS.map((s) => s.id);
+    return saved && valid.includes(saved) ? saved : 'classic';
   });
   const [unlockedSkins, setUnlockedSkins] = useState(() => {
-    const saved = localStorage.getItem('watersort_unlocked_skins');
-    return saved ? JSON.parse(saved) : ['classic'];
+    try {
+      const saved = localStorage.getItem('watersort_unlocked_skins');
+      return normalizeUnlockedList(saved ? JSON.parse(saved) : [], 'classic');
+    } catch {
+      return ['classic'];
+    }
   });
 
   const [activeNutSkin, setActiveNutSkin] = useState(() => {
-    return localStorage.getItem('watersort_active_nut_skin') || 'steel_classic';
+    const saved = localStorage.getItem('watersort_active_nut_skin');
+    const valid = NUT_SKINS.map((s) => s.id);
+    return saved && valid.includes(saved) ? saved : 'steel_classic';
   });
   const [unlockedNutSkins, setUnlockedNutSkins] = useState(() => {
-    const saved = localStorage.getItem('watersort_unlocked_nut_skins');
-    return saved ? JSON.parse(saved) : ['steel_classic'];
+    try {
+      const saved = localStorage.getItem('watersort_unlocked_nut_skins');
+      return normalizeUnlockedList(saved ? JSON.parse(saved) : [], 'steel_classic');
+    } catch {
+      return ['steel_classic'];
+    }
   });
 
+  // Flush full progress snapshot immediately (prevents losing purchases on quick refresh)
+  const flushProgressSnapshot = useCallback((overrides = {}) => {
+    const snapshot = {
+      stage,
+      highestUnlocked,
+      coins,
+      stars,
+      gems,
+      activeTheme,
+      unlockedThemes,
+      activeSkin,
+      unlockedSkins,
+      activeNutSkin,
+      unlockedNutSkins,
+      soundEnabled,
+      musicEnabled,
+      vibrationEnabled,
+      ...overrides,
+    };
+    localStorage.setItem('watersort_coins', String(snapshot.coins));
+    localStorage.setItem('watersort_active_theme', snapshot.activeTheme);
+    localStorage.setItem('watersort_unlocked_themes', JSON.stringify(snapshot.unlockedThemes));
+    localStorage.setItem('watersort_active_skin', snapshot.activeSkin);
+    localStorage.setItem('watersort_unlocked_skins', JSON.stringify(snapshot.unlockedSkins));
+    localStorage.setItem('watersort_active_nut_skin', snapshot.activeNutSkin);
+    localStorage.setItem('watersort_unlocked_nut_skins', JSON.stringify(snapshot.unlockedNutSkins));
+    if (currentUser) {
+      authService.saveProgressNow(currentUser.username, snapshot);
+    }
+  }, [
+    currentUser,
+    stage,
+    highestUnlocked,
+    coins,
+    stars,
+    gems,
+    activeTheme,
+    unlockedThemes,
+    activeSkin,
+    unlockedSkins,
+    activeNutSkin,
+    unlockedNutSkins,
+    soundEnabled,
+    musicEnabled,
+    vibrationEnabled,
+  ]);
+
   const handlePurchaseTheme = (themeId, price) => {
-    if (coins < price || unlockedThemes.includes(themeId)) return false;
-    setCoins((c) => c - price);
-    setUnlockedThemes((prev) => {
-      const next = [...prev, themeId];
-      localStorage.setItem('watersort_unlocked_themes', JSON.stringify(next));
-      return next;
-    });
+    const cost = Math.max(0, Number(price) || 0);
+    if (unlockedThemes.includes(themeId) || coins < cost) return false;
+    const nextCoins = coins - cost;
+    const nextUnlocked = normalizeUnlockedList([...unlockedThemes, themeId], 'playbg3');
+    setCoins(nextCoins);
+    setUnlockedThemes(nextUnlocked);
     setActiveTheme(themeId);
-    localStorage.setItem('watersort_active_theme', themeId);
-    gameAudio.playClick();
+    flushProgressSnapshot({ coins: nextCoins, unlockedThemes: nextUnlocked, activeTheme: themeId });
+    gameAudio.playPowerUp();
     return true;
   };
 
   const handleEquipTheme = (themeId) => {
-    if (!unlockedThemes.includes(themeId)) return;
+    const themeDef = GAME_THEMES.find((t) => t.id === themeId);
+    if (!themeDef || (!unlockedThemes.includes(themeId) && themeDef.price > 0)) return false;
     setActiveTheme(themeId);
-    localStorage.setItem('watersort_active_theme', themeId);
+    flushProgressSnapshot({ activeTheme: themeId });
     gameAudio.playClick();
+    return true;
   };
 
   const handlePurchaseSkin = (skinId, price) => {
-    if (coins < price || unlockedSkins.includes(skinId)) return false;
-    setCoins((c) => c - price);
-    setUnlockedSkins((prev) => {
-      const next = [...prev, skinId];
-      localStorage.setItem('watersort_unlocked_skins', JSON.stringify(next));
-      return next;
-    });
+    const cost = Math.max(0, Number(price) || 0);
+    if (unlockedSkins.includes(skinId) || coins < cost) return false;
+    const nextCoins = coins - cost;
+    const nextUnlocked = normalizeUnlockedList([...unlockedSkins, skinId], 'classic');
+    setCoins(nextCoins);
+    setUnlockedSkins(nextUnlocked);
     setActiveSkin(skinId);
-    localStorage.setItem('watersort_active_skin', skinId);
-    gameAudio.playClick();
+    flushProgressSnapshot({ coins: nextCoins, unlockedSkins: nextUnlocked, activeSkin: skinId });
+    gameAudio.playPowerUp();
     return true;
   };
 
   const handleEquipSkin = (skinId) => {
-    if (!unlockedSkins.includes(skinId)) return;
+    const skinDef = BOLT_SKINS.find((s) => s.id === skinId);
+    if (!skinDef || (!unlockedSkins.includes(skinId) && skinDef.price > 0)) return false;
     setActiveSkin(skinId);
-    localStorage.setItem('watersort_active_skin', skinId);
-    gameAudio.playClick();
-  };
-
-  const handlePurchaseNutSkin = (nutSkinId, price) => {
-    if (coins < price || unlockedNutSkins.includes(nutSkinId)) return false;
-    setCoins((c) => c - price);
-    setUnlockedNutSkins((prev) => {
-      const next = [...prev, nutSkinId];
-      localStorage.setItem('watersort_unlocked_nut_skins', JSON.stringify(next));
-      return next;
-    });
-    setActiveNutSkin(nutSkinId);
-    localStorage.setItem('watersort_active_nut_skin', nutSkinId);
+    flushProgressSnapshot({ activeSkin: skinId });
     gameAudio.playClick();
     return true;
   };
 
-  const handleEquipNutSkin = (nutSkinId) => {
-    if (!unlockedNutSkins.includes(nutSkinId)) return;
+  const handlePurchaseNutSkin = (nutSkinId, price) => {
+    const cost = Math.max(0, Number(price) || 0);
+    if (unlockedNutSkins.includes(nutSkinId) || coins < cost) return false;
+    const nextCoins = coins - cost;
+    const nextUnlocked = normalizeUnlockedList([...unlockedNutSkins, nutSkinId], 'steel_classic');
+    setCoins(nextCoins);
+    setUnlockedNutSkins(nextUnlocked);
     setActiveNutSkin(nutSkinId);
-    localStorage.setItem('watersort_active_nut_skin', nutSkinId);
+    flushProgressSnapshot({ coins: nextCoins, unlockedNutSkins: nextUnlocked, activeNutSkin: nutSkinId });
+    gameAudio.playPowerUp();
+    return true;
+  };
+
+  const handleEquipNutSkin = (nutSkinId) => {
+    const nutDef = NUT_SKINS.find((n) => n.id === nutSkinId);
+    if (!nutDef || (!unlockedNutSkins.includes(nutSkinId) && nutDef.price > 0)) return false;
+    setActiveNutSkin(nutSkinId);
+    flushProgressSnapshot({ activeNutSkin: nutSkinId });
     gameAudio.playClick();
+    return true;
   };
 
   // Modals
@@ -224,23 +289,42 @@ export default function App() {
   const applyProgress = useCallback((prog) => {
     if (!prog) return;
     const stg = Math.max(1, Number(prog.stage) || 1);
+    const highest = Math.max(1, Number(prog.highestUnlocked) || stg);
+    const nextCoins = Math.max(0, Number(prog.coins) || 0);
+    const nextStars = Math.max(0, Number(prog.stars) || 0);
+    const nextGems = Math.max(0, Number(prog.gems) || 0);
+
+    const nextUnlockedThemes = normalizeUnlockedList(prog.unlockedThemes, 'playbg3');
+    const nextActiveTheme = nextUnlockedThemes.includes(prog.activeTheme) ? prog.activeTheme : 'playbg3';
+    const nextUnlockedSkins = normalizeUnlockedList(prog.unlockedSkins, 'classic');
+    const nextActiveSkin = nextUnlockedSkins.includes(prog.activeSkin) ? prog.activeSkin : 'classic';
+    const nextUnlockedNutSkins = normalizeUnlockedList(prog.unlockedNutSkins, 'steel_classic');
+    const nextActiveNutSkin = nextUnlockedNutSkins.includes(prog.activeNutSkin) ? prog.activeNutSkin : 'steel_classic';
+
     setStage(stg);
-    setHighestUnlocked(Math.max(1, Number(prog.highestUnlocked) || stg));
-    setCoins(Math.max(0, Number(prog.coins) || 0));
-    setStars(Math.max(0, Number(prog.stars) || 0));
-    setGems(Math.max(0, Number(prog.gems) || 0));
-    if (prog.activeTheme) setActiveTheme(prog.activeTheme);
-    if (Array.isArray(prog.unlockedThemes) && prog.unlockedThemes.length > 0) {
-      setUnlockedThemes(prog.unlockedThemes);
-    }
-    if (prog.activeSkin) setActiveSkin(prog.activeSkin);
-    if (Array.isArray(prog.unlockedSkins) && prog.unlockedSkins.length > 0) {
-      setUnlockedSkins(prog.unlockedSkins);
-    }
-    if (prog.activeNutSkin) setActiveNutSkin(prog.activeNutSkin);
-    if (Array.isArray(prog.unlockedNutSkins) && prog.unlockedNutSkins.length > 0) {
-      setUnlockedNutSkins(prog.unlockedNutSkins);
-    }
+    setHighestUnlocked(highest);
+    setCoins(nextCoins);
+    setStars(nextStars);
+    setGems(nextGems);
+    setUnlockedThemes(nextUnlockedThemes);
+    setActiveTheme(nextActiveTheme);
+    setUnlockedSkins(nextUnlockedSkins);
+    setActiveSkin(nextActiveSkin);
+    setUnlockedNutSkins(nextUnlockedNutSkins);
+    setActiveNutSkin(nextActiveNutSkin);
+
+    localStorage.setItem('watersort_stage', String(stg));
+    localStorage.setItem('watersort_highest_stage', String(highest));
+    localStorage.setItem('watersort_coins', String(nextCoins));
+    localStorage.setItem('watersort_stars', String(nextStars));
+    localStorage.setItem('watersort_gems', String(nextGems));
+    localStorage.setItem('watersort_active_theme', nextActiveTheme);
+    localStorage.setItem('watersort_unlocked_themes', JSON.stringify(nextUnlockedThemes));
+    localStorage.setItem('watersort_active_skin', nextActiveSkin);
+    localStorage.setItem('watersort_unlocked_skins', JSON.stringify(nextUnlockedSkins));
+    localStorage.setItem('watersort_active_nut_skin', nextActiveNutSkin);
+    localStorage.setItem('watersort_unlocked_nut_skins', JSON.stringify(nextUnlockedNutSkins));
+
     if (prog.soundEnabled !== undefined) setSoundEnabled(Boolean(prog.soundEnabled));
     if (prog.musicEnabled !== undefined) setMusicEnabled(Boolean(prog.musicEnabled));
     if (prog.vibrationEnabled !== undefined) setVibrationEnabled(Boolean(prog.vibrationEnabled));
@@ -325,6 +409,19 @@ export default function App() {
   const handleLogout = async () => {
     gameAudio.playClick();
     await authService.logout();
+    [
+      'watersort_stage',
+      'watersort_highest_stage',
+      'watersort_coins',
+      'watersort_stars',
+      'watersort_gems',
+      'watersort_active_theme',
+      'watersort_unlocked_themes',
+      'watersort_active_skin',
+      'watersort_unlocked_skins',
+      'watersort_active_nut_skin',
+      'watersort_unlocked_nut_skins',
+    ].forEach((k) => localStorage.removeItem(k));
     setCurrentUser(null);
     setScreen('home');
   };
@@ -825,6 +922,7 @@ export default function App() {
                 hint={hint}
                 activeSkin={activeSkin}
                 activeNutSkin={activeNutSkin}
+                activeTheme={activeTheme}
                 currentStage={stage}
                 isPaintMode={isColorStudioOpen}
                 activePaintColor={activePaintColor}
