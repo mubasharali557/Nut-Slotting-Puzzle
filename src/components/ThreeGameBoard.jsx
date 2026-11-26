@@ -321,7 +321,7 @@ function createMachinedFlangeGeometry(outerRadius = 0.305, height = 0.056) {
 /**
  * Creates crisp DIN hexagonal nut geometry + open circular machined bearing collar ring
  */
-function createNutGeometry(outerRadius = 0.268, innerRadius = 0.128, thickness = 0.102) {
+function createNutGeometry(outerRadius = 0.268, innerRadius = 0.134, thickness = 0.120) {
   const shape = new THREE.Shape();
   for (let i = 0; i < 6; i++) {
     const angle = (i * Math.PI) / 3;
@@ -342,8 +342,8 @@ function createNutGeometry(outerRadius = 0.268, innerRadius = 0.128, thickness =
     bevelEnabled: true,
     bevelSegments: 2,
     steps: 1,
-    bevelSize: 0.014,
-    bevelThickness: 0.014,
+    bevelSize: 0.015,
+    bevelThickness: 0.015,
   };
 
   const geom = new THREE.ExtrudeGeometry(shape, extrudeSettings);
@@ -464,12 +464,12 @@ export default function ThreeGameBoard({
 
       const refAspect = 16 / 9;
       if (aspect < 1.0) {
-        // Mobile portrait: closer framing for larger, prominent bolts while adapting safely to 4-col rows
+        // Mobile portrait: prominent, larger bolts seated cleanly on the wooden bench
         const bottlesLen = stateRef.current?.bottles?.length || 4;
-        const isWidePortraitRow = bottlesLen >= 7;
+        const isWidePortraitRow = bottlesLen === 4 || bottlesLen >= 7;
         camera.fov = 42;
-        camera.position.set(0, isWidePortraitRow ? 2.02 : 1.84, isWidePortraitRow ? 7.65 : 6.75);
-        camera.lookAt(0, -0.02, 0);
+        camera.position.set(0, isWidePortraitRow ? 2.26 : 2.00, isWidePortraitRow ? 7.45 : 5.90);
+        camera.lookAt(0, isWidePortraitRow ? -0.15 : -0.16, 0);
       } else if (aspect < refAspect) {
         // Intermediate screens / tablets
         const baseFovRad = (28 * Math.PI) / 180;
@@ -477,13 +477,13 @@ export default function ThreeGameBoard({
         const requiredFovRad = 2 * Math.atan(targetHalfWidth / aspect);
         camera.fov = Math.min(35, (requiredFovRad * 180) / Math.PI);
         const ratioDiff = refAspect - aspect;
-        camera.position.set(0, 2.05 + ratioDiff * 0.15, 9.4 + ratioDiff * 0.5);
-        camera.lookAt(0, 0.08, 0);
+        camera.position.set(0, 2.00 + ratioDiff * 0.15, 8.95 + ratioDiff * 0.5);
+        camera.lookAt(0, 0.05, 0);
       } else {
         // Desktop widescreen: closer framing so bolts & nuts look prominent and crisp across the workbench
         camera.fov = 28;
-        camera.position.set(0, 2.0, 9.2);
-        camera.lookAt(0, 0.06, 0);
+        camera.position.set(0, 1.94, 8.65);
+        camera.lookAt(0, 0.03, 0);
       }
       camera.updateProjectionMatrix();
     };
@@ -549,35 +549,35 @@ export default function ThreeGameBoard({
     const nanoThreadColorMap = textureLoader.load('/hardware/nano_screw_thread_albedo.webp');
     nanoThreadColorMap.wrapS = THREE.RepeatWrapping;
     nanoThreadColorMap.wrapT = THREE.RepeatWrapping;
-    nanoThreadColorMap.repeat.set(1, 2.4);
+    nanoThreadColorMap.repeat.set(1, 2.8);
     nanoThreadColorMap.colorSpace = THREE.SRGBColorSpace;
 
     const nanoThreadNormalMap = textureLoader.load('/hardware/nano_screw_thread_normal.webp');
     nanoThreadNormalMap.wrapS = THREE.RepeatWrapping;
     nanoThreadNormalMap.wrapT = THREE.RepeatWrapping;
-    nanoThreadNormalMap.repeat.set(1, 2.4);
+    nanoThreadNormalMap.repeat.set(1, 2.8);
 
     const nanoThreadRoughMap = textureLoader.load('/hardware/nano_screw_thread_roughness.webp');
     nanoThreadRoughMap.wrapS = THREE.RepeatWrapping;
     nanoThreadRoughMap.wrapT = THREE.RepeatWrapping;
-    nanoThreadRoughMap.repeat.set(1, 2.4);
+    nanoThreadRoughMap.repeat.set(1, 2.8);
 
     const threadColorMap = createThreadColorTexture();
     const threadNormalMap = createThreadNormalTexture();
-    const nutGeometry = createNutGeometry(0.268, 0.128, 0.102);
-    const nutRingGeometry = createNutBearingRingGeometry(0.129, 0.214, 0.0055);
-    const boreGeometry = new THREE.CylinderGeometry(0.129, 0.129, 0.118, 28, 1, true);
+    const nutGeometry = createNutGeometry(0.268, 0.134, 0.120);
+    const nutRingGeometry = createNutBearingRingGeometry(0.135, 0.220, 0.006);
+    const boreGeometry = new THREE.CylinderGeometry(0.135, 0.135, 0.136, 28, 1, true);
 
-    // Slim Silver Threaded Steel Stud Shaft (leaves clean exposed threaded top when not full/completed)
-    const shaftHeight = 0.605;
-    const shaftGeometry = createThreadedShaftGeometry(0.116, shaftHeight, 21);
+    // Prominent Stainless Threaded Steel Stud Shaft (sleek, taller hardware + exposed threaded tip when incomplete)
+    const shaftHeight = 0.725;
+    const shaftGeometry = createThreadedShaftGeometry(0.122, shaftHeight, 23);
 
     // Smooth Chamfered Silver Stud Tip (peeking out of top nut center hole when incomplete)
-    const headHeight = 0.044;
-    const headGeometry = createStudTipGeometry(0.116, headHeight);
+    const headHeight = 0.048;
+    const headGeometry = createStudTipGeometry(0.122, headHeight);
 
     // 3D Brushed Steel Completion Cap Lid (screws on top when all 4 nuts match)
-    const completionCapGeometry = createCompletionCapGeometry(0.174, 0.088);
+    const completionCapGeometry = createCompletionCapGeometry(0.180, 0.095);
     const completionCapMaterial = new THREE.MeshStandardMaterial({
       color: 0xf1f5f9,
       metalness: 0.90,
@@ -590,9 +590,9 @@ export default function ThreeGameBoard({
     });
 
     // Round Silver Steel Flange Base Disc
-    const baseHeight = 0.056;
-    const baseGeometry = createMachinedFlangeGeometry(0.305, baseHeight);
-    const contactShadowGeometry = new THREE.RingGeometry(0.16, 0.345, 36);
+    const baseHeight = 0.064;
+    const baseGeometry = createMachinedFlangeGeometry(0.288, baseHeight);
+    const contactShadowGeometry = new THREE.RingGeometry(0.155, 0.328, 36);
     contactShadowGeometry.rotateX(-Math.PI / 2);
 
     // Materials Cache
@@ -676,7 +676,7 @@ export default function ThreeGameBoard({
       opacity: 0.85,
       side: THREE.DoubleSide,
     });
-    const haloGeometry = new THREE.RingGeometry(0.325, 0.38, 32);
+    const haloGeometry = new THREE.RingGeometry(0.312, 0.368, 32);
     haloGeometry.rotateX(-Math.PI / 2);
 
     // 4. Object Pools
@@ -685,7 +685,7 @@ export default function ThreeGameBoard({
     const movingNutMesh = new THREE.Mesh(nutGeometry, nutMaterials.red);
     const movingBoreMesh = new THREE.Mesh(boreGeometry, boreMaterial);
     const movingRingMesh = new THREE.Mesh(nutRingGeometry, nutMaterials.red);
-    movingRingMesh.position.y = 0.064;
+    movingRingMesh.position.y = 0.074;
     movingNutMesh.userData.ringMesh = movingRingMesh;
     movingNutMesh.add(movingBoreMesh);
     movingNutMesh.add(movingRingMesh);
@@ -771,31 +771,48 @@ export default function ThreeGameBoard({
       let colSpacing, r1Z, r1Y, r2Z, r2Y;
 
       if (isPortrait) {
-        // Dynamic camera frustum width calculation based on exact camera distance and FOV
+        if (numTubes >= 7) {
+          r1Z = -0.48;
+          r1Y = -1.92;
+          r2Z = 0.52;
+          r2Y = -2.02;
+        } else if (isTwoRows) {
+          r1Z = -0.40;
+          r1Y = -1.56;
+          r2Z = 0.48;
+          r2Y = -1.64;
+        } else if (numTubes === 4) {
+          r1Z = 0.08;
+          r1Y = -1.96;
+          r2Z = 0.48;
+          r2Y = -1.64;
+        } else {
+          r1Z = 0.10;
+          r1Y = -1.62;
+          r2Z = 0.48;
+          r2Y = -1.64;
+        }
+
+        // Dynamic camera frustum width calculation on front-most row so outer flanges stay inside screen
         const vfovRad = (camera.fov * Math.PI) / 180;
-        const targetZ = isTwoRows ? 0.0 : -0.1;
-        const distToPlane = Math.abs(camera.position.z - targetZ);
+        const frontRowZ = isTwoRows ? r2Z : r1Z;
+        const distToPlane = Math.abs(camera.position.z - frontRowZ);
         const visH = 2 * distToPlane * Math.tan(vfovRad / 2);
         const visW = visH * currentAspect;
 
-        // Nut outer diameter is 0.54; proportionate clustering without flange overlap
-        const nutDiameter = 0.54;
-        const availableW = Math.max(1.5, visW * 0.90 - nutDiameter);
-        colSpacing = Math.min(0.76, availableW / Math.max(1, maxCols - 1));
-
-        r1Z = isTwoRows ? -0.58 : 0.0;
-        r1Y = isTwoRows ? -1.04 : -1.16;
-        r2Z = 0.68;
-        r2Y = -1.28;
+        const flangeDiameter = 0.576;
+        const availableW = Math.max(1.2, visW * 0.95 - flangeDiameter);
+        const maxGapSpacing = maxCols >= 4 ? 0.68 : 0.70;
+        colSpacing = Math.min(maxGapSpacing, availableW / Math.max(1, maxCols - 1));
       } else {
         // Desktop / widescreen
         const totalWidth = 3.9;
         colSpacing = Math.min(0.92, totalWidth / Math.max(1, maxCols - 0.2));
 
-        r1Z = isTwoRows ? -0.60 : 0.05;
-        r1Y = isTwoRows ? -1.06 : -1.18;
-        r2Z = 0.70;
-        r2Y = -1.30;
+        r1Z = isTwoRows ? -0.56 : 0.05;
+        r1Y = isTwoRows ? -1.14 : -1.24;
+        r2Z = 0.64;
+        r2Y = -1.28;
       }
 
       const positions = [];
@@ -1037,9 +1054,9 @@ export default function ThreeGameBoard({
     let clock = new THREE.Clock();
     let animId = null;
 
-    const nutThickness = 0.102;
-    const nutSpacing = 0.129; // Exact DIN machined nut thickness + chamfers with crisp layer separation
-    const threadPitch = shaftHeight / 21;
+    const nutThickness = 0.120;
+    const nutSpacing = 0.148; // Exact DIN machined nut thickness + chamfers with crisp layer separation
+    const threadPitch = shaftHeight / 23;
 
     function renderLoop() {
       animId = requestAnimationFrame(renderLoop);
@@ -1157,7 +1174,7 @@ export default function ThreeGameBoard({
         const nutMesh = new THREE.Mesh(nutGeometry, nutMaterials.red);
         const boreMesh = new THREE.Mesh(boreGeometry, boreMaterial);
         const ringMesh = new THREE.Mesh(nutRingGeometry, nutMaterials.red);
-        ringMesh.position.y = 0.064;
+        ringMesh.position.y = 0.074;
         nutMesh.userData.ringMesh = ringMesh;
         nutMesh.add(boreMesh);
         nutMesh.add(ringMesh);
@@ -1178,7 +1195,7 @@ export default function ThreeGameBoard({
 
         let targetLift = 0;
         if (isSelected) {
-          targetLift = 0.18; // Full unscrew lift
+          targetLift = 0.21; // Full unscrew lift
         } else if (isHovered && hasNuts) {
           targetLift = 0.038; // Subtle interactive hover lift along threads
         }
