@@ -704,11 +704,14 @@ export default function ThreeGameBoard({
 
       const refAspect = 16 / 9;
       if (aspect < 1.0) {
-        // Mobile portrait: prominent, detailed bolts seated cleanly inside the wooden bench
+        // Mobile portrait: prominent, detailed bolts seated cleanly inside the wooden bench (adapts cleanly even if +Bolt makes 5 cols)
         const bottlesLen = stateRef.current?.bottles?.length || 4;
+        const isFiveColPortraitRow = bottlesLen >= 9;
         const isWidePortraitRow = bottlesLen === 4 || bottlesLen >= 7;
         camera.fov = 42;
-        camera.position.set(0, isWidePortraitRow ? 2.26 : 1.98, isWidePortraitRow ? 7.65 : 5.95);
+        const camY = isFiveColPortraitRow ? 2.48 : (isWidePortraitRow ? 2.26 : 1.98);
+        const camZ = isFiveColPortraitRow ? 8.65 : (isWidePortraitRow ? 7.65 : 5.95);
+        camera.position.set(0, camY, camZ);
         camera.lookAt(0, isWidePortraitRow ? -0.15 : -0.16, 0);
       } else if (aspect < refAspect) {
         // Intermediate screens / tablets
@@ -1113,7 +1116,12 @@ export default function ThreeGameBoard({
       let colSpacing, r1Z, r1Y, r2Z, r2Y;
 
       if (isPortrait) {
-        if (numTubes >= 7) {
+        if (numTubes >= 9) {
+          r1Z = -0.48;
+          r1Y = -2.20;
+          r2Z = 0.50;
+          r2Y = -2.30;
+        } else if (numTubes >= 7) {
           r1Z = -0.48;
           r1Y = -1.96;
           r2Z = 0.50;

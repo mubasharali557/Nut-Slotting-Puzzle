@@ -206,6 +206,62 @@ class AuthService {
   }
 
   /**
+   * Persistent Guest session in local browser storage so Shop purchases and progress survive reloads
+   */
+  loginAsGuest() {
+    const guestId = 'guest_local';
+    const token = 'local_token_' + guestId;
+    let savedProgress = null;
+
+    try {
+      const rawBackup = localStorage.getItem('watersort_backup_Guest');
+      if (rawBackup) savedProgress = JSON.parse(rawBackup);
+    } catch (e) {}
+
+    if (!savedProgress) {
+      const savedCoins = localStorage.getItem('watersort_coins');
+      const savedSkins = localStorage.getItem('watersort_unlocked_skins');
+      const savedNuts = localStorage.getItem('watersort_unlocked_nut_skins');
+      const savedThemes = localStorage.getItem('watersort_unlocked_themes');
+      savedProgress = {
+        ...DEFAULT_INITIAL_PROGRESS,
+        ...(savedCoins !== null && { coins: Math.max(0, parseInt(savedCoins, 10) || 0) }),
+        ...(savedSkins && { unlockedSkins: JSON.parse(savedSkins) }),
+        ...(localStorage.getItem('watersort_active_skin') && {
+          activeSkin: localStorage.getItem('watersort_active_skin'),
+        }),
+        ...(savedNuts && { unlockedNutSkins: JSON.parse(savedNuts) }),
+        ...(localStorage.getItem('watersort_active_nut_skin') && {
+          activeNutSkin: localStorage.getItem('watersort_active_nut_skin'),
+        }),
+        ...(savedThemes && { unlockedThemes: JSON.parse(savedThemes) }),
+        ...(localStorage.getItem('watersort_active_theme') && {
+          activeTheme: localStorage.getItem('watersort_active_theme'),
+        }),
+      };
+    }
+
+    const guestUser = {
+      id: guestId,
+      username: 'Guest',
+      createdAt: new Date().toISOString(),
+      progress: savedProgress,
+    };
+    this.setToken(token);
+    this.currentUser = { id: guestUser.id, username: guestUser.username };
+    try {
+      localStorage.setItem(LOCAL_ACTIVE_USER_KEY, JSON.stringify(guestUser));
+    } catch (e) {}
+
+    return {
+      success: true,
+      token,
+      user: this.currentUser,
+      progress: guestUser.progress,
+    };
+  }
+
+  /**
    * Check current active user session on app launch
    */
   async getCurrentUser() {
@@ -304,6 +360,11 @@ class AuthService {
           users[idx].progress = { ...users[idx].progress, ...progress };
           saveLocalUsers(users);
           localStorage.setItem(LOCAL_ACTIVE_USER_KEY, JSON.stringify(users[idx]));
+        } else if (this.currentUser?.id === 'guest_local') {
+          localStorage.setItem(
+            LOCAL_ACTIVE_USER_KEY,
+            JSON.stringify({ id: this.currentUser.id, username: this.currentUser.username, progress })
+          );
         }
         localStorage.setItem(
           `watersort_backup_${this.currentUser.username}`,

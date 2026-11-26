@@ -22,25 +22,8 @@ export default function AuthScreen({ onAuthSuccess }) {
 
   const handleGuestPlay = () => {
     gameAudio.playClick();
-    onAuthSuccess?.(
-      { id: 'guest', username: 'Guest' },
-      {
-        stage: 1,
-        highestUnlocked: 1,
-        coins: 250,
-        stars: 125,
-        gems: 15,
-        activeTheme: 'playbg3',
-        unlockedThemes: ['playbg3'],
-        activeSkin: 'classic',
-        unlockedSkins: ['classic'],
-        activeNutSkin: 'steel_classic',
-        unlockedNutSkins: ['steel_classic'],
-        soundEnabled: true,
-        musicEnabled: false,
-        vibrationEnabled: true,
-      }
-    );
+    const res = authService.loginAsGuest();
+    onAuthSuccess?.(res.user, res.progress);
   };
 
   const handleSubmit = async (e) => {
