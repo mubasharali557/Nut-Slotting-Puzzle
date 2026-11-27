@@ -409,14 +409,14 @@ export default function HomeScreen({
               <button
                 onClick={handleLevelsClick}
                 type="button"
-                className="w-[38vw] max-w-[145px] aspect-[542/199] cursor-pointer select-none focus:outline-none drop-shadow-[0_8px_16px_rgba(0,0,0,0.6)] hover:brightness-105 active:scale-95 transition-all"
+                className="flex-1 max-w-[172px] aspect-[757/286] cursor-pointer select-none focus:outline-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] hover:brightness-105 active:scale-95 transition-all flex items-center justify-center"
                 title="Levels & Stage Map"
                 aria-label="Levels and Stage Map"
               >
                 <img
                   src="/levels_button.webp"
                   alt="Levels"
-                  className="w-full h-full object-contain pointer-events-none select-none block"
+                  className="w-full h-full object-fill pointer-events-none select-none block"
                   draggable={false}
                 />
               </button>
@@ -427,14 +427,14 @@ export default function HomeScreen({
                 onPointerDown={() => setIsPlayPressed(true)}
                 onPointerLeave={() => setIsPlayPressed(false)}
                 type="button"
-                className="group relative w-[56vw] max-w-[218px] aspect-[757/286] cursor-pointer select-none focus:outline-none drop-shadow-[0_10px_22px_rgba(0,0,0,0.6)] hover:brightness-105 active:scale-95 transition-all"
+                className="group relative flex-1 max-w-[172px] aspect-[757/286] cursor-pointer select-none focus:outline-none drop-shadow-[0_10px_20px_rgba(0,0,0,0.6)] hover:brightness-105 active:scale-95 transition-all flex items-center justify-center"
                 title={`Play Level ${currentStage}!`}
                 aria-label={`Play Level ${currentStage}`}
               >
                 <img
                   src="/play_button_base.webp"
                   alt="Play"
-                  className="w-full h-full object-contain pointer-events-none select-none block"
+                  className="w-full h-full object-fill pointer-events-none select-none block"
                   draggable={false}
                 />
                 <div
@@ -591,17 +591,17 @@ export default function HomeScreen({
               {/* INTERACTIVE ACTION BUTTONS OVERLAY (Clean workbench without baked corner icons) */}
               <div className="absolute inset-0 z-20 pointer-events-auto">
 
-                {/* === A. LEVELS BUTTON (Glossy Blue 3D Pill - 100% Fixed & Stationary) === */}
+                {/* === A. LEVELS BUTTON (Glossy Blue 3D Pill - Identical Dimensions to PLAY) === */}
                 <button
                   onClick={handleLevelsClick}
                   type="button"
-                  className="absolute cursor-pointer select-none focus:outline-none"
+                  className="absolute cursor-pointer select-none focus:outline-none flex items-center justify-center"
                   style={{
                     left: '24.5%',
-                    top: '70.2%',
-                    width: '19.5%',
-                    aspectRatio: '542 / 199',
-                    filter: 'drop-shadow(0 10px 20px rgba(0,0,0,0.5)) drop-shadow(0 0 12px rgba(59,130,246,0.3))',
+                    top: '68.0%',
+                    width: '23.8%',
+                    aspectRatio: '757 / 286',
+                    filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.55)) drop-shadow(0 0 14px rgba(59,130,246,0.3))',
                     transform: 'none',
                   }}
                   title="Levels & Stage Map"
@@ -610,7 +610,7 @@ export default function HomeScreen({
                   <img
                     src="/levels_button.webp"
                     alt="Levels"
-                    className="w-full h-full object-contain pointer-events-none select-none block"
+                    className="w-full h-full object-fill pointer-events-none select-none block"
                     draggable={false}
                     style={{ transform: 'none' }}
                   />
@@ -625,13 +625,13 @@ export default function HomeScreen({
                   }}
                   onPointerLeave={() => setIsPlayPressed(false)}
                   type="button"
-                  className="group absolute cursor-pointer select-none focus:outline-none"
+                  className="group absolute cursor-pointer select-none focus:outline-none flex items-center justify-center"
                   style={{
-                    left: '47.5%',
-                    top: '66.8%',
-                    width: '28.0%',
+                    left: '51.7%',
+                    top: '68.0%',
+                    width: '23.8%',
                     aspectRatio: '757 / 286',
-                    filter: 'drop-shadow(0 14px 28px rgba(0,0,0,0.6)) drop-shadow(0 0 16px rgba(34,197,94,0.35))',
+                    filter: 'drop-shadow(0 12px 24px rgba(0,0,0,0.55)) drop-shadow(0 0 16px rgba(34,197,94,0.35))',
                     transform: 'none',
                   }}
                   title={`Play Level ${currentStage}!`}
@@ -641,7 +641,7 @@ export default function HomeScreen({
                   <img
                     src="/play_button_base.webp"
                     alt="Play"
-                    className="w-full h-full object-contain pointer-events-none select-none block"
+                    className="w-full h-full object-fill pointer-events-none select-none block"
                     draggable={false}
                     style={{ transform: 'none' }}
                   />
