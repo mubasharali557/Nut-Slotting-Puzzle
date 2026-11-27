@@ -704,29 +704,29 @@ export default function ThreeGameBoard({
 
       const refAspect = 16 / 9;
       if (aspect < 1.0) {
-        // Mobile portrait: prominent, detailed bolts seated cleanly inside the wooden bench (adapts cleanly even if +Bolt makes 5 cols)
+        // Mobile portrait: natural standing eye-line perspective (narrower 30deg FOV eliminates wide-angle skew & forward lean)
         const bottlesLen = stateRef.current?.bottles?.length || 4;
         const isFiveColPortraitRow = bottlesLen >= 9;
         const isWidePortraitRow = bottlesLen === 4 || bottlesLen >= 7;
-        camera.fov = 42;
-        const camY = isFiveColPortraitRow ? 2.48 : (isWidePortraitRow ? 2.26 : 1.98);
-        const camZ = isFiveColPortraitRow ? 8.65 : (isWidePortraitRow ? 7.65 : 5.95);
+        camera.fov = 30;
+        const camY = isFiveColPortraitRow ? 1.72 : (isWidePortraitRow ? 1.60 : 1.48);
+        const camZ = isFiveColPortraitRow ? 12.20 : (isWidePortraitRow ? 10.90 : 8.60);
         camera.position.set(0, camY, camZ);
-        camera.lookAt(0, isWidePortraitRow ? -0.15 : -0.16, 0);
+        camera.lookAt(0, isFiveColPortraitRow ? -0.35 : (isWidePortraitRow ? -0.32 : -0.26), 0);
       } else if (aspect < refAspect) {
-        // Intermediate screens / tablets
-        const baseFovRad = (28 * Math.PI) / 180;
+        // Intermediate screens / tablets: natural standing perspective matching desktop framing
+        const baseFovRad = (23 * Math.PI) / 180;
         const targetHalfWidth = Math.tan(baseFovRad / 2) * refAspect;
         const requiredFovRad = 2 * Math.atan(targetHalfWidth / aspect);
-        camera.fov = Math.min(35, (requiredFovRad * 180) / Math.PI);
+        camera.fov = Math.min(30, (requiredFovRad * 180) / Math.PI);
         const ratioDiff = refAspect - aspect;
-        camera.position.set(0, 1.96 + ratioDiff * 0.15, 8.70 + ratioDiff * 0.5);
-        camera.lookAt(0, 0.04, 0);
+        camera.position.set(0, 1.56 + ratioDiff * 0.14, 10.60 + ratioDiff * 0.4);
+        camera.lookAt(0, -0.10, 0);
       } else {
-        // Desktop widescreen: closer framing so machined bolts & threads stand out clearly on the bench
-        camera.fov = 28;
-        camera.position.set(0, 1.92, 8.40);
-        camera.lookAt(0, 0.03, 0);
+        // Desktop widescreen: natural standing eye-line slightly above workbench for elongated, straight bolts
+        camera.fov = 23;
+        camera.position.set(0, 1.56, 10.60);
+        camera.lookAt(0, -0.10, 0);
       }
       camera.updateProjectionMatrix();
     };
@@ -810,13 +810,13 @@ export default function ThreeGameBoard({
     const nutRingGeometry = createNutBearingRingGeometry(0.139, 0.222, 0.006);
     const boreGeometry = new THREE.CylinderGeometry(0.139, 0.139, 0.136, 28, 1, true);
 
-    // Prominent 3D Sculpted ISO Metric Steel Stud Shaft + Heavy Fluted Spiral Variant
-    const shaftHeight = 0.745;
-    const shaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 16, 0.0145);
-    const spiralShaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 9, 0.0215);
+    // Elongated, Sleek 3D Sculpted ISO Metric Steel Stud Shaft + Heavy Fluted Spiral Variant
+    const shaftHeight = 0.830;
+    const shaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 18, 0.0145);
+    const spiralShaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 10, 0.0215);
 
     // CNC Chamfered Steel Stud Tip + Machined Hex Socket Drive Recess
-    const headHeight = 0.056;
+    const headHeight = 0.055;
     const headGeometry = createStudTipGeometry(0.128, headHeight);
     const hexSocketGeometry = createHexSocketInsertGeometry(0.052, 0.012);
     const hexSocketMaterial = new THREE.MeshStandardMaterial({
@@ -1117,30 +1117,30 @@ export default function ThreeGameBoard({
 
       if (isPortrait) {
         if (numTubes >= 9) {
-          r1Z = -0.48;
-          r1Y = -2.20;
-          r2Z = 0.50;
-          r2Y = -2.30;
+          r1Z = -0.78;
+          r1Y = -2.06;
+          r2Z = 0.65;
+          r2Y = -2.18;
         } else if (numTubes >= 7) {
-          r1Z = -0.48;
-          r1Y = -1.96;
-          r2Z = 0.50;
-          r2Y = -2.06;
+          r1Z = -0.75;
+          r1Y = -1.84;
+          r2Z = 0.65;
+          r2Y = -1.96;
         } else if (isTwoRows) {
-          r1Z = -0.40;
-          r1Y = -1.56;
-          r2Z = 0.46;
-          r2Y = -1.64;
+          r1Z = -0.68;
+          r1Y = -1.46;
+          r2Z = 0.62;
+          r2Y = -1.56;
         } else if (numTubes === 4) {
-          r1Z = 0.08;
-          r1Y = -1.98;
-          r2Z = 0.46;
-          r2Y = -1.64;
+          r1Z = 0.05;
+          r1Y = -1.88;
+          r2Z = 0.65;
+          r2Y = -1.96;
         } else {
-          r1Z = 0.10;
-          r1Y = -1.62;
-          r2Z = 0.46;
-          r2Y = -1.64;
+          r1Z = 0.05;
+          r1Y = -1.52;
+          r2Z = 0.62;
+          r2Y = -1.56;
         }
 
         // Dynamic camera frustum width calculation on front-most row so outer flanges stay inside screen
@@ -1152,17 +1152,17 @@ export default function ThreeGameBoard({
 
         const flangeDiameter = 0.588;
         const availableW = Math.max(1.2, visW * 0.96 - flangeDiameter);
-        const maxGapSpacing = maxCols >= 4 ? 0.68 : 0.70;
+        const maxGapSpacing = maxCols >= 4 ? 0.66 : 0.70;
         colSpacing = Math.min(maxGapSpacing, availableW / Math.max(1, maxCols - 1));
       } else {
         // Desktop / widescreen
         const totalWidth = 3.9;
         colSpacing = Math.min(0.92, totalWidth / Math.max(1, maxCols - 0.2));
 
-        r1Z = isTwoRows ? -0.56 : 0.05;
-        r1Y = isTwoRows ? -1.12 : -1.22;
-        r2Z = 0.62;
-        r2Y = -1.25;
+        r1Z = isTwoRows ? -0.78 : 0.05;
+        r1Y = isTwoRows ? -1.16 : -1.26;
+        r2Z = 0.72;
+        r2Y = -1.32;
       }
 
       const positions = [];
@@ -1358,10 +1358,14 @@ export default function ThreeGameBoard({
 
       state.lastRejectedIdx = null;
 
-      // Start Transfer: 1 nut moves cleanly from source to destination regardless of color
+      // Start Transfer: 1 nut moves cleanly & directly from its current lifted position to destination
       const topColor = fromBottle[fromBottle.length - 1];
       const amount = 1;
+      const startLift = state.selectedLift[fromIdx] || 0;
 
+      state.selected = null;
+      state.selectedLift[fromIdx] = 0;
+      state.selectedLift[toIdx] = 0;
       state.isAnimating = true;
       state.animTime = 0;
       state.moveData = {
@@ -1369,6 +1373,7 @@ export default function ThreeGameBoard({
         toIdx,
         color: topColor,
         amount,
+        startLift,
         phase1Started: false,
         phase1Released: false,
         phase3Started: false,
@@ -1407,7 +1412,11 @@ export default function ThreeGameBoard({
 
     const nutThickness = 0.120;
     const nutSpacing = 0.148; // Exact DIN machined nut thickness + chamfers with crisp layer separation
-    const threadPitch = shaftHeight / 16;
+    const threadPitch = shaftHeight / 18;
+    // Slight away-facing inclination (-3.15 deg toward -Z) counters downward perspective lean so bolts look upright & away from viewer
+    const BOLT_TILT_X = -0.055;
+    const COS_TILT = Math.cos(BOLT_TILT_X);
+    const SIN_TILT = Math.sin(BOLT_TILT_X);
 
     function renderLoop() {
       animId = requestAnimationFrame(renderLoop);
@@ -1475,23 +1484,28 @@ export default function ThreeGameBoard({
 
         headGroup.position.y = shaftHeight;
 
-        // Round Silver Steel Flange Disc Base
+        // Round Silver Steel Flange Disc Base stays flush on tabletop
         const base = new THREE.Mesh(baseGeometry, boltBaseMaterial);
         base.castShadow = true;
         base.receiveShadow = true;
         base.userData = { type: 'bolt', tubeIndex: boltIdx };
+
+        // Tilted Stud Assembly (orients shaft & head slightly away from viewer cleanly centered on flange)
+        const tiltGroup = new THREE.Group();
+        tiltGroup.rotation.x = BOLT_TILT_X;
+        tiltGroup.add(shaft);
+        tiltGroup.add(headGroup);
 
         const halo = new THREE.Mesh(haloGeometry, haloMaterial);
         halo.position.y = 0.008;
         halo.visible = false;
 
         group.add(base);
-        group.add(shaft);
-        group.add(headGroup);
+        group.add(tiltGroup);
         group.add(halo);
 
         scene.add(group);
-        boltMeshes.push({ group, shaft, headGroup, collar, base, halo, badge, badgeScale: 0 });
+        boltMeshes.push({ group, tiltGroup, shaft, headGroup, collar, base, halo, badge, badgeScale: 0 });
       }
 
       // Position bolts on wooden tabletop and update selection halo
@@ -1597,7 +1611,7 @@ export default function ThreeGameBoard({
           if (mesh.userData.ringMesh) mesh.userData.ringMesh.material = activeRingAccentMat || mat;
           mesh.userData = { ...mesh.userData, type: 'nut', tubeIndex: i, nutIndex: l };
 
-          const isTop = l === displayCount - 1 && (state.selected === i || state.hoveredTube === i);
+          const isTop = !state.isAnimating && l === displayCount - 1 && (state.selected === i || state.hoveredTube === i);
           const nutLift = isTop ? lift : 0;
           const cel = state.celebratingBolts[i];
           const celBounce = cel
@@ -1605,56 +1619,75 @@ export default function ThreeGameBoard({
             : 0;
           const celSpin = cel ? cel.time * 7 : 0;
 
-          // Nut sits flush on stepped washer flange: baseHeight + totalNutHeight / 2
-          const restY = pos.y + baseHeight + nutSpacing * 0.5 + l * nutSpacing + nutLift + celBounce;
+          // Nut sits flush along the bolt axis: baseHeight + totalNutHeight / 2
+          const axialOffset = baseHeight + nutSpacing * 0.5 + l * nutSpacing + nutLift + celBounce;
 
-          mesh.position.set(pos.x, restY, pos.z);
+          mesh.position.set(pos.x, pos.y + axialOffset * COS_TILT, pos.z + axialOffset * SIN_TILT);
 
-          // Thread-phase resting angle + helical unscrewing rotation when lifted + celebration spin
+          // Thread-phase resting angle + helical unscrewing rotation aligned with tilted bolt axis
           const baseAngle = l * 0.45;
           const unscrewAngle = isTop ? -(nutLift / threadPitch) * Math.PI * 2 : 0;
-          mesh.rotation.set(0, baseAngle + unscrewAngle + celSpin, 0);
+          mesh.rotation.order = 'XYZ';
+          mesh.rotation.set(BOLT_TILT_X, baseAngle + unscrewAngle + celSpin, 0);
         }
       }
 
-      // 3. Handle Active Nut Transfer
+      // 3. Handle Active Nut Transfer (Continuous direct path from pickup height to target slot)
       if (state.isAnimating && state.moveData) {
         state.animTime += deltaSec;
-        const duration = 0.82;
+        const duration = 0.76;
         const rawProgress = Math.min(1.0, state.animTime / duration);
 
-        const { fromIdx, toIdx, color } = state.moveData;
+        const { fromIdx, toIdx, color, startLift = 0 } = state.moveData;
         const fromPos = layout.positions[fromIdx];
         const toPos = layout.positions[toIdx];
 
         const fromStack = bottlesData[fromIdx];
         const toStack = bottlesData[toIdx];
 
-        const fromRestY = fromPos.y + baseHeight + nutSpacing * 0.5 + (fromStack.length - 1) * nutSpacing;
-        const toRestY = toPos.y + baseHeight + nutSpacing * 0.5 + toStack.length * nutSpacing;
-        const apexY = Math.max(fromPos.y, toPos.y) + shaftHeight + headHeight + 0.14;
+        const fromAxialRest = baseHeight + nutSpacing * 0.5 + (fromStack.length - 1) * nutSpacing;
+        const startAxial = fromAxialRest + startLift;
+        const toAxialRest = baseHeight + nutSpacing * 0.5 + toStack.length * nutSpacing;
+        const apexAxial = Math.max(startAxial, toAxialRest, shaftHeight + headHeight + 0.12);
+
+        const startY = fromPos.y + startAxial * COS_TILT;
+        const startZ = fromPos.z + startAxial * SIN_TILT;
+        const apexFromY = fromPos.y + apexAxial * COS_TILT;
+        const apexFromZ = fromPos.z + apexAxial * SIN_TILT;
+        const apexToY = toPos.y + apexAxial * COS_TILT;
+        const apexToZ = toPos.z + apexAxial * SIN_TILT;
+        const toRestY = toPos.y + toAxialRest * COS_TILT;
+        const toRestZ = toPos.z + toAxialRest * SIN_TILT;
+
+        const startAngle = (fromStack.length - 1) * 0.45 - (startLift / threadPitch) * Math.PI * 2;
+        const endAngle = toStack.length * 0.45;
+        const phase1EndAngle = startAngle - ((apexAxial - startAxial) / threadPitch) * Math.PI * 2;
+        const phase3StartAngle = endAngle + ((apexAxial - toAxialRest) / threadPitch) * Math.PI * 2;
 
         const movingMat = nutMaterials[color] || nutMaterials.red;
         movingNutMesh.visible = true;
         movingNutMesh.material = movingMat;
+        movingNutMesh.rotation.order = 'XYZ';
         if (movingNutMesh.userData.ringMesh) movingNutMesh.userData.ringMesh.material = activeRingAccentMat || movingMat;
 
-        // Cubic Easing helper
+        // Smooth easing helpers for continuous phase transitions
+        const easeOutCubic = (x) => 1 - Math.pow(1 - x, 3);
         const easeInOut = (x) => (x < 0.5 ? 4 * x * x * x : 1 - Math.pow(-2 * x + 2, 3) / 2);
 
-        // Phase 1: Unscrew & Climb Up (0.00 to 0.30)
-        if (rawProgress < 0.30) {
-          const sub = rawProgress / 0.30;
-          const eased = easeInOut(sub);
-          const currY = fromRestY + (apexY - fromRestY) * eased;
-          const totalUnscrewTurns = (apexY - fromRestY) / threadPitch;
+        // Phase 1: Continue upward straight off the bolt tip along bolt axis (0.00 to 0.28)
+        if (rawProgress < 0.28) {
+          const sub = rawProgress / 0.28;
+          const eased = easeOutCubic(sub);
+          const currY = startY + (apexFromY - startY) * eased;
+          const currZ = startZ + (apexFromZ - startZ) * eased;
+          const totalUnscrewTurns = (apexAxial - startAxial) / threadPitch;
 
-          movingNutMesh.position.set(fromPos.x, currY, fromPos.z);
-          movingNutMesh.rotation.set(0, -eased * totalUnscrewTurns * Math.PI * 2, 0);
+          movingNutMesh.position.set(fromPos.x, currY, currZ);
+          movingNutMesh.rotation.set(BOLT_TILT_X, startAngle + (phase1EndAngle - startAngle) * eased, 0);
 
           if (!state.moveData.phase1Started) {
             state.moveData.phase1Started = true;
-            gameAudio.playUnscrewStart(duration * 0.30);
+            gameAudio.playUnscrewStart(duration * 0.28);
           }
           const turnStep = Math.floor(eased * totalUnscrewTurns * 5.5);
           if (turnStep > state.moveData.lastSoundTurnStep) {
@@ -1662,42 +1695,45 @@ export default function ThreeGameBoard({
             gameAudio.playThreadClick(sub, 'up');
           }
         }
-        // Phase 2: Parabolic 3D Transfer Arc (0.30 to 0.70)
-        else if (rawProgress < 0.70) {
+        // Phase 2: Direct Parabolic 3D Transfer Arc over to destination bolt (0.28 to 0.72)
+        else if (rawProgress < 0.72) {
           if (!state.moveData.phase1Released) {
             state.moveData.phase1Released = true;
             gameAudio.playUnscrewRelease();
           }
-          const sub = (rawProgress - 0.30) / 0.40;
+          const sub = (rawProgress - 0.28) / 0.44;
           const eased = easeInOut(sub);
 
           const currX = fromPos.x + (toPos.x - fromPos.x) * eased;
-          const currZ = fromPos.z + (toPos.z - fromPos.z) * eased;
-          const flightArc = Math.sin(sub * Math.PI) * 0.18;
-          const currY = apexY + flightArc;
+          const currZ = apexFromZ + (apexToZ - apexFromZ) * eased;
+          const baseArcY = apexFromY + (apexToY - apexFromY) * eased;
+          const flightArc = Math.sin(sub * Math.PI) * 0.14;
+          const currY = baseArcY + flightArc;
 
-          // Gentle flight banking tilt towards movement direction
+          // Gentle flight banking tilt towards movement direction while maintaining bolt axis lean
           const dir = toPos.x >= fromPos.x ? 1 : -1;
-          const tilt = dir * Math.sin(sub * Math.PI) * 0.12;
+          const tilt = dir * Math.sin(sub * Math.PI) * 0.10;
+          const rotY = THREE.MathUtils.lerp(phase1EndAngle, phase3StartAngle, eased);
 
           movingNutMesh.position.set(currX, currY, currZ);
-          movingNutMesh.rotation.set(0, -Math.PI * 3 + sub * Math.PI * 2, tilt);
+          movingNutMesh.rotation.set(BOLT_TILT_X, rotY, tilt);
         }
-        // Phase 3: Descend & Screw Down onto Destination (0.70 to 1.00)
+        // Phase 3: Descend & Screw Down smoothly onto destination slot along bolt axis (0.72 to 1.00)
         else if (rawProgress < 1.0) {
-          const sub = (rawProgress - 0.70) / 0.30;
+          const sub = (rawProgress - 0.72) / 0.28;
           const eased = easeInOut(sub);
-          const currY = apexY + (toRestY - apexY) * eased;
-          const totalScrewTurns = (apexY - toRestY) / threadPitch;
+          const currY = apexToY + (toRestY - apexToY) * eased;
+          const currZ = apexToZ + (toRestZ - apexToZ) * eased;
+          const totalScrewTurns = (apexAxial - toAxialRest) / threadPitch;
+          const rotY = THREE.MathUtils.lerp(phase3StartAngle, endAngle, eased);
 
-          movingNutMesh.position.set(toPos.x, currY, toPos.z);
-          // Clockwise tightening rotation ending at thread alignment
-          movingNutMesh.rotation.set(0, (1.0 - eased) * totalScrewTurns * Math.PI * 2, 0);
+          movingNutMesh.position.set(toPos.x, currY, currZ);
+          movingNutMesh.rotation.set(BOLT_TILT_X, rotY, 0);
 
           if (!state.moveData.phase3Started) {
             state.moveData.phase3Started = true;
             state.moveData.lastSoundTurnStep = 0;
-            gameAudio.playScrewDownStart(duration * 0.30);
+            gameAudio.playScrewDownStart(duration * 0.28);
           }
           const downStep = Math.floor(eased * totalScrewTurns * 5.0);
           if (downStep > state.moveData.lastSoundTurnStep) {
