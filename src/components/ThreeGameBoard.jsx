@@ -473,14 +473,14 @@ function createThreadedShaftGeometry(baseRadius = 0.128, height = 0.745, turns =
 
 /**
  * Creates a clean 45-degree CNC-chamfered steel bolt end with a flat machined top face
- * (no extra protruding knob or bulky cap sticking above the threaded stud)
+ * (flush machined tip with zero protruding knob above the threads)
  */
-function createStudTipGeometry(radius = 0.128, height = 0.024) {
+function createStudTipGeometry(radius = 0.128, height = 0.012) {
   const pts = [
     new THREE.Vector2(0.0, 0.0),
     new THREE.Vector2(radius, 0.0),
-    new THREE.Vector2(radius * 0.94, height * 0.35),
-    new THREE.Vector2(radius * 0.78, height),
+    new THREE.Vector2(radius * 0.92, height * 0.45),
+    new THREE.Vector2(radius * 0.80, height),
     new THREE.Vector2(0.0, height),
   ];
   const geom = new THREE.LatheGeometry(pts, 44);
@@ -489,16 +489,15 @@ function createStudTipGeometry(radius = 0.128, height = 0.024) {
 }
 
 /**
- * Creates a low-profile DIN brushed-steel Completion Cap Lid that seals the top of a finished 4-nut bolt cleanly
+ * Creates a flush low-profile DIN brushed-steel Completion Seal Plug for finished 4-nut bolts
  */
-function createCompletionCapGeometry(radius = 0.168, height = 0.068) {
+function createCompletionCapGeometry(radius = 0.144, height = 0.026) {
   const pts = [
     new THREE.Vector2(0.0, 0.0),
     new THREE.Vector2(radius, 0.0),
-    new THREE.Vector2(radius, height * 0.25),
-    new THREE.Vector2(radius * 0.92, height * 0.58),
-    new THREE.Vector2(radius * 0.72, height * 0.90),
-    new THREE.Vector2(radius * 0.42, height),
+    new THREE.Vector2(radius, height * 0.40),
+    new THREE.Vector2(radius * 0.88, height * 0.80),
+    new THREE.Vector2(radius * 0.65, height),
     new THREE.Vector2(0.0, height),
   ];
   const geom = new THREE.LatheGeometry(pts, 44);
@@ -783,17 +782,17 @@ export default function ThreeGameBoard({
     const nutRingGeometry = createNutBearingRingGeometry(0.139, 0.222, 0.006);
     const boreGeometry = new THREE.CylinderGeometry(0.139, 0.139, 0.156, 28, 1, true);
 
-    // Elongated, Sleek 3D Sculpted ISO Metric Steel Stud Shaft + Heavy Fluted Spiral Variant
-    const shaftHeight = 0.798;
-    const shaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 17, 0.0145);
+    // Elongated 3D Sculpted ISO Metric Steel Stud Shaft matched flush to 4 stacked nuts
+    const shaftHeight = 0.764;
+    const shaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 16, 0.0145);
     const spiralShaftGeometry = createThreadedShaftGeometry(0.128, shaftHeight, 10, 0.0215);
 
-    // Clean Low 45-deg CNC Chamfered Stud End (flush machined top with no protruding piece)
-    const headHeight = 0.024;
+    // Flush 45-deg CNC Chamfered Stud End (clean flat machined top, zero extra protrusion)
+    const headHeight = 0.012;
     const headGeometry = createStudTipGeometry(0.128, headHeight);
 
-    // 3D Brushed Steel Completion Cap Lid (low rounded cap sealing completed 4-nut bolt cleanly)
-    const completionCapGeometry = createCompletionCapGeometry(0.168, 0.068);
+    // 3D Brushed Steel Completion Seal Plug (sits flush in the 4th nut bore when solved)
+    const completionCapGeometry = createCompletionCapGeometry(0.144, 0.026);
     const completionCapMaterial = new THREE.MeshStandardMaterial({
       color: 0xf1f5f9,
       metalness: 0.90,
@@ -1377,8 +1376,8 @@ export default function ThreeGameBoard({
     let animId = null;
 
     const nutThickness = 0.144;
-    const nutSpacing = 0.174; // Cleanly fills bolt height so 4 nuts leave zero awkward tall protruding shaft
-    const threadPitch = shaftHeight / 17;
+    const nutSpacing = 0.174; // Cleanly fills bolt height so 4 nuts end flush at bolt top
+    const threadPitch = shaftHeight / 16;
     // Slight away-facing inclination (-3.15 deg toward -Z) counters downward perspective lean so bolts look upright & away from viewer
     const BOLT_TILT_X = -0.055;
     const COS_TILT = Math.cos(BOLT_TILT_X);
@@ -1435,9 +1434,9 @@ export default function ThreeGameBoard({
         collar.userData = { type: 'bolt', tubeIndex: boltIdx };
         headGroup.add(collar);
 
-        // 3D Brushed Silver Completion Cap Lid: screws flush onto the 4th nut when bolt is solved
+        // 3D Brushed Silver Completion Seal Plug: sits flush on the 4th nut when bolt is solved
         const badge = new THREE.Mesh(completionCapGeometry, completionCapMaterial);
-        badge.position.y = baseHeight + 4 * nutSpacing - shaftHeight; // Exact flush top of 4th nut
+        badge.position.y = baseHeight + 4 * nutSpacing - shaftHeight - 0.012;
         badge.castShadow = true;
         badge.receiveShadow = true;
         badge.visible = false;
@@ -1500,9 +1499,9 @@ export default function ThreeGameBoard({
           if (bm.badgeScale > 0.02) {
             bm.badge.visible = true;
             bm.badge.scale.setScalar(bm.badgeScale);
-            const flushCapY = baseHeight + 4 * nutSpacing - shaftHeight;
-            // Descend slightly as it screws onto the top nut, cleanly hiding the underlying stud tip once seated
-            bm.badge.position.y = flushCapY + (1.0 - bm.badgeScale) * 0.04;
+            const flushCapY = baseHeight + 4 * nutSpacing - shaftHeight - 0.012;
+            // Descend gently to sit flush with the top of the 4th nut
+            bm.badge.position.y = flushCapY + (1.0 - bm.badgeScale) * 0.025;
             bm.badge.rotation.y = (1.0 - bm.badgeScale) * Math.PI * 3;
             bm.collar.visible = bm.badgeScale < 0.35;
           } else {
